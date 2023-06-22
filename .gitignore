@@ -1,0 +1,12 @@
+# Gradle
+.gradle
+build
+run
+testRun
+
+# Eclipse
+.metadata
+.settings
+.project
+.classpath
+bin

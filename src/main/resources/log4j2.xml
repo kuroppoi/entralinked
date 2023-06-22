@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration status="off" packages="entralinked.utility">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level [%32t] %-48c{1.2*} : %msg%n"/>
+    </Console>
+    <RollingFile name="LogFile" fileName="logs/latest.log" filePattern="logs/%d{yyyy-MM-dd}-%i.log.gz">
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level [%16t] %-48c{1.2*} : %msg%n"/>
+      <Policies>
+        <OnStartupTriggeringPolicy/>
+      </Policies>
+    </RollingFile>
+    <ConsumerAppender name="GuiOutput">
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level : %msg%n"/>
+    </ConsumerAppender>
+  </Appenders>
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="Console"/>
+      <AppenderRef ref="LogFile"/>
+      <AppenderRef ref="GuiOutput"/>
+    </Root>
+  </Loggers>
+</Configuration>

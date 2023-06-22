@@ -1,0 +1,86 @@
+plugins {
+    id 'java'
+}
+
+project.ext {
+    mainClass = 'entralinked.Entralinked'
+    agentClass = 'entralinked.LauncherAgent'
+    workingDirectory = 'run'
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    signedImplementation
+    implementation.extendsFrom signedImplementation
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    signedImplementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+    implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2'
+	implementation 'io.netty:netty-all:4.1.79.Final'
+    implementation 'io.javalin:javalin:5.5.0'
+    implementation 'org.apache.logging.log4j:log4j-slf4j2-impl:2.20.0'
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir 'poke-sprites-v'
+        }
+    }
+}
+
+test {
+    workingDir = "testRun";
+    useJUnitPlatform()
+    
+    doFirst {
+        mkdir workingDir
+    }
+}
+
+compileJava {
+    options.encoding = "UTF-8"
+}
+
+task dist(type: Jar) {
+    manifest {
+        attributes 'Main-Class': project.ext.mainClass,
+                   'Launcher-Agent-Class': project.ext.agentClass,
+                   'Multi-Release': 'true'
+    }
+    
+    from {
+        (configurations.runtimeClasspath - configurations.signedImplementation).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    
+    from {
+        configurations.signedImplementation
+    }
+    
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    dependsOn configurations.runtimeClasspath, test
+    with jar
+}
+
+task run(type: JavaExec) {
+    mainClass = project.ext.mainClass
+    workingDir = project.ext.workingDirectory
+    classpath = sourceSets.main.runtimeClasspath
+    
+    doFirst {
+        mkdir workingDir
+    }
+}
+    
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17

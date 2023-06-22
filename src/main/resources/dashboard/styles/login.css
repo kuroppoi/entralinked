@@ -1,0 +1,38 @@
+body {
+    background-color: #191919;
+    color: white;
+    font-size: 20px;
+}
+      
+input {
+    color: white;
+    background-color: #262626;
+    border: 0px;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 4px;
+    margin-bottom: 16px;
+    padding: 4px 4px;
+    font-size: 16px;
+}
+
+button {
+    color: white;
+    background-color: #3D3D3D;
+    border: 0px;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 16px 32px;
+}
+
+button:active {
+    background-color: #333333;
+}
+
+.root-container {
+    position: absolute;
+	left: 50%;
+	top: 25%;
+	transform: translate(-50%, 0%);
+	padding: 10px;
+}

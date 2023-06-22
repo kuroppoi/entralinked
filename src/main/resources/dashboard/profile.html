@@ -1,0 +1,173 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/profile.css">
+  </head>
+  <body onload="fetchProfileData()">
+    <div id="main-container" class="root-container" style="display:none;">
+      <div>
+        <label id="game-summary" class="header-text"></label>
+      </div>
+      <div>
+        <!-- Dreamer Summary -->
+        <label>Tucked-in Pokémon Summary</label><br>
+        <table id="dreamer-summary" class="dreamer-summary">
+          <tr>
+            <td id="dreamer-sprite" class="dreamer-sprite" rowspan="5">
+              <image src="/sprites/pokemon/normal/0.png"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Species</th>
+            <td id="dreamer-species"></td>
+            <th>Nature</th>
+            <td id="dreamer-nature"></td>
+          </tr>
+          <tr>
+            <th>Name</th>
+            <td id="dreamer-name"></td>
+            <th>Gender</th>
+            <td id="dreamer-gender"></td>
+          </tr>
+          <tr>
+            <th>Trainer</th>
+            <td id="dreamer-trainer"></td>
+            <th>Level</th>
+            <td id="dreamer-level"></td>
+          </tr>
+          <tr>
+            <th>Trainer ID</th>
+            <td id="dreamer-trainer-id"></td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <!-- Entree Forest Encounter Configuration -->
+        <label>Entree Forest Encounters (Max. 10)</label><br>
+        <div>
+          <table id="encounter-table" class="encounter-image-table">
+            <tr>
+              <td><a id="encounter0" href="#configureEncounter" onclick="configureEncounter(0)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+              <td><a id="encounter1" href="#configureEncounter" onclick="configureEncounter(1)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+              <td><a id="encounter2" href="#configureEncounter" onclick="configureEncounter(2)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+              <td><a id="encounter3" href="#configureEncounter" onclick="configureEncounter(3)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+              <td><a id="encounter4" href="#configureEncounter" onclick="configureEncounter(4)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+            </tr>
+            <tr>
+              <td><a id="encounter5" href="#configureEncounter" onclick="configureEncounter(5)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+              <td><a id="encounter6" href="#configureEncounter" onclick="configureEncounter(6)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+              <td><a id="encounter7" href="#configureEncounter" onclick="configureEncounter(7)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+              <td><a id="encounter8" href="#configureEncounter" onclick="configureEncounter(8)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+              <td><a id="encounter9" href="#configureEncounter" onclick="configureEncounter(9)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <!-- Item Configuration -->
+        <label>Items (Max. 20)</label><br>
+        <div>
+          <table id="item-table" class="item-table">
+            <tr>
+              <td><a id="item0" href="#configureItem" onclick="configureItem(0)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item1" href="#configureItem" onclick="configureItem(1)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item2" href="#configureItem" onclick="configureItem(2)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item3" href="#configureItem" onclick="configureItem(3)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item4" href="#configureItem" onclick="configureItem(4)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item5" href="#configureItem" onclick="configureItem(5)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item6" href="#configureItem" onclick="configureItem(6)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item7" href="#configureItem" onclick="configureItem(7)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item8" href="#configureItem" onclick="configureItem(8)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item9" href="#configureItem" onclick="configureItem(9)"><image src="/sprites/items/0.png"/></a></td>
+            </tr>
+            <tr>
+              <td><a id="item10" href="#configureItem" onclick="configureItem(10)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item11" href="#configureItem" onclick="configureItem(11)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item12" href="#configureItem" onclick="configureItem(12)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item13" href="#configureItem" onclick="configureItem(13)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item14" href="#configureItem" onclick="configureItem(14)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item15" href="#configureItem" onclick="configureItem(15)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item16" href="#configureItem" onclick="configureItem(16)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item17" href="#configureItem" onclick="configureItem(17)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item18" href="#configureItem" onclick="configureItem(18)"><image src="/sprites/items/0.png"/></a></td>
+              <td><a id="item19" href="#configureItem" onclick="configureItem(19)"><image src="/sprites/items/0.png"/></a></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <!-- Misc Configurations -->
+        <div class="grid-container">
+          <div>
+            <label>CGear Skin</label>
+            <select id="cgear-skin">
+              <option value="none">Do not change</option>
+            </select>
+          </div>
+          <div>
+            <label>Pokédex Skin</label>
+            <select id="dex-skin">
+              <option value="none">Do not change</option>
+            </select>
+          </div>
+          <div>
+            <label>Musical</label>
+            <select id="musical">
+              <option value="none">Do not change</option>
+            </select>
+          </div>
+          <div>
+            <label>Level Gain</label>
+            <input id="level-gain-input" type="number" value="0" min="0" max="99"/>
+          </div>
+        </div>
+      </div>
+      <div>
+          <button id="save" class="big-button" onclick="postProfileData()">Save Profile</button>
+          <button id="logout" class="big-button" onclick="postLogout()">Log Out</button>
+      </div>
+	</div>
+    <!-- Entree Forest Encounter Configuration Form -->
+    <div id="configureEncounter" class="popup">
+      <div class="content">
+        <button class="close-button" onclick="closeEncounterForm()">X</button>
+        <form id="encounter-form">
+          <label for="encounter-form-species">Species ID</label>
+          <input id="encounter-form-species" name="species" type="number" value="1" min="1" max="493"/>
+          <label for="encounter-form-move">Move ID</label>
+          <input id="encounter-form-move" name="move" type="number" value="1" min="1" max="559"/>
+          <label for="encounter-form-form">Forme Index</label>
+          <input id="encounter-form-form" name="form" type="number" value="0" min="0" max="31"/>
+          <label for="encounter-form-animation">Animation</label>
+          <select id="encounter-form-animation" name="animation">
+            <option value="LOOK_AROUND">Look Around</option>
+            <option value="WALK_AROUND">Walk Around</option>
+            <option value="WALK_LOOK_AROUND">Walk and Look Around</option>
+            <option value="WALK_VERTICALLY">Walk Vertically</option>
+            <option value="WALK_HORIZONTALLY">Walk Horizontally</option>
+            <option value="WALK_HORIZONTALLY_LOOK_AROUND">Walk Horizontally and Look Around</option>
+            <option value="SPIN_RIGHT">Spin Right</option>
+            <option value="SPIN_LEFT">Spin Left</option>
+          </select>
+        </form>
+        <button class="big-button" onclick="saveEncounter()">Confirm</button>
+        <button class="big-button" onclick="removeEncounter()">Remove</button>
+      </div>
+    </div>
+    <!-- Item Configuration Form -->
+    <div id="configureItem" class="popup">
+      <div class="content">
+        <button class="close-button" onclick="closeEncounterForm()">X</button>
+        <form id="item-form">
+          <label for="item-form-id">Item ID</label>
+          <input id="item-form-id" name="id" type="number" value="1" min="1" max="638"/>
+          <label for="item-form-quantity">Quantity</label>
+          <input id="item-form-quantity" name="quantity" type="number" value="1" min="1" max="20"/>
+        </form>
+        <button class="big-button" onclick="saveItem()">Confirm</button>
+        <button class="big-button" onclick="removeItem()">Remove</button>
+      </div>
+    </div>
+  </body>
+  <script src="scripts/profile.js"></script>
+</html>
