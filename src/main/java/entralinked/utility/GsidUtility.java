@@ -30,7 +30,6 @@ public class GsidUtility {
             ugsid = (ugsid >> 5) | (checksum << 27);
             checksum >>= 5;
             output[i] = GSID_CHARTABLE.charAt(index); // sub_2048734(v4, chartable + index)
-            
         }
         
         return new String(output);
