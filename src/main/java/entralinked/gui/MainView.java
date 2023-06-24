@@ -13,6 +13,7 @@ import java.util.concurrent.CompletableFuture;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -40,6 +41,8 @@ public class MainView {
     private static Logger logger = LogManager.getLogger();
     private final StyleContext styleContext = StyleContext.getDefaultStyleContext();
     private final AttributeSet fontAttribute = styleContext.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.FontFamily, "Consolas");
+    private final JButton dashboardButton;
+    private final JLabel statusLabel;
     
     public MainView(Entralinked entralinked) {
         // Try set Look and Feel
@@ -50,11 +53,20 @@ public class MainView {
         }
         
         // Create dashboard button
-        JButton dashboardButton = new JButton("Open User Dashboard");
+        dashboardButton = new JButton("Open User Dashboard");
+        dashboardButton.setEnabled(false);
         dashboardButton.setFocusable(false);
         dashboardButton.addActionListener(event -> {
             openUrl("http://127.0.0.1/dashboard/profile.html");
         });
+        
+        // Create status label
+        statusLabel = new JLabel("Entralinked is starting...", JLabel.CENTER);
+        
+        // Create footer panel
+        JPanel footerPanel = new JPanel(new BorderLayout());
+        footerPanel.add(statusLabel, BorderLayout.CENTER);
+        footerPanel.add(dashboardButton, BorderLayout.LINE_END);
         
         // Create console output
         JTextPane consoleOutputPane = new JTextPane() {
@@ -88,13 +100,17 @@ public class MainView {
         // Create main panel
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(scrollPane, BorderLayout.CENTER);
-        panel.add(dashboardButton, BorderLayout.PAGE_END);
+        panel.add(footerPanel, BorderLayout.PAGE_END);
         
         // Create window
         JFrame frame = new JFrame("Entralinked");
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
+                // Update status
+                dashboardButton.setEnabled(false);
+                statusLabel.setText("Entralinked is shutting down ...");
+                
                 // Run asynchronously so it doesn't just awkwardly freeze
                 // Still scuffed but better than nothing I guess
                 CompletableFuture.runAsync(() -> {
@@ -109,6 +125,15 @@ public class MainView {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+    
+    public void setDashboardButtonEnabled(boolean enabled) {
+        dashboardButton.setEnabled(enabled);
+    }
+    
+    
+    public void setStatusLabelText(String text) {
+        statusLabel.setText(text);
     }
     
     private void openUrl(String url) {

@@ -41,6 +41,7 @@ public class Entralinked {
     private final DnsServer dnsServer;
     private final GameSpyServer gameSpyServer;
     private final HttpServer httpServer;
+    private MainView mainView;
     
     public Entralinked(String[] args) {
         // Read command line arguments
@@ -49,7 +50,7 @@ public class Entralinked {
         // Create GUI if enabled
         if(!arguments.disableGui()) {
             try {
-                SwingUtilities.invokeAndWait(() -> new MainView(this));
+                SwingUtilities.invokeAndWait(() -> mainView = new MainView(this));
             } catch (InvocationTargetException | InterruptedException e) {
                 logger.error("An error occured whilst creating main view", e);
             }
@@ -79,13 +80,16 @@ public class Entralinked {
         userManager = new UserManager();
         playerManager = new PlayerManager();
         
+        // Start servers
+        boolean started = true;
+        
         // Create DNS server
         dnsServer = new DnsServer(hostAddress);
-        dnsServer.start();
+        started &= dnsServer.start();
         
         // Create GameSpy server
         gameSpyServer = new GameSpyServer(this);
-        gameSpyServer.start();
+        started &= gameSpyServer.start();
         
         // Create HTTP server
         httpServer = new HttpServer(this);
@@ -93,7 +97,22 @@ public class Entralinked {
         httpServer.addHandler(new PglHandler(this));
         httpServer.addHandler(new DlsHandler(this));
         httpServer.addHandler(new DashboardHandler(this));
-        httpServer.start();
+        started &= httpServer.start();
+        
+        // Handle post-startup GUI stuff
+        if(mainView != null) {
+            if(!started) {
+                SwingUtilities.invokeLater(() -> mainView.setStatusLabelText(
+                        "ERROR: One or more servers failed to start! Please check the logs for info."));
+                return;
+            }
+            
+            String hostIpAddress = hostAddress.getHostAddress();
+            SwingUtilities.invokeLater(() -> {
+                mainView.setDashboardButtonEnabled(true);
+                mainView.setStatusLabelText("Configure your DS to use the following DNS server: %s".formatted(hostIpAddress));
+            });
+        }
     }
     
     public void stopServers() {
