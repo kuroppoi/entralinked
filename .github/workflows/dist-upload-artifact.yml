@@ -1,5 +1,13 @@
 name: Build
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+    paths:
+    - poke-sprites-v
+    - src/**
+    - build.gradle
+  
 jobs:
   dist:
     runs-on: ubuntu-latest
