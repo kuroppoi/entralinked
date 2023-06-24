@@ -73,7 +73,8 @@ public class PglHandler implements HttpHandler {
      * The deserialized request will be stored in a context attribute named {@code request} and may be retrieved
      * by subsequent handlers.
      */
-    private void authorizePglRequest(Context ctx) throws IOException {        
+    private void authorizePglRequest(Context ctx) throws IOException {
+        System.out.println(ctx.queryString());
         // Verify the authorization header credentials
         BasicAuthCredentials credentials = ctx.basicAuthCredentials();
         

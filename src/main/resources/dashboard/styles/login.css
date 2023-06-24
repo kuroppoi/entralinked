@@ -31,8 +31,8 @@ button:active {
 
 .root-container {
     position: absolute;
-	left: 50%;
-	top: 25%;
-	transform: translate(-50%, 0%);
-	padding: 10px;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, 0%);
+    padding: 10px;
 }
