@@ -74,7 +74,6 @@ public class PglHandler implements HttpHandler {
      * by subsequent handlers.
      */
     private void authorizePglRequest(Context ctx) throws IOException {
-        System.out.println(ctx.queryString());
         // Verify the authorization header credentials
         BasicAuthCredentials credentials = ctx.basicAuthCredentials();
         
