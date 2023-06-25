@@ -26,4 +26,5 @@ java -jar entralinked.jar disablegui
 Entralinked has a built-in DNS server.\
 In order for your game to connect, you must configure the DNS settings of your DS.\
 By default, Entralinked is configured to use the local host of the system.\
+If you receive error code `60000` when trying to connect, erase the Nintendo WFC Configuration of your DS and try again.\
 After tucking in a Pokémon, navigate to `http://localhost/dashboard/profile.html` in a web browser to configure Game Sync settings.
