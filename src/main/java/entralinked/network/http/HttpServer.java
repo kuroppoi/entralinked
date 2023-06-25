@@ -44,6 +44,8 @@ public class HttpServer {
             if(keyStore == null) {
                 logger.warn("SSL will be disabled because keystore creation failed. You may have to manually sign a certificate.");
             }
+        } else {
+            logger.warn("SSL will be disabled because BouncyCastle could not be loaded");
         }
         
         KeyStore _keyStore = keyStore; // Java moment
