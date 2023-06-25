@@ -21,7 +21,7 @@ public class DnsServer extends NettyServerBase {
     public DnsServer(InetAddress hostAddress) {
         super("DNS", 53);
         this.hostAddress = hostAddress;
-        logger.info("DNS queries will be resolved to {}", hostAddress);
+        logger.info("DNS queries will be resolved to {}", hostAddress.getHostAddress());
     }
     
     @Override
