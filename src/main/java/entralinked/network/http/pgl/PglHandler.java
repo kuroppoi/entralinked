@@ -1,5 +1,7 @@
 package entralinked.network.http.pgl;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
@@ -118,6 +120,7 @@ public class PglHandler implements HttpHandler {
             case "sleepily.bitlist" -> this::handleGetSleepyList;
             case "account.playstatus" -> this::handleGetAccountStatus;
             case "savedata.download" -> this::handleDownloadSaveData;
+            case "savedata.getbw" -> this::handleMemoryLink;
             default -> throw new IllegalArgumentException("Invalid GET request type: " + request.type());
         };
         
@@ -246,6 +249,40 @@ public class PglHandler implements HttpHandler {
     }
     
     /**
+     * GET handler for {@code /dsio/gw?p=savedata.getbw}
+     */
+    private void handleMemoryLink(PglRequest request, Context ctx) throws IOException {
+        LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
+        Player player = playerManager.getPlayer(request.gameSyncId());
+        
+        // Check if player exists
+        if(player == null) {
+            writeStatusCode(outputStream, 8); // Invalid Game Sync ID
+            return;
+        }
+        
+        // Check if the save file belongs to Black or White
+        if(player.getGameVersion().isVersion2()) {
+            writeStatusCode(outputStream, 10); // Not a Black or White save
+            return;
+        }
+        
+        // Check if the game save data exists
+        File file = playerManager.getPlayerGameSaveFile(player);
+        
+        if(!file.exists()) {
+            writeStatusCode(outputStream, 5); // No game save data exists for this Game Sync ID
+            return;
+        }
+        
+        // Send the save data!
+        try(FileInputStream inputStream = new FileInputStream(file)) {
+            writeStatusCode(outputStream, 0);
+            inputStream.transferTo(outputStream);
+        }
+    }
+    
+    /**
      * POST base handler for {@code /dsio/gw}
      */
     private void handlePglPostRequest(Context ctx) throws IOException {
@@ -295,41 +332,44 @@ public class PglHandler implements HttpHandler {
      * POST handler for {@code /dsio/gw?p=savedata.upload}
      */
     private void handleUploadSaveData(PglRequest request, Context ctx) throws IOException {
-        // Read save data
-        ServletInputStream inputStream = ctx.req().getInputStream();
-        inputStream.skip(0x1D300); // Skip to dream world data
-        inputStream.skip(8); // Skip to Pokémon data
-        PkmnInfo info = PkmnInfoReader.readPokeInfo(inputStream);
-        
-        // Don't care about anything else -- continue reading bytes until we're done.
-        while(!inputStream.isFinished()) {
-            inputStream.read();
-        }
-        
         // Prepare response
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
+        
+        // Check if player exists, has the same game version and does not already have a Pokémon tucked in
         Player player = playerManager.getPlayer(request.gameSyncId());
         
-        // Check if player exists
-        if(player == null) {
+        if(player == null || player.getGameVersion() != request.gameVersion()
+                || (player.getStatus() != PlayerStatus.AWAKE && !configuration.allowOverwritingPlayerDreamInfo())) {
+            // Skip everything
+            ServletInputStream inputStream = ctx.req().getInputStream();
+            
+            while(!inputStream.isFinished()) {
+                inputStream.read();
+            }
+            
+            // Write error response
             writeStatusCode(outputStream, 1); // Unauthorized
             return;
         }
         
-        // Check if player doesn't already have a Pokémon tucked in
-        if(player.getStatus() != PlayerStatus.AWAKE) {
-            logger.warn("Player {} tried to upload save data while already asleep", player.getGameSyncId());
-            
-            // Return error if not allowed
-            if(!configuration.allowOverwritingPlayerDreamInfo()) {
-                writeStatusCode(outputStream, 4); // Already dreaming
-                return;
-            }
+        // Try to store save data
+        if(!playerManager.storePlayerGameSaveFile(player, ctx.bodyInputStream())) {
+            writeStatusCode(outputStream, 4); // Game save data IO error
+            return;
+        }
+        
+        // Read save data
+        PkmnInfo dreamerInfo = null;
+        
+        try(FileInputStream inputStream = new FileInputStream(playerManager.getPlayerGameSaveFile(player))) {
+            inputStream.skip(0x1D300); // Skip to dream world data
+            inputStream.skip(8); // Skip to Pokémon data
+            dreamerInfo = PkmnInfoReader.readPokeInfo(inputStream);
         }
         
         // Update and save player information
         player.setStatus(PlayerStatus.SLEEPING);
-        player.setDreamerInfo(info);
+        player.setDreamerInfo(dreamerInfo);
         
         if(!playerManager.savePlayer(player)) {
             logger.warn("Save data failure for player {}", player.getGameSyncId());

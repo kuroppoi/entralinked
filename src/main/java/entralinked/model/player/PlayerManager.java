@@ -1,7 +1,9 @@
 package entralinked.model.player;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,6 +27,7 @@ public class PlayerManager {
     private final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
     private final Map<String, Player> playerMap = new ConcurrentHashMap<>();
     private final File dataDirectory = new File("players");
+    private final File gameSaveDirectory = new File(dataDirectory, "savedata");
     
     public PlayerManager() {
         logger.info("Loading player data ...");
@@ -135,6 +138,37 @@ public class PlayerManager {
         // Map player object & return it
         playerMap.put(gameSyncId, player);
         return player;
+    }
+    
+    /**
+     * Stores a game save file read from the specified input stream to a file.
+     * The output file is generated as follows:
+     * 
+     * {@code new File(gameSaveDirectory, "SAV-%s.bin".formatted(gameSyncId))}
+     * 
+     * @return {@code true} if the game save file was written successfully, otherwise {@code false}.
+     */
+    public boolean storePlayerGameSaveFile(Player player, InputStream inputStream) {
+        // Try create directories
+        if(!gameSaveDirectory.exists() && !gameSaveDirectory.mkdirs()) {
+            return false;
+        }
+        
+        // Write the save data        
+        try(FileOutputStream outputStream = new FileOutputStream(getPlayerGameSaveFile(player))) {
+            inputStream.transferTo(outputStream);
+            return true;
+        } catch(IOException e) {
+            logger.error("Could not write game save data for player {}", player.getGameSyncId());
+            return false;
+        }
+    }
+    
+    /**
+     * @return The game save data {@link File} object associated with this player.
+     */
+    public File getPlayerGameSaveFile(Player player) {
+        return new File(gameSaveDirectory, "SAV-%s.bin".formatted(player.getGameSyncId()));
     }
     
     /**
