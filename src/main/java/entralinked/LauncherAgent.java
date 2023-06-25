@@ -5,17 +5,14 @@ import java.lang.instrument.Instrumentation;
 import java.nio.file.Files;
 import java.util.jar.JarFile;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 /**
  * Stupid solution to a stupid problem.
  * If this just randomly breaks in the future because of some nonsense security reason I will completely lose it.
  */
 public class LauncherAgent {
     
-    private static final Logger logger = LogManager.getLogger();
     private static boolean bouncyCastlePresent = true;
+    private static Exception cause;
     
     public static void agentmain(String args, Instrumentation instrumentation) {        
         try {
@@ -41,12 +38,16 @@ public class LauncherAgent {
                 instrumentation.appendToSystemClassLoaderSearch(new JarFile(jarFile));
             }
         } catch(Exception e) {
-            logger.error("Could not add BouncyCastle to SystemClassLoader search", e);
             bouncyCastlePresent = false;
+            cause = e; // Store exception to log later
         }
     }
     
     public static boolean isBouncyCastlePresent() {
         return bouncyCastlePresent;
+    }
+    
+    public static Exception getCause() {
+        return cause;
     }
 }

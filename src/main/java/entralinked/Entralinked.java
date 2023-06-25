@@ -56,6 +56,11 @@ public class Entralinked {
             }
         }
         
+        // Log premain errors
+        if(!LauncherAgent.isBouncyCastlePresent()) {
+            logger.error("Could not add BouncyCastle to SystemClassLoader search", LauncherAgent.getCause());
+        }
+        
         // Load config
         configuration = loadConfigFile();
         logger.info("Using configuration {}", configuration);
