@@ -20,6 +20,7 @@ public abstract class NettyServerBase {
     protected final EventLoopGroup eventLoopGroup;
     protected final String name;
     protected final int port;
+    protected boolean usingEpoll;
     protected boolean started;
     
     public NettyServerBase(String name, int port) {
@@ -29,6 +30,7 @@ public abstract class NettyServerBase {
         
         if(Epoll.isAvailable()) {
             eventLoopGroup = new EpollEventLoopGroup(threadFactory);
+            usingEpoll = true;
         } else {
             eventLoopGroup = new NioEventLoopGroup(threadFactory);
         }

@@ -9,6 +9,8 @@ import entralinked.network.NettyServerBase;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.epoll.EpollDatagramChannel;
+import io.netty.channel.socket.DatagramChannel;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.handler.codec.dns.DatagramDnsQueryDecoder;
 import io.netty.handler.codec.dns.DatagramDnsResponseEncoder;
@@ -28,10 +30,10 @@ public class DnsServer extends NettyServerBase {
     public ChannelFuture bootstrap(int port) {
         return new Bootstrap()
                 .group(eventLoopGroup)
-                .channel(NioDatagramChannel.class)
-                .handler(new ChannelInitializer<NioDatagramChannel>() {
+                .channel(usingEpoll ? EpollDatagramChannel.class : NioDatagramChannel.class)
+                .handler(new ChannelInitializer<DatagramChannel>() {
             @Override
-            protected void initChannel(NioDatagramChannel channel) throws Exception {
+            protected void initChannel(DatagramChannel channel) throws Exception {
                 channel.pipeline().addLast(new DatagramDnsQueryDecoder());
                 channel.pipeline().addLast(new DatagramDnsResponseEncoder());
                 channel.pipeline().addLast(new DnsQueryHandler(hostAddress));

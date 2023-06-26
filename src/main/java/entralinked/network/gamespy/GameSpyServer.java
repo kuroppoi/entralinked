@@ -19,10 +19,11 @@ import entralinked.network.gamespy.request.GameSpyRequest;
 import entralinked.serialization.GameSpyMessageFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.epoll.EpollServerSocketChannel;
+import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.util.concurrent.DefaultEventExecutor;
@@ -58,10 +59,10 @@ public class GameSpyServer extends NettyServerBase {
     public ChannelFuture bootstrap(int port) {
         return new ServerBootstrap()
                 .group(eventLoopGroup)
-                .channel(NioServerSocketChannel.class)
-                .childHandler(new ChannelInitializer<Channel>() {
+                .channel(usingEpoll ? EpollServerSocketChannel.class : NioServerSocketChannel.class)
+                .childHandler(new ChannelInitializer<ServerSocketChannel>() {
             @Override
-            protected void initChannel(Channel channel) throws Exception {
+            protected void initChannel(ServerSocketChannel channel) throws Exception {
                 ChannelPipeline pipeline = channel.pipeline();
                 pipeline.addLast(new DelimiterBasedFrameDecoder(512, Unpooled.wrappedBuffer("\\final\\".getBytes())));
                 pipeline.addLast(new GameSpyRequestDecoder(mapper, requestTypes));
