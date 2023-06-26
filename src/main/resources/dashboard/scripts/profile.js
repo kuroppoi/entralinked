@@ -14,6 +14,7 @@ const ELEMENT_DREAMER_LEVEL = document.getElementById("dreamer-level");
 const ELEMENT_ENCOUNTER_SPECIES = document.getElementById("encounter-form-species");
 const ELEMENT_ENCOUNTER_MOVE = document.getElementById("encounter-form-move");
 const ELEMENT_ENCOUNTER_FORM = document.getElementById("encounter-form-form");
+const ELEMENT_ENCOUNTER_GENDER = document.getElementById("encounter-form-gender");
 const ELEMENT_ENCOUNTER_ANIMATION = document.getElementById("encounter-form-animation");
 
 // Item form elements
@@ -60,6 +61,7 @@ function configureEncounter(index) {
     ELEMENT_ENCOUNTER_SPECIES.value = encounter ? encounter.species : 1;
     ELEMENT_ENCOUNTER_MOVE.value = encounter ? encounter.move : 1;
     ELEMENT_ENCOUNTER_FORM.value = encounter ? encounter.form : 0;
+    ELEMENT_ENCOUNTER_GENDER.value = encounter ? encounter.gender : "GENDERLESS";
     ELEMENT_ENCOUNTER_ANIMATION.value = encounter ? encounter.animation : "WALK_AROUND";
 }
 
@@ -73,6 +75,7 @@ function saveEncounter() {
         species: ELEMENT_ENCOUNTER_SPECIES.value,
         move: ELEMENT_ENCOUNTER_MOVE.value,
         form: ELEMENT_ENCOUNTER_FORM.value,
+        gender: ELEMENT_ENCOUNTER_GENDER.value,
         animation: ELEMENT_ENCOUNTER_ANIMATION.value
     }
     

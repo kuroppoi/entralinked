@@ -195,6 +195,8 @@ public class DashboardHandler implements HttpHandler {
                 return "Species is out of range.";
             } else if(encounter.move() < 1 || encounter.move() > 559) {
                 return "Move ID is out of range.";
+            } else if(encounter.gender() == null) {
+                return "Gender is undefined.";
             } else if(encounter.animation() == null) {
                 return "Animation is undefined.";
             }

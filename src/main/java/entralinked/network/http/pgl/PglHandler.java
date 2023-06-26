@@ -214,7 +214,7 @@ public class PglHandler implements HttpHandler {
             outputStream.writeShort(encounter.species());
             outputStream.writeShort(encounter.move());
             outputStream.write(encounter.form());
-            outputStream.write(0); // unknown
+            outputStream.write(encounter.gender().ordinal()); // Genderless = 2 = random
             outputStream.write(encounter.animation().ordinal());
             outputStream.write(0); // unknown
         }
