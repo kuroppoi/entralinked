@@ -3,11 +3,8 @@ package entralinked;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.UnknownHostException;
-import java.util.Enumeration;
 
 import javax.swing.SwingUtilities;
 
@@ -28,6 +25,7 @@ import entralinked.network.http.dashboard.DashboardHandler;
 import entralinked.network.http.dls.DlsHandler;
 import entralinked.network.http.nas.NasHandler;
 import entralinked.network.http.pgl.PglHandler;
+import entralinked.utility.NetworkUtility;
 
 public class Entralinked {
     
@@ -73,12 +71,12 @@ public class Entralinked {
         String hostName = configuration.hostName();
         
         if(hostName.equals("local") || hostName.equals("localhost")) {
-            hostAddress = tryGetLocalHost();
+            hostAddress = NetworkUtility.getLocalHost();
         } else {
             try {
                 hostAddress = InetAddress.getByName(hostName);
             } catch(UnknownHostException e) {
-                hostAddress = tryGetLocalHost();
+                hostAddress = NetworkUtility.getLocalHost();
                 logger.error("Could not resolve host name - falling back to {} ", hostAddress, e);
             }
         }
@@ -160,36 +158,6 @@ public class Entralinked {
             logger.error("Could not load configuration - default configuration will be used", e);
             return Configuration.DEFAULT;
         }
-    }
-    
-    private InetAddress tryGetLocalHost() {
-        try {
-            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
-            
-            while(networkInterfaces.hasMoreElements()) {
-                NetworkInterface networkInterface = networkInterfaces.nextElement();
-                
-                // Skip if loopback interface
-                if(networkInterface.isLoopback()) {
-                    continue;
-                }
-                
-                Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
-                
-                while(addresses.hasMoreElements()) {
-                    InetAddress address = addresses.nextElement();
-                    
-                    // Return if IPv4
-                    if(address instanceof Inet4Address) {
-                        return address;
-                    }
-                }
-            }
-        } catch(IOException e) {
-            logger.error("Could not determine local host", e);
-        }
-        
-        return null;
     }
     
     public Configuration getConfiguration() {
