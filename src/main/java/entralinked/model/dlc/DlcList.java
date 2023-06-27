@@ -43,7 +43,7 @@ public class DlcList {
                     if(outputFile.getParentFile() != null) {
                         outputFile.getParentFile().mkdirs();
                     }
-                    System.out.println(outputFile);
+                    
                     // Copy resource to destination
                     if(resource != null) {
                         Files.copy(resource, outputFile.toPath());
