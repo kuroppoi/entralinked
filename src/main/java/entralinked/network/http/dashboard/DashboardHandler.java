@@ -1,6 +1,7 @@
 package entralinked.network.http.dashboard;
 
 import java.util.Collections;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,6 +30,10 @@ import io.javalin.json.JavalinJackson;
  */
 public class DashboardHandler implements HttpHandler {
     
+    private final Set<Integer> availableBlackAndWhiteSpecies = Set.of(
+            505, 507, 510, 511, 513, 515, 519, 523, 525, 527, 529, 531, 533, 535, 538, 539, 542, 545, 546, 548, 
+            550, 553, 556, 558, 559, 561, 564, 569, 572, 575, 578, 580, 583, 587, 588, 594, 596, 600, 605, 607, 
+            610, 613, 616, 618, 619, 621, 622, 624, 626, 628, 630, 631, 632);
     private final DlcList dlcList;
     private final PlayerManager playerManager;
     
@@ -191,8 +196,14 @@ public class DashboardHandler implements HttpHandler {
         }
         
         for(DreamEncounter encounter : request.encounters()) {
-            if(encounter.species() < 1 || encounter.species() > 493) {
+            if(encounter.species() < 1) {
                 return "Species is out of range.";
+            } else if(encounter.species() > 493) {
+                if(!player.getGameVersion().isVersion2()) {
+                    return "Sorry, Generation V Pokémon are exclusive to Black Version 2 and White Version 2.";
+                } else if(!availableBlackAndWhiteSpecies.contains(encounter.species())) {
+                    return "You have selected one or more Pokémon species that cannot be downloaded.";
+                }
             } else if(encounter.move() < 1 || encounter.move() > 559) {
                 return "Move ID is out of range.";
             } else if(encounter.gender() == null) {

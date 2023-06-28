@@ -1,0 +1,34 @@
+body {
+    background-color: #191919;
+    color: white;
+    font-size: 20px;
+}
+
+label {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-spacing: 8px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+td {
+    background-color: #262626;
+    border-radius: 10px;
+    width: 96px;
+    height: 96px;
+    text-align: center;
+}
+
+.root-container {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.big-label {
+    font-size: 36px;
+}

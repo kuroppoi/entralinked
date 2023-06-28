@@ -45,6 +45,13 @@ function clampValue() {
     }
 }
 
+// Other constant stuff
+const AVAILABLE_GENERATION_V_POKEMON = new Array(
+            505, 507, 510, 511, 513, 515, 519, 523, 525, 527, 529, 531, 533, 535, 538, 539, 542, 545, 546, 548, 
+            550, 553, 556, 558, 559, 561, 564, 569, 572, 575, 578, 580, 583, 587, 588, 594, 596, 600, 605, 607, 
+            610, 613, 616, 618, 619, 621, 622, 624, 626, 628, 630, 631, 632); // Defining this 3 times is a brilliant idea.
+
+
 // Local variables
 var encounterTableIndex = -1;
 var itemTableIndex = -1;
@@ -70,9 +77,17 @@ function saveEncounter() {
         return;
     }
     
+    // Check if this species can be downloaded
+    let species = parseInt(ELEMENT_ENCOUNTER_SPECIES.value);
+    
+    if(species > 493 && !AVAILABLE_GENERATION_V_POKEMON.includes(species)) {
+        alert("This Pokémon species cannot be downloaded. Click 'View list' in the encounter form to view a list of available Pokémon.");
+        return;
+    }
+        
     // Create encounter data
     let encounterData = {
-        species: ELEMENT_ENCOUNTER_SPECIES.value,
+        species: species,
         move: ELEMENT_ENCOUNTER_MOVE.value,
         form: ELEMENT_ENCOUNTER_FORM.value,
         gender: ELEMENT_ENCOUNTER_GENDER.value,
@@ -82,16 +97,17 @@ function saveEncounter() {
     // Set form to highest form available if it too great
     let maxForm = 0;
     
-    switch(encounterData.species) {
-        case "201": maxForm = 27; break; // Unown
-        case "386": maxForm = 3; break; // Deoxys
-        case "412":
-        case "413": maxForm = 2; break; // Burmy & Wormadam
-        case "422":
-        case "423": 
-        case "487": maxForm = 1; break; // Shellos, Gastrodon & Giratina
-        case "479": maxForm = 5; break; // Rotom
-        case "493": maxForm = 16; break; // Arceus
+    switch(species) {
+        case 201: maxForm = 27; break; // Unown
+        case 386: maxForm = 3; break; // Deoxys
+        case 412:
+        case 413: maxForm = 2; break; // Burmy & Wormadam
+        case 422:
+        case 423: 
+        case 487: maxForm = 1; break; // Shellos, Gastrodon & Giratina
+        case 479: maxForm = 5; break; // Rotom
+        case 493: maxForm = 16; break; // Arceus
+        case 550: maxForm = 1; break; // Basculin
     }
     
     if(encounterData.form > maxForm) {
@@ -270,6 +286,12 @@ function fetchProfileData() {
         // Update game summary
         profile.gameVersion = gameVersion;
         ELEMENT_GAME_SUMMARY.innerHTML = "Game Card in use: " + gameVersion;
+        
+        // Still don't like this!
+        if(gameVersion.includes("2")) {
+            ELEMENT_ENCOUNTER_SPECIES.max = 649;
+            ELEMENT_ITEM_ID.max = 638;
+        }
         
         // Update dreamer summary
         if(dreamerInfo) {

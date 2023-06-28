@@ -35,6 +35,10 @@ button:active {
     background-color: #333333;
 }
 
+a:link, a:visited {
+    color: white;
+}
+
 .root-container {
     position: absolute;
     left: 50%;
