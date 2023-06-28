@@ -101,12 +101,13 @@ public class UrlEncodedFormParser extends SimpleParserBase {
             _currToken = JsonToken.VALUE_STRING;
             
             // Decode base64 if feature is enabled
+            // Otherwise, decode using URLDecoder.
             if(Feature.BASE64_DECODE_VALUES.enabledIn(formatFeatures)) {
-                parsedString = new String(Base64.getDecoder().decode(
-                        parsedString.replace('*', '=').replace('.', '+').replace('-', '/')), StandardCharsets.ISO_8859_1);
+                context.setCurrentValue(new String(Base64.getDecoder().decode(
+                        parsedString.replace('*', '=').replace('.', '+').replace('-', '/')), StandardCharsets.ISO_8859_1));
+            } else {
+                context.setCurrentValue(URLDecoder.decode(parsedString, StandardCharsets.UTF_8));
             }
-            
-            context.setCurrentValue(URLDecoder.decode(parsedString, StandardCharsets.UTF_8));
             
             if(i != '&') {
                 if(i != -1) {

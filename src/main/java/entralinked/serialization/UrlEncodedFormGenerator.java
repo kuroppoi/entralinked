@@ -98,15 +98,14 @@ public class UrlEncodedFormGenerator extends SimpleGeneratorBase {
             writer.write('=');
         }
         
-        String value = text;
-        
         // Encode value as base64 if feature is enabled
+        // Otherwise, encode using URLEncoder.
         if(Feature.BASE64_ENCODE_VALUES.enabledIn(formatFeatures)) {
-            value = Base64.getEncoder().encodeToString(text.getBytes(StandardCharsets.ISO_8859_1))
-                    .replace('=', '*').replace('+', '.').replace('/', '-');
+            writer.write(Base64.getEncoder().encodeToString(text.getBytes(StandardCharsets.ISO_8859_1))
+                    .replace('=', '*').replace('+', '.').replace('/', '-'));
+        } else {
+            writer.write(URLEncoder.encode(text, StandardCharsets.UTF_8));
         }
-        
-        writer.write(URLEncoder.encode(value, StandardCharsets.UTF_8));
     }
     
     @Override
