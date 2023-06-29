@@ -3,6 +3,8 @@ const AVAILABLE_GENERATION_V_POKEMON = new Array(
             550, 553, 556, 558, 559, 561, 564, 569, 572, 575, 578, 580, 583, 587, 588, 594, 596, 600, 605, 607, 
             610, 613, 616, 618, 619, 621, 622, 624, 626, 628, 630, 631, 632);
 
+const ITEMS_TO_EXCLUDE = new Array(113, 114, 115, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 426, 427);
+
 function fillTable(tableId, rowSize, elementCount, htmlAppender) {
     let tableHTML = "";
     let index = 0;
@@ -49,5 +51,11 @@ function fillTableWithSpecies() {
 }
 
 function fillTableWithItems() {
-    fillTable("item-table", 20, 638, (item) => "<td style='width:48px;height:48px;'><image src='/sprites/items/" + item + ".png'/><br>#" + item + "</td>");
+    fillTable("item-table", 20, 638, (item) => {
+        if(ITEMS_TO_EXCLUDE.includes(item)) {
+            return false;
+        }
+        
+        return "<td style='width:48px;height:48px;'><image src='/sprites/items/" + item + ".png'/><br>#" + item + "</td>"
+    });
 }
