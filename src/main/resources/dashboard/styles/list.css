@@ -9,7 +9,6 @@ label {
 }
 
 table {
-    width: 100%;
     border-spacing: 8px;
     margin-top: 15px;
     margin-bottom: 20px;
@@ -18,15 +17,15 @@ table {
 td {
     background-color: #262626;
     border-radius: 10px;
-    width: 96px;
-    height: 96px;
     text-align: center;
 }
 
 .root-container {
+    display: grid;
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0%);
+    width: 1136; /* Hack-ish */
 }
 
 .big-label {
