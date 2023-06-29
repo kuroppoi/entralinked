@@ -11,23 +11,23 @@ import entralinked.model.pkmn.PkmnInfo;
 public class Player {
     
     private final String gameSyncId;
-    private final GameVersion gameVersion;
     private final List<DreamEncounter> encounters = new ArrayList<>();
     private final List<DreamItem> items = new ArrayList<>();
     private PlayerStatus status;
+    private GameVersion gameVersion;
     private PkmnInfo dreamerInfo;
     private int levelsGained;
     private String cgearSkin;
     private String dexSkin;
     private String musical;
     
-    public Player(String gameSyncId, GameVersion gameVersion) {
+    public Player(String gameSyncId) {
         this.gameSyncId = gameSyncId;
-        this.gameVersion = gameVersion;
     }
     
     public void resetDreamInfo() {
         status = PlayerStatus.AWAKE;
+        gameVersion = null;
         dreamerInfo = null;
         encounters.clear();
         items.clear();
@@ -39,10 +39,6 @@ public class Player {
     
     public String getGameSyncId() {
         return gameSyncId;
-    }
-    
-    public GameVersion getGameVersion() {
-        return gameVersion;
     }
     
     public void setEncounters(Collection<DreamEncounter> encounters) {
@@ -73,6 +69,14 @@ public class Player {
     
     public PlayerStatus getStatus() {
         return status;
+    }
+    
+    public void setGameVersion(GameVersion gameVersion) {
+        this.gameVersion = gameVersion;
+    }
+    
+    public GameVersion getGameVersion() {
+        return gameVersion;
     }
     
     public void setDreamerInfo(PkmnInfo dreamerInfo) {

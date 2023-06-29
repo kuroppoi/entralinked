@@ -16,8 +16,6 @@ import org.apache.logging.log4j.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import entralinked.GameVersion;
-
 /**
  * Manager class for managing {@link Player} information (Global Link users)
  */
@@ -119,7 +117,7 @@ public class PlayerManager {
      * That is, the specified Game Sync ID wasn't already registered and the player data
      * was saved without any errors.
      */
-    public Player registerPlayer(String gameSyncId, GameVersion gameVersion) {
+    public Player registerPlayer(String gameSyncId) {
         // Check for duplicate Game Sync ID
         if(playerMap.containsKey(gameSyncId)) {
             logger.warn("Attempted to register duplicate player {}", gameSyncId);
@@ -127,7 +125,7 @@ public class PlayerManager {
         }
         
         // Construct player object
-        Player player = new Player(gameSyncId, gameVersion);
+        Player player = new Player(gameSyncId);
         player.setStatus(PlayerStatus.AWAKE);
         
         // Try to save player data

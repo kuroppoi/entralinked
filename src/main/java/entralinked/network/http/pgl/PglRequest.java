@@ -7,12 +7,12 @@ import entralinked.GameVersion;
 import entralinked.serialization.GsidDeserializer;
 
 public record PglRequest(
-        @JsonProperty(value = "gsid", required = true) @JsonDeserialize(using = GsidDeserializer.class) String gameSyncId,
-        @JsonProperty(value = "p", required = true)        String type,
-        @JsonProperty(value = "rom", required = true)      int romCode,
-        @JsonProperty(value = "langcode", required = true) int languageCode,
-        @JsonProperty(value = "dreamw", required = true)   int dreamWorld, // Always 1, but what is it for?
-        @JsonProperty(value = "tok", required = true)      String token) {
+        @JsonProperty(value = "gsid") @JsonDeserialize(using = GsidDeserializer.class) String gameSyncId,
+        @JsonProperty(value = "p", required = true)   String type,
+        @JsonProperty(value = "tok", required = true) String token,
+        @JsonProperty(value = "rom")      int romCode,
+        @JsonProperty(value = "langcode") int languageCode,
+        @JsonProperty(value = "dreamw")   int dreamWorld) { // Always 1, but what is it for?
     
     public GameVersion gameVersion() {
         return GameVersion.lookup(romCode(), languageCode());

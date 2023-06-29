@@ -28,6 +28,7 @@ import entralinked.network.http.HttpHandler;
 import entralinked.network.http.HttpRequestHandler;
 import entralinked.serialization.UrlEncodedFormFactory;
 import entralinked.serialization.UrlEncodedFormParser;
+import entralinked.utility.GsidUtility;
 import entralinked.utility.LEOutputStream;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -88,13 +89,6 @@ public class PglHandler implements HttpHandler {
         
         // Deserialize the request
         PglRequest request = mapper.readValue(ctx.queryString(), PglRequest.class);
-        
-        // Check game version
-        if(request.gameVersion() == null) {
-            ctx.status(HttpStatus.BAD_REQUEST);
-            clearTasks(ctx);
-            return;
-        }
         
         // Verify the service session token
         ServiceSession session = userManager.getServiceSession(request.token(), "external");
@@ -294,6 +288,7 @@ public class PglHandler implements HttpHandler {
             case "savedata.upload" -> this::handleUploadSaveData; 
             case "savedata.download.finish" -> this::handleDownloadSaveDataFinish;
             case "account.create.upload" -> this::handleCreateAccount;
+            case "account.createdata" -> this::handleCreateData;
             default -> throw new IllegalArgumentException("Invalid POST request type: " + request.type());
         };
         
@@ -335,11 +330,10 @@ public class PglHandler implements HttpHandler {
         // Prepare response
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
         
-        // Check if player exists, has the same game version and does not already have a Pokémon tucked in
+        // Check if the player exists and does not already have a Pokémon tucked in
         Player player = playerManager.getPlayer(request.gameSyncId());
         
-        if(player == null || player.getGameVersion() != request.gameVersion()
-                || (player.getStatus() != PlayerStatus.AWAKE && !configuration.allowOverwritingPlayerDreamInfo())) {
+        if(player == null || (player.getStatus() != PlayerStatus.AWAKE && !configuration.allowOverwritingPlayerDreamInfo())) {
             // Skip everything
             ServletInputStream inputStream = ctx.req().getInputStream();
             
@@ -369,6 +363,7 @@ public class PglHandler implements HttpHandler {
         
         // Update and save player information
         player.setStatus(PlayerStatus.SLEEPING);
+        player.setGameVersion(request.gameVersion());
         player.setDreamerInfo(dreamerInfo);
         
         if(!playerManager.savePlayer(player)) {
@@ -394,7 +389,37 @@ public class PglHandler implements HttpHandler {
         
         // Prepare response
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
-        String gameSyncId = request.gameSyncId();
+        
+        // Make sure Game Sync ID is present
+        if(request.gameSyncId() == null) {
+            writeStatusCode(outputStream, 1); // Unauthorized
+            return;
+        }
+        
+        // Check if player doesn't exist already
+        if(playerManager.doesPlayerExist(request.gameSyncId())) {
+            writeStatusCode(outputStream, 2); // Duplicate Game Sync ID
+            return;
+        }
+        
+        // Try to register player
+        if(playerManager.registerPlayer(request.gameSyncId()) == null) {
+            writeStatusCode(outputStream, 3); // Registration error
+            return;
+        }
+        
+        // Write status code
+        writeStatusCode(outputStream, 0);
+    }
+    
+    /**
+     * POST handler for {@code /dsio/gw?p=account.createdata}
+     * 
+     * Seems to be a funny Japanese version quirk
+     */
+    private void handleCreateData(PglRequest request, Context ctx) throws IOException {
+        LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
+        String gameSyncId = GsidUtility.stringifyGameSyncId(Integer.parseInt(ctx.body().replace("\u0000", ""))); // So quirky
         
         // Check if player doesn't exist already
         if(playerManager.doesPlayerExist(gameSyncId)) {
@@ -403,7 +428,7 @@ public class PglHandler implements HttpHandler {
         }
         
         // Try to register player
-        if(playerManager.registerPlayer(gameSyncId, request.gameVersion()) == null) {
+        if(playerManager.registerPlayer(gameSyncId) == null) {
             writeStatusCode(outputStream, 3); // Registration error
             return;
         }

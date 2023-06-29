@@ -67,6 +67,11 @@ public class DlsHandler implements HttpHandler {
      * POST handler for {@code /download action=list}
      */
     private void handleRetrieveDlcList(DlsRequest request, Context ctx) throws IOException {
+        String gameCode = switch(request.dlcGameCode()) {
+            case "IRAJ" -> "IRAO";
+            default -> request.dlcGameCode();
+        };
+        
         // Map to generic type, I doubt there is a real difference between the language codes anyway.
         String type = switch(request.dlcType()) {
             case "CGEAR_E", "CGEAR_F", "CGEAR_I", "CGEAR_G", "CGEAR_S", "CGEAR_J", "CGEAR_K" -> "CGEAR";
@@ -77,7 +82,7 @@ public class DlsHandler implements HttpHandler {
         };
         
         // TODO NOTE: I assume that in a conventional implementation, certain DLC attributes may be omitted from the request.
-        ctx.result(dlcList.getDlcListString(dlcList.getDlcList(request.dlcGameCode(), type, request.dlcIndex())));
+        ctx.result(dlcList.getDlcListString(dlcList.getDlcList(gameCode, type, request.dlcIndex())));
     }
     
     /**

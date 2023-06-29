@@ -33,8 +33,9 @@ public record PlayerDto(
      * Constructs a new {@link Player} object using the data in this DTO.
      */
     public Player toPlayer() {
-        Player player = new Player(gameSyncId, gameVersion);
+        Player player = new Player(gameSyncId);
         player.setStatus(status);
+        player.setGameVersion(gameVersion);
         player.setDreamerInfo(dreamerInfo);
         player.setCGearSkin(cgearSkin);
         player.setDexSkin(dexSkin);
