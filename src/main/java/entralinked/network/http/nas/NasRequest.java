@@ -1,7 +1,6 @@
 package entralinked.network.http.nas;
 
 import java.time.LocalDateTime;
-import java.time.MonthDay;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -24,8 +23,8 @@ public record NasRequest(
         @JsonProperty("bssid")   String bssid,
         @JsonProperty("apinfo")  String accessPointInfo,
         @JsonProperty("devname") String deviceName,
+        @JsonProperty("birth")   String birthDate, // Hex, apparently
         @JsonProperty("devtime") @JsonFormat(shape = Shape.STRING, pattern = "yyMMddHHmmss") LocalDateTime deviceTime,
-        @JsonProperty("birth")   @JsonFormat(shape = Shape.STRING, pattern = "MMdd")         MonthDay birthDate,
         
         // Request-specific info
         @JsonProperty(value = "action", required = true) String action,
