@@ -204,7 +204,7 @@ public class DashboardHandler implements HttpHandler {
                 } else if(!availableBlackAndWhiteSpecies.contains(encounter.species())) {
                     return "You have selected one or more Pokémon species that cannot be downloaded.";
                 }
-            } else if(encounter.move() < 1 || encounter.move() > 559) {
+            } else if(encounter.move() < 0 || encounter.move() > 559) {
                 return "Move ID is out of range.";
             } else if(encounter.gender() == null) {
                 return "Gender is undefined.";
