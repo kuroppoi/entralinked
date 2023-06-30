@@ -4,6 +4,10 @@ body {
     font-size: 20px;
 }
 
+img {
+    image-rendering: pixelated;
+}
+
 label {
     text-align: center;
 }
