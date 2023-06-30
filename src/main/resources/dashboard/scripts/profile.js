@@ -310,7 +310,7 @@ function fetchProfileData() {
             ELEMENT_DREAMER_NAME.innerHTML = nickname;
             ELEMENT_DREAMER_GENDER.innerHTML = stringToWord(gender);
             ELEMENT_DREAMER_TRAINER.innerHTML = trainerName;
-            ELEMENT_DREAMER_TRAINER_ID.innerHTML = trainerId;
+            ELEMENT_DREAMER_TRAINER_ID.innerHTML = ("0000" + trainerId).slice(-5);
             ELEMENT_DREAMER_LEVEL.innerHTML = level;
         }
         
