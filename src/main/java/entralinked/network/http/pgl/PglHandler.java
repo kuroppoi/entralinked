@@ -3,6 +3,7 @@ package entralinked.network.http.pgl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +18,7 @@ import entralinked.Entralinked;
 import entralinked.model.dlc.DlcList;
 import entralinked.model.pkmn.PkmnInfo;
 import entralinked.model.pkmn.PkmnInfoReader;
+import entralinked.model.player.DreamDecor;
 import entralinked.model.player.DreamEncounter;
 import entralinked.model.player.DreamItem;
 import entralinked.model.player.Player;
@@ -46,6 +48,12 @@ public class PglHandler implements HttpHandler {
     private static final String password = "2Phfv9MY"; // Best security in the world
     private final ObjectMapper mapper = new ObjectMapper(new UrlEncodedFormFactory()
             .disable(UrlEncodedFormParser.Feature.BASE64_DECODE_VALUES));
+    private final List<DreamDecor> decorList = List.of(
+            new DreamDecor(1, "+----------+"),
+            new DreamDecor(2, "Thank you"), 
+            new DreamDecor(3, "for using"),
+            new DreamDecor(4, "Entralinked!"),
+            new DreamDecor(5, "+----------+"));
     private final Set<Integer> sleepyList = new HashSet<>();
     private final Configuration configuration;
     private final DlcList dlcList;
@@ -222,7 +230,7 @@ public class PglHandler implements HttpHandler {
         outputStream.write(dlcList.getDlcIndex(player.getMusical()));
         outputStream.write(dlcList.getDlcIndex(player.getCGearSkin()));
         outputStream.write(dlcList.getDlcIndex(player.getDexSkin()));
-        outputStream.write(0); // Unknown
+        outputStream.write(decorList.isEmpty() ? 0 : 1); // Seems to be a flag for indicating whether or not decor data is present
         outputStream.write(0); // Must be zero?
         
         // Write item IDs
@@ -240,6 +248,23 @@ public class PglHandler implements HttpHandler {
         
         // Write quantity padding
         outputStream.writeBytes(0, (20 - items.size()));
+        
+        // Decor data -- copied to 0x1D420 in the save file
+        // Need to send 5 entries or nothing will happen
+        // After decor is selected in Nacrene City, the *index* of it (default: 0x7F) will be saved to 0x1D4A6 in the save file.
+        for(DreamDecor decor : decorList) {
+            byte[] nameBytes = decor.name().getBytes(StandardCharsets.UTF_16LE);
+            
+            // If any ID is 0x7E it will not work. It also appears as the default in the save file.
+            outputStream.writeShort(decor.id());
+            
+            // Name can't have more than 12 characters
+            outputStream.write(nameBytes, 0, Math.min(24, nameBytes.length));
+            outputStream.writeBytes(-1, 24 - nameBytes.length);
+        }
+        
+        // Write decor padding
+        outputStream.writeBytes(0, (5 - decorList.size()) * 26);
     }
     
     /**
