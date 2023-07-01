@@ -30,9 +30,8 @@ button:active {
 }
 
 .root-container {
-    position: absolute;
-    left: 50%;
-    top: 25%;
-    transform: translate(-50%, 0%);
-    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }

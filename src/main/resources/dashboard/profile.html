@@ -6,125 +6,127 @@
   <body onload="fetchProfileData()">
     <div id="main-container" class="root-container" style="display:none;">
       <div>
-        <label id="game-summary" class="header-text"></label>
-      </div>
-      <div>
-        <!-- Dreamer Summary -->
-        <label>Tucked-in Pokémon Summary</label><br>
-        <table id="dreamer-summary" class="dreamer-summary">
-          <tr>
-            <td id="dreamer-sprite" class="dreamer-sprite" rowspan="5">
-              <image src="/sprites/pokemon/normal/0.png"/>
-            </td>
-          </tr>
-          <tr>
-            <th>Species</th>
-            <td id="dreamer-species"></td>
-            <th>Nature</th>
-            <td id="dreamer-nature"></td>
-          </tr>
-          <tr>
-            <th>Name</th>
-            <td id="dreamer-name"></td>
-            <th>Gender</th>
-            <td id="dreamer-gender"></td>
-          </tr>
-          <tr>
-            <th>Trainer</th>
-            <td id="dreamer-trainer"></td>
-            <th>Level</th>
-            <td id="dreamer-level"></td>
-          </tr>
-          <tr>
-            <th>Trainer ID</th>
-            <td id="dreamer-trainer-id"></td>
-          </tr>
-        </table>
-      </div>
-      <div>
-        <!-- Entree Forest Encounter Configuration -->
-        <label>Entree Forest Encounters (Max. 10)</label><br>
         <div>
-          <table id="encounter-table" class="encounter-image-table">
+          <label id="game-summary" class="header-text"></label>
+        </div>
+        <div>
+          <!-- Dreamer Summary -->
+          <label>Tucked-in Pokémon Summary</label><br>
+          <table id="dreamer-summary" class="dreamer-summary">
             <tr>
-              <td><a id="encounter0" href="#configureEncounter" onclick="configureEncounter(0)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
-              <td><a id="encounter1" href="#configureEncounter" onclick="configureEncounter(1)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
-              <td><a id="encounter2" href="#configureEncounter" onclick="configureEncounter(2)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
-              <td><a id="encounter3" href="#configureEncounter" onclick="configureEncounter(3)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
-              <td><a id="encounter4" href="#configureEncounter" onclick="configureEncounter(4)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+              <td id="dreamer-sprite" class="dreamer-sprite" rowspan="5">
+                <image src="/sprites/pokemon/normal/0.png"/>
+              </td>
             </tr>
             <tr>
-              <td><a id="encounter5" href="#configureEncounter" onclick="configureEncounter(5)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
-              <td><a id="encounter6" href="#configureEncounter" onclick="configureEncounter(6)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
-              <td><a id="encounter7" href="#configureEncounter" onclick="configureEncounter(7)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
-              <td><a id="encounter8" href="#configureEncounter" onclick="configureEncounter(8)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
-              <td><a id="encounter9" href="#configureEncounter" onclick="configureEncounter(9)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+              <th>Species</th>
+              <td id="dreamer-species"></td>
+              <th>Nature</th>
+              <td id="dreamer-nature"></td>
+            </tr>
+            <tr>
+              <th>Name</th>
+              <td id="dreamer-name"></td>
+              <th>Gender</th>
+              <td id="dreamer-gender"></td>
+            </tr>
+            <tr>
+              <th>Trainer</th>
+              <td id="dreamer-trainer"></td>
+              <th>Level</th>
+              <td id="dreamer-level"></td>
+            </tr>
+            <tr>
+              <th>Trainer ID</th>
+              <td id="dreamer-trainer-id"></td>
             </tr>
           </table>
         </div>
-      </div>
-      <div>
-        <!-- Item Configuration -->
-        <label>Items (Max. 20)</label><br>
         <div>
-          <table id="item-table" class="item-table">
-            <tr>
-              <td><a id="item0" href="#configureItem" onclick="configureItem(0)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item1" href="#configureItem" onclick="configureItem(1)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item2" href="#configureItem" onclick="configureItem(2)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item3" href="#configureItem" onclick="configureItem(3)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item4" href="#configureItem" onclick="configureItem(4)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item5" href="#configureItem" onclick="configureItem(5)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item6" href="#configureItem" onclick="configureItem(6)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item7" href="#configureItem" onclick="configureItem(7)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item8" href="#configureItem" onclick="configureItem(8)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item9" href="#configureItem" onclick="configureItem(9)"><image src="/sprites/items/0.png"/></a></td>
-            </tr>
-            <tr>
-              <td><a id="item10" href="#configureItem" onclick="configureItem(10)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item11" href="#configureItem" onclick="configureItem(11)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item12" href="#configureItem" onclick="configureItem(12)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item13" href="#configureItem" onclick="configureItem(13)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item14" href="#configureItem" onclick="configureItem(14)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item15" href="#configureItem" onclick="configureItem(15)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item16" href="#configureItem" onclick="configureItem(16)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item17" href="#configureItem" onclick="configureItem(17)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item18" href="#configureItem" onclick="configureItem(18)"><image src="/sprites/items/0.png"/></a></td>
-              <td><a id="item19" href="#configureItem" onclick="configureItem(19)"><image src="/sprites/items/0.png"/></a></td>
-            </tr>
-          </table>
-        </div>
-      </div>
-      <div>
-        <!-- Misc Configurations -->
-        <div class="grid-container">
+          <!-- Entree Forest Encounter Configuration -->
+          <label>Entree Forest Encounters (Max. 10)</label><br>
           <div>
-            <label>C-Gear Skin</label>
-            <select id="cgear-skin">
-              <option value="none">Do not change</option>
-            </select>
-          </div>
-          <div>
-            <label>Pokédex Skin</label>
-            <select id="dex-skin">
-              <option value="none">Do not change</option>
-            </select>
-          </div>
-          <div>
-            <label>Musical Show</label>
-            <select id="musical">
-              <option value="none">Do not change</option>
-            </select>
-          </div>
-          <div>
-            <label>Level Gain</label>
-            <input id="level-gain-input" type="number" value="0" min="0" max="99"/>
+            <table id="encounter-table" class="encounter-image-table">
+              <tr>
+                <td><a id="encounter0" href="#configureEncounter" onclick="configureEncounter(0)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+                <td><a id="encounter1" href="#configureEncounter" onclick="configureEncounter(1)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+                <td><a id="encounter2" href="#configureEncounter" onclick="configureEncounter(2)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+                <td><a id="encounter3" href="#configureEncounter" onclick="configureEncounter(3)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+                <td><a id="encounter4" href="#configureEncounter" onclick="configureEncounter(4)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+              </tr>
+              <tr>
+                <td><a id="encounter5" href="#configureEncounter" onclick="configureEncounter(5)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+                <td><a id="encounter6" href="#configureEncounter" onclick="configureEncounter(6)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+                <td><a id="encounter7" href="#configureEncounter" onclick="configureEncounter(7)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+                <td><a id="encounter8" href="#configureEncounter" onclick="configureEncounter(8)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+                <td><a id="encounter9" href="#configureEncounter" onclick="configureEncounter(9)"><image src="/sprites/pokemon/normal/0.png"/></a></td>
+              </tr>
+            </table>
           </div>
         </div>
-      </div>
-      <div>
+        <div>
+          <!-- Item Configuration -->
+          <label>Items (Max. 20)</label><br>
+          <div>
+            <table id="item-table" class="item-table">
+              <tr>
+                <td><a id="item0" href="#configureItem" onclick="configureItem(0)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item1" href="#configureItem" onclick="configureItem(1)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item2" href="#configureItem" onclick="configureItem(2)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item3" href="#configureItem" onclick="configureItem(3)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item4" href="#configureItem" onclick="configureItem(4)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item5" href="#configureItem" onclick="configureItem(5)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item6" href="#configureItem" onclick="configureItem(6)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item7" href="#configureItem" onclick="configureItem(7)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item8" href="#configureItem" onclick="configureItem(8)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item9" href="#configureItem" onclick="configureItem(9)"><image src="/sprites/items/0.png"/></a></td>
+              </tr>
+              <tr>
+                <td><a id="item10" href="#configureItem" onclick="configureItem(10)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item11" href="#configureItem" onclick="configureItem(11)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item12" href="#configureItem" onclick="configureItem(12)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item13" href="#configureItem" onclick="configureItem(13)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item14" href="#configureItem" onclick="configureItem(14)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item15" href="#configureItem" onclick="configureItem(15)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item16" href="#configureItem" onclick="configureItem(16)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item17" href="#configureItem" onclick="configureItem(17)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item18" href="#configureItem" onclick="configureItem(18)"><image src="/sprites/items/0.png"/></a></td>
+                <td><a id="item19" href="#configureItem" onclick="configureItem(19)"><image src="/sprites/items/0.png"/></a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div>
+          <!-- Misc Configurations -->
+          <div class="grid-container">
+            <div>
+              <label>C-Gear Skin</label>
+              <select id="cgear-skin">
+                <option value="none">Do not change</option>
+              </select>
+            </div>
+            <div>
+              <label>Pokédex Skin</label>
+              <select id="dex-skin">
+                <option value="none">Do not change</option>
+              </select>
+            </div>
+            <div>
+              <label>Musical Show</label>
+              <select id="musical">
+                <option value="none">Do not change</option>
+              </select>
+            </div>
+            <div>
+              <label>Level Gain</label>
+              <input id="level-gain-input" type="number" value="0" min="0" max="99"/>
+            </div>
+          </div>
+        </div>
+        <div>
           <button id="save" class="big-button" onclick="postProfileData()">Save Profile</button>
           <button id="logout" class="big-button" onclick="postLogout()">Log Out</button>
+        </div>
       </div>
 	</div>
     <!-- Entree Forest Encounter Configuration Form -->

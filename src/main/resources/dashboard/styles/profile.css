@@ -40,11 +40,13 @@ a:link, a:visited {
 }
 
 .root-container {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.root-container div {
     max-width: 512px;
 }
 
