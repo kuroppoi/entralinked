@@ -21,6 +21,14 @@ const ELEMENT_ENCOUNTER_ANIMATION = document.getElementById("encounter-form-anim
 const ELEMENT_ITEM_ID = document.getElementById("item-form-id");
 const ELEMENT_ITEM_QUANTITY = document.getElementById("item-form-quantity");
 
+// Join Avenue Visitor form elements
+const ELEMENT_VISITOR_NAME = document.getElementById("visitor-form-name");
+const ELEMENT_VISITOR_TYPE = document.getElementById("visitor-form-type");
+const ELEMENT_VISITOR_SHOP_TYPE = document.getElementById("visitor-form-shop-type");
+const ELEMENT_VISITOR_GAME = document.getElementById("visitor-form-game");
+const ELEMENT_VISITOR_PERSONALITY = document.getElementById("visitor-form-personality");
+const ELEMENT_VISITOR_DREAMER = document.getElementById("visitor-form-dreamer");
+
 // Misc input elements
 const ELEMENT_CGEAR_SKIN_INPUT = document.getElementById("cgear-skin");
 const ELEMENT_DEX_SKIN_INPUT = document.getElementById("dex-skin");
@@ -33,6 +41,8 @@ ELEMENT_ENCOUNTER_MOVE.addEventListener("change", clampValue);
 ELEMENT_ITEM_ID.addEventListener("change", clampValue);
 ELEMENT_ITEM_QUANTITY.addEventListener("change", clampValue);
 ELEMENT_LEVEL_GAIN_INPUT.addEventListener("change", clampValue);
+ELEMENT_VISITOR_PERSONALITY.addEventListener("change", clampValue);
+ELEMENT_VISITOR_DREAMER.addEventListener("change", clampValue);
 
 function clampValue() {
     let value = parseInt(this.value);
@@ -55,9 +65,11 @@ const AVAILABLE_GENERATION_V_POKEMON = new Array(
 // Local variables
 var encounterTableIndex = -1;
 var itemTableIndex = -1;
+var visitorTableIndex = -1;
 var profile = {
     encounters: [],
-    items: []
+    items: [],
+    visitors: []
 };
 
 function configureEncounter(index) {
@@ -157,6 +169,96 @@ function updateEncounterCell(index) {
 
 function closeEncounterForm() {
     encounterTableIndex = -1;
+    window.location.href = "#";
+}
+
+function configureVisitor(index) {
+    visitorTableIndex = Math.min(12, Math.min(index, profile.visitors.length));
+    
+    // Load existing settings
+    let visitor = profile.visitors[visitorTableIndex];
+    ELEMENT_VISITOR_NAME.value = visitor ? visitor.name : "";
+    ELEMENT_VISITOR_TYPE.value = visitor ? visitor.type : "ACE_TRAINER_MALE";
+    ELEMENT_VISITOR_SHOP_TYPE.value = visitor ? visitor.shopType : "RAFFLE";
+    ELEMENT_VISITOR_GAME.value = visitor ? visitor.gameVersion : "BLACK_ENGLISH";
+    ELEMENT_VISITOR_PERSONALITY.value = visitor ? visitor.personality : 0;
+    ELEMENT_VISITOR_DREAMER.value = visitor ? visitor.dreamerSpecies : 1;
+}
+
+function saveVisitor() {
+    if(visitorTableIndex < 0) {
+        return;
+    }
+    
+    // Check if name is empty
+    if(ELEMENT_VISITOR_NAME.value == "") {
+        alert("Please enter a name for this visitor.");
+        return;
+    }
+    
+    // Check if name is duplicate
+    for(i in profile.visitors) {
+        if(i != visitorTableIndex) {
+            let visitor = profile.visitors[i];
+            
+            if(visitor.name == ELEMENT_VISITOR_NAME.value) {
+                alert("A visitor with this name already exists!")
+                return;
+            }
+        }
+    }
+    
+    // I'll make country codes configurable later... probably
+    let visitorData = {
+        name: ELEMENT_VISITOR_NAME.value,
+        type: ELEMENT_VISITOR_TYPE.value,
+        shopType: ELEMENT_VISITOR_SHOP_TYPE.value,
+        gameVersion: ELEMENT_VISITOR_GAME.value,
+        countryCode: 220, // United States
+        stateProvinceCode: 48, // Washington, D.C.
+        personality: ELEMENT_VISITOR_PERSONALITY.value,
+        dreamerSpecies: ELEMENT_VISITOR_DREAMER.value
+    }
+    
+    profile.visitors[visitorTableIndex] = visitorData;
+    updateVisitorCell(visitorTableIndex);
+    closeVisitorForm();
+}
+
+function removeVisitor() {
+    if(visitorTableIndex < 0) {
+        return;
+    }
+    
+    let oldLength = profile.visitors.length;
+    profile.visitors.splice(visitorTableIndex, 1);
+    
+    for(let i = visitorTableIndex; i < oldLength; i++) {
+        updateVisitorCell(i);
+    }
+    
+    closeVisitorForm();
+}
+
+function updateVisitorCell(index) {
+    let cell = document.getElementById("visitor" + index);
+    let visitor = profile.visitors[index];
+    let spriteBase = "/sprites/trainers/";
+    let spriteImage = spriteBase + "none.png";
+    
+    if(visitor) {
+        let newSpriteImage = spriteBase + visitor.type.toLowerCase() + ".png";
+        
+        if(checkURL(newSpriteImage)){
+            spriteImage = newSpriteImage;
+        }
+    }
+    
+    cell.innerHTML = "<img src='" + spriteImage + "'/>";
+}
+
+function closeVisitorForm() {
+    visitorTableIndex = -1;
     window.location.href = "#";
 }
 
@@ -278,6 +380,7 @@ function fetchProfileData() {
         let dreamerInfo = response["dreamerInfo"];
         let encounters = response["encounters"];
         let items = response["items"];
+        let visitors = response["avenueVisitors"];
         let cgearSkin = response["cgearSkin"];
         let dexSkin = response["dexSkin"];
         let musical = response["musical"];
@@ -291,6 +394,9 @@ function fetchProfileData() {
         if(gameVersion.includes("2")) {
             ELEMENT_ENCOUNTER_SPECIES.max = 649;
             ELEMENT_ITEM_ID.max = 638;
+            
+            // Show Join Avenue visitor table
+            document.getElementById("visitor-table-container").style.display = "block";
         }
         
         // Update dreamer summary
@@ -332,6 +438,15 @@ function fetchProfileData() {
             }
         }   
         
+        // Update Join Avenue visitor table
+        if(visitors) {
+            profile.visitors = visitors;
+            
+            for(let i = 0; i < 12; i++) {
+                updateVisitorCell(i);
+            }
+        }
+        
         // Update selected DLC
         profile.cgearSkin = cgearSkin ? cgearSkin : "none";
         profile.dexSkin = dexSkin ? dexSkin : "none";
@@ -342,7 +457,7 @@ function fetchProfileData() {
         ELEMENT_LEVEL_GAIN_INPUT.value = levelsGained;
         
         // Show div
-        document.getElementById("main-container").style.display = "grid";
+        document.getElementById("main-container").style.display = "flex";
     });
 }
 
@@ -351,6 +466,7 @@ function postProfileData() {
     let profileData = {
         encounters: profile.encounters,
         items: profile.items,
+        avenueVisitors: profile.visitors,
         cgearSkin: ELEMENT_CGEAR_SKIN_INPUT.value,
         dexSkin: ELEMENT_DEX_SKIN_INPUT.value,
         musical: ELEMENT_MUSICAL_INPUT.value,

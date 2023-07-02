@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import entralinked.Configuration;
 import entralinked.Entralinked;
+import entralinked.model.avenue.AvenueVisitor;
 import entralinked.model.dlc.DlcList;
 import entralinked.model.pkmn.PkmnInfo;
 import entralinked.model.pkmn.PkmnInfoReader;
@@ -265,6 +266,44 @@ public class PglHandler implements HttpHandler {
         
         // Write decor padding
         outputStream.writeBytes(0, (5 - decorList.size()) * 26);
+        outputStream.writeShort(0); // ?
+        
+        // Join Avenue visitor data -- copied in parts to 0x2422C in the save file.
+        // Black Version 2 and White Version 2 only.
+        if(player.getGameVersion().isVersion2()) {
+            List<AvenueVisitor> avenueVisitors = player.getAvenueVisitors();
+            
+            for(AvenueVisitor visitor : avenueVisitors) {
+                // Write visitor name + padding. Names cannot be duplicate.
+                byte[] nameBytes = visitor.name().getBytes(StandardCharsets.UTF_16LE);
+                outputStream.write(nameBytes, 0, Math.min(14, nameBytes.length));
+                outputStream.writeBytes(-1, 14 - nameBytes.length);
+                
+                // Full visitor type consists of a trainer class and what I call a 'personality' index
+                // that, along with the trainer class, determines which phrases the visitor uses.
+                // The shope type is calculated in such an odd manner because for some reason,
+                // the 'starting' index of the shop type used increases by 2 for each visitor type.
+                // For example, if the visitor type is '0', then shop type '0' would be a raffle.
+                // However, if the visitor type is '2', then shop type '0' results in a dojo instead.
+                int visitorType = visitor.type().getClientId() + visitor.personality() * 8;
+                outputStream.writeShort(-1); // Does nothing, seems to be read as part of the name.
+                outputStream.write(visitorType);
+                outputStream.write(visitor.shopType().ordinal() + (7 - visitorType * 2 % 7));
+                outputStream.writeShort(0); // Does nothing
+                outputStream.writeInt(1); // [20] Ignores if 0
+                outputStream.write(visitor.countryCode());
+                outputStream.write(visitor.stateProvinceCode());
+                outputStream.write(0); // [26] Ignores if 1
+                outputStream.write(visitor.gameVersion().getRomCode()); // Affects shop stock
+                outputStream.write(visitor.type().isFemale() ? 1 : 0);
+                outputStream.write(0); // [29] Does.. something
+                outputStream.writeShort(visitor.dreamerSpecies());
+            }
+            
+            // Write visitor padding
+            outputStream.writeBytes(0, (12 - avenueVisitors.size()) * 32);
+            outputStream.writeInt(0); // 672 is the total -- there shouldn't be anything left after this. Hooray!
+        }
     }
     
     /**

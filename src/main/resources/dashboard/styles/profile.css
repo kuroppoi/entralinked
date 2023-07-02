@@ -47,7 +47,7 @@ a:link, a:visited {
 }
 
 .root-container div {
-    max-width: 512px;
+    max-width: 532px;
 }
 
 .grid-container {
@@ -130,7 +130,7 @@ a:link, a:visited {
     top: 25%;
     transform: translate(-50%, 0%);
     padding: 20px;
-    width: 300px;
+    width: 500px;
 }
 
 .encounter-image-table {
@@ -169,6 +169,22 @@ a:link, a:visited {
     display: block;
     color: inherit;
     text-decoration: none;
+}
+
+.visitor-table {
+    width: calc(100% + 16px);
+    border-spacing: 8px;
+    margin-left: -8px;
+    margin-top: -4px;
+    margin-bottom: 14px;
+}
+
+.visitor-table td {
+    background-color: #262626;
+    border-radius: 10px;
+    width: 80px;
+    height: 80px;
+    text-align: center;
 }
 
 .big-button {

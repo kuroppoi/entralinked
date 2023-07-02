@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import entralinked.GameVersion;
+import entralinked.model.avenue.AvenueVisitor;
 import entralinked.model.pkmn.PkmnInfo;
 
 public class Player {
@@ -13,6 +14,7 @@ public class Player {
     private final String gameSyncId;
     private final List<DreamEncounter> encounters = new ArrayList<>();
     private final List<DreamItem> items = new ArrayList<>();
+    private final List<AvenueVisitor> avenueVisitors = new ArrayList<>();
     private PlayerStatus status;
     private GameVersion gameVersion;
     private PkmnInfo dreamerInfo;
@@ -31,6 +33,7 @@ public class Player {
         dreamerInfo = null;
         encounters.clear();
         items.clear();
+        avenueVisitors.clear();
         levelsGained = 0;
         cgearSkin = null;
         dexSkin = null;
@@ -61,6 +64,17 @@ public class Player {
     
     public List<DreamItem> getItems() {
         return Collections.unmodifiableList(items);
+    }
+    
+    public void setAvenueVisitors(Collection<AvenueVisitor> avenueVisitors) {
+        if(avenueVisitors.size() <= 12) {
+            this.avenueVisitors.clear();
+            this.avenueVisitors.addAll(avenueVisitors);
+        }
+    }
+    
+    public List<AvenueVisitor> getAvenueVisitors() {
+        return Collections.unmodifiableList(avenueVisitors);
     }
     
     public void setStatus(PlayerStatus status) {

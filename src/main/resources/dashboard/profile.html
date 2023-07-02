@@ -96,6 +96,30 @@
             </table>
           </div>
         </div>
+        <div id="visitor-table-container" style="display:none;">
+        <!-- Join Avenue Visitor Configuration -->
+          <label>Join Avenue Visitors (Max. 12)</label><br>
+          <div>
+            <table id="visitor-table" class="visitor-table">
+              <tr>
+                <td><a id="visitor0" href="#configureVisitor" onclick="configureVisitor(0)"><image src="/sprites/trainers/none.png"/></a></td>
+                <td><a id="visitor1" href="#configureVisitor" onclick="configureVisitor(1)"><image src="/sprites/trainers/none.png"/></a></td>
+                <td><a id="visitor2" href="#configureVisitor" onclick="configureVisitor(2)"><image src="/sprites/trainers/none.png"/></a></td>
+                <td><a id="visitor3" href="#configureVisitor" onclick="configureVisitor(3)"><image src="/sprites/trainers/none.png"/></a></td>
+                <td><a id="visitor4" href="#configureVisitor" onclick="configureVisitor(4)"><image src="/sprites/trainers/none.png"/></a></td>
+                <td><a id="visitor5" href="#configureVisitor" onclick="configureVisitor(5)"><image src="/sprites/trainers/none.png"/></a></td>
+              </tr>
+              <tr>
+                <td><a id="visitor6" href="#configureVisitor" onclick="configureVisitor(6)"><image src="/sprites/trainers/none.png"/></a></td>
+                <td><a id="visitor7" href="#configureVisitor" onclick="configureVisitor(7)"><image src="/sprites/trainers/none.png"/></a></td>
+                <td><a id="visitor8" href="#configureVisitor" onclick="configureVisitor(8)"><image src="/sprites/trainers/none.png"/></a></td>
+                <td><a id="visitor9" href="#configureVisitor" onclick="configureVisitor(9)"><image src="/sprites/trainers/none.png"/></a></td>
+                <td><a id="visitor10" href="#configureVisitor" onclick="configureVisitor(10)"><image src="/sprites/trainers/none.png"/></a></td>
+                <td><a id="visitor11" href="#configureVisitor" onclick="configureVisitor(11)"><image src="/sprites/trainers/none.png"/></a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
         <div>
           <!-- Misc Configurations -->
           <div class="grid-container">
@@ -128,7 +152,7 @@
           <button id="logout" class="big-button" onclick="postLogout()">Log Out</button>
         </div>
       </div>
-	</div>
+	  </div>
     <!-- Entree Forest Encounter Configuration Form -->
     <div id="configureEncounter" class="popup">
       <div class="content">
@@ -174,6 +198,58 @@
         </form>
         <button class="big-button" onclick="saveItem()">Confirm</button>
         <button class="big-button" onclick="removeItem()">Remove</button>
+      </div>
+    </div>
+    <!-- Join Avenue Visitor Configuration Form -->
+    <div id="configureVisitor" class="popup">
+      <div class="content">
+        <button class="close-button" onclick="closeVisitorForm()">X</button>
+        <form id="visitor-form">
+          <label for="visitor-form-name">Name (Max. 7 characters)</label>
+          <input id="visitor-form-name" name="name" placeholder="Trainer" maxlength="7"/>
+          <label for="visitor-form-type">Trainer Class</label>
+          <select id="visitor-form-type" name="type" value="ACE_TRAINER_MALE">
+            <option value="YOUNGSTER">Youngster</option>
+            <option value="LASS">Lass</option>
+            <option value="ACE_TRAINER_MALE">Ace Trainer (Male)</option>
+            <option value="ACE_TRAINER_FEMALE">Ace Trainer (Female)</option>
+            <option value="RANGER_MALE">Pokémon Ranger (Male)</option>
+            <option value="RANGER_FEMALE">Pokémon Ranger (Female)</option>
+            <option value="BREEDER_MALE">Pokémon Breeder (Male)</option>
+            <option value="BREEDER_FEMALE">Pokémon Breeder (Female)</option>
+            <option value="SCIENTIST_MALE">Scientist (Male)</option>
+            <option value="SCIENTIST_FEMALE">Scientist (Female)</option>
+            <option value="HIKER">Hiker</option>
+            <option value="PARASOL_LADY">Parasol Lady</option>
+            <option value="ROUGHNECK">Roughneck</option>
+            <option value="NURSE">Nurse</option>
+            <option value="PRESCHOOLER_MALE">Preschooler (Male)</option>
+            <option value="PRESCHOOLER_FEMALE">Preschooler (Female)</option>
+          </select>
+          <label for="visitor-form-shop-type">Shop Type</label>
+          <select id="visitor-form-shop-type" name="shopType" value="RAFFLE">
+            <option value="RAFFLE">Raffle Shop</option>
+            <option value="FLORIST">Flower Shop</option>
+            <option value="SALON">Beauty Salon</option>
+            <option value="ANTIQUE">Antique Shop</option>
+            <option value="DOJO">Training Dojo</option>
+            <option value="CAFE">Café</option>
+            <option value="MARKET">Market</option>
+          </select>
+          <label for="visitor-form-game">Game of Origin (Affects which goods/services are sold)</label>
+          <select id="visitor-form-game" name="gameVersion" value="BLACK_ENGLISH">
+            <option value="BLACK_ENGLISH">Black Version</option>
+            <option value="WHITE_ENGLISH">White Version</option>
+            <option value="BLACK_2_ENGLISH">Black Version 2</option>
+            <option value="WHITE_2_ENGLISH">White Version 2</option>
+          </select>
+          <label for="visitor-form-personality">Personality (Affects phrases used)</label>
+          <input id="visitor-form-personality" name="personality" type="number" value="0" min="0" max="7"/>
+          <label for="visitor-form-dreamer">Tucked-in Pokémon Species</label>
+          <input id="visitor-form-dreamer" name="personality" type="number" value="1" min="1" max="649"/>
+        </form>
+        <button class="big-button" onclick="saveVisitor()">Confirm</button>
+        <button class="big-button" onclick="removeVisitor()">Remove</button>
       </div>
     </div>
   </body>

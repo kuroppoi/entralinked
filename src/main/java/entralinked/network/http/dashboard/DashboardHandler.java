@@ -1,12 +1,14 @@
 package entralinked.network.http.dashboard;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import entralinked.Entralinked;
+import entralinked.model.avenue.AvenueVisitor;
 import entralinked.model.dlc.Dlc;
 import entralinked.model.dlc.DlcList;
 import entralinked.model.pkmn.PkmnGender;
@@ -170,6 +172,7 @@ public class DashboardHandler implements HttpHandler {
         player.setStatus(PlayerStatus.WAKE_READY);
         player.setEncounters(request.encounters());
         player.setItems(request.items());
+        player.setAvenueVisitors(request.avenueVisitors());
         player.setCGearSkin(request.cgearSkin().equals("none") ? null : request.cgearSkin());
         player.setDexSkin(request.dexSkin().equals("none") ? null : request.dexSkin());
         player.setMusical(request.musical().equals("none") ? null : request.musical());
@@ -230,6 +233,31 @@ public class DashboardHandler implements HttpHandler {
             if(item.quantity() < 0 || item.quantity() > 20) {
                 return "Item quantity is out of range.";
             }
+        }
+        
+        // Validate Join Avenue visitors
+        Set<String> avenueVisitorNames = new HashSet<>(); // For duplicate checking
+        
+        if(request.avenueVisitors().size() > 12) {
+            return "Join Avenue visitor list size exceeds the limit.";
+        }
+        
+        for(AvenueVisitor visitor : request.avenueVisitors()) {
+            if(visitor.type() == null) {
+                return "Join Avenue visitor type is undefined.";
+            } else if(visitor.shopType() == null) {
+                return "Join Avenue visitor shop type is undefined.";
+            } else if(visitor.name().isBlank() || visitor.name().length() > 7) {
+                return "Join Avenue visitor name must be between 1 and 7 characters in length.";
+            } else if(avenueVisitorNames.contains(visitor.name())) {
+                return "Join Avenue visitors cannot have the same name!";
+            } else if(visitor.gameVersion() == null) {
+                return "Join Avenue visitor game version is undefined.";
+            } else if(visitor.dreamerSpecies() < 1 || visitor.dreamerSpecies() > 649) {
+                return "Tucked-in Pokémon species of the Join Avenue visitor is out of range.";
+            }
+            
+            avenueVisitorNames.add(visitor.name());
         }
         
         // Validate gained levels

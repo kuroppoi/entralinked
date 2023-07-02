@@ -2,6 +2,7 @@ package entralinked.network.http.dashboard;
 
 import java.util.Collection;
 
+import entralinked.model.avenue.AvenueVisitor;
 import entralinked.model.pkmn.PkmnInfo;
 import entralinked.model.player.DreamEncounter;
 import entralinked.model.player.DreamItem;
@@ -16,10 +17,12 @@ public record DashboardProfileMessage(
         String musical, 
         int levelsGained,
         Collection<DreamEncounter> encounters,
-        Collection<DreamItem> items) {
+        Collection<DreamItem> items,
+        Collection<AvenueVisitor> avenueVisitors) {
     
     public DashboardProfileMessage(String dreamerSprite, Player player) {
-        this(player.getGameVersion().getDisplayName(), dreamerSprite, player.getDreamerInfo(), player.getCGearSkin(), 
-                player.getDexSkin(), player.getMusical(), player.getLevelsGained(), player.getEncounters(), player.getItems());
+        this(player.getGameVersion().getDisplayName(), dreamerSprite, player.getDreamerInfo(), 
+                player.getCGearSkin(), player.getDexSkin(), player.getMusical(), player.getLevelsGained(), 
+                player.getEncounters(), player.getItems(), player.getAvenueVisitors());
     }
 }

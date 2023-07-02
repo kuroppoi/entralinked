@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import entralinked.GameVersion;
+import entralinked.model.avenue.AvenueVisitor;
 import entralinked.model.pkmn.PkmnInfo;
 
 /**
@@ -22,11 +23,13 @@ public record PlayerDto(
         String musical,
         int levelsGained,
         @JsonDeserialize(contentAs = DreamEncounter.class) Collection<DreamEncounter> encounters,
-        @JsonDeserialize(contentAs = DreamItem.class)      Collection<DreamItem> items) {
+        @JsonDeserialize(contentAs = DreamItem.class)      Collection<DreamItem> items,
+        @JsonDeserialize(contentAs = AvenueVisitor.class)  Collection<AvenueVisitor> avenueVisitors) {
     
     public PlayerDto(Player player) {
-        this(player.getGameSyncId(), player.getGameVersion(), player.getStatus(), player.getDreamerInfo(), player.getCGearSkin(), 
-                player.getDexSkin(), player.getMusical(), player.getLevelsGained(), player.getEncounters(), player.getItems());
+        this(player.getGameSyncId(), player.getGameVersion(), player.getStatus(), player.getDreamerInfo(), 
+                player.getCGearSkin(), player.getDexSkin(), player.getMusical(), player.getLevelsGained(), 
+                player.getEncounters(), player.getItems(),player.getAvenueVisitors());
     }
     
     /**
@@ -43,6 +46,7 @@ public record PlayerDto(
         player.setLevelsGained(levelsGained);
         player.setEncounters(encounters == null ? Collections.emptyList() : encounters);
         player.setItems(items == null ? Collections.emptyList() : items);
+        player.setAvenueVisitors(avenueVisitors == null ? Collections.emptyList() : avenueVisitors);
         return player;
     }
 }
