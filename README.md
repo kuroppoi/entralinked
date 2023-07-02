@@ -2,8 +2,9 @@
 [![build](https://github.com/kuroppoi/entralinked/actions/workflows/dist-upload-artifact.yml/badge.svg)](https://github.com/kuroppoi/entralinked/actions)
 
 Entralinked is a standalone Game Sync emulator developed for use with Pokémon Black & White and its sequels.\
-Its purpose is to serve as a simple utility for downloading Pokémon, Items, C-Gear skins, Pokédex skins and Musicals\
-to your game without needing to edit your save file.
+Its purpose is to serve as a simple utility for downloading Pokémon, Items, C-Gear skins, Pokédex skins, Musicals\
+and, in Black 2 & White 2 only, Join Avenue visitors to your game without needing to edit your save file.\
+It can also be used to Memory Link with a Black or White save file if you don't have a second DS system.
 
 ## Building
 
