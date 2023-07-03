@@ -46,7 +46,7 @@ a:link, a:visited {
     height: 100%;
 }
 
-.root-container div {
+.root-container div:first-child {
     max-width: 532px;
     margin: auto;
 }
@@ -191,4 +191,5 @@ a:link, a:visited {
 .big-button {
     font-size: 16px;
     padding: 16px 32px;
+    margin-bottom: 8px;
 }
