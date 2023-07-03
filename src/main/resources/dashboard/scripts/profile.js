@@ -78,7 +78,7 @@ function configureEncounter(index) {
     // Load existing settings
     let encounter = profile.encounters[encounterTableIndex];
     ELEMENT_ENCOUNTER_SPECIES.value = encounter ? encounter.species : 1;
-    ELEMENT_ENCOUNTER_MOVE.value = encounter ? encounter.move : 1;
+    ELEMENT_ENCOUNTER_MOVE.value = encounter ? encounter.move : 0;
     ELEMENT_ENCOUNTER_FORM.value = encounter ? encounter.form : 0;
     ELEMENT_ENCOUNTER_GENDER.value = encounter ? encounter.gender : "GENDERLESS";
     ELEMENT_ENCOUNTER_ANIMATION.value = encounter ? encounter.animation : "WALK_AROUND";
