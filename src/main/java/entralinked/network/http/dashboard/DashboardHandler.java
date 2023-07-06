@@ -1,9 +1,20 @@
 package entralinked.network.http.dashboard;
 
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import javax.imageio.ImageIO;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,6 +31,7 @@ import entralinked.model.player.PlayerManager;
 import entralinked.model.player.PlayerStatus;
 import entralinked.network.http.HttpHandler;
 import entralinked.utility.GsidUtility;
+import entralinked.utility.TiledImageReader;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.http.Context;
@@ -32,20 +44,41 @@ import io.javalin.json.JavalinJackson;
  */
 public class DashboardHandler implements HttpHandler {
     
+    private static final Logger logger = LogManager.getLogger();
     private final Set<Integer> availableBlackAndWhiteSpecies = Set.of(
             505, 507, 510, 511, 513, 515, 519, 523, 525, 527, 529, 531, 533, 535, 538, 539, 542, 545, 546, 548, 
             550, 553, 556, 558, 559, 561, 564, 569, 572, 575, 578, 580, 583, 587, 588, 594, 596, 600, 605, 607, 
             610, 613, 616, 618, 619, 621, 622, 624, 626, 628, 630, 631, 632);
+    private final Map<String, BufferedImage> skinPreviewCache = new HashMap<>();
     private final DlcList dlcList;
     private final PlayerManager playerManager;
     
     public DashboardHandler(Entralinked entralinked) {
         this.dlcList = entralinked.getDlcList();
         this.playerManager = entralinked.getPlayerManager();
+        
+        // Load & cache skin previews
+        logger.info("Loading C-Gear and Pokédex skin previews ...");
+        List<Dlc> skins = dlcList.getDlcList(dlc -> dlc.type().startsWith("CGEAR") || dlc.type().equals("ZUKAN"));
+        
+        for(Dlc skin : skins) {
+            try(FileInputStream inputStream = new FileInputStream(skin.path())) {
+                BufferedImage image = 
+                        skin.type().equals("ZUKAN") ? TiledImageReader.readDexSkin(inputStream) :
+                        skin.type().equals("CGEAR") ? TiledImageReader.readCGearSkin(inputStream, true) :
+                        TiledImageReader.readCGearSkin(inputStream, false); // CGEAR2
+                skinPreviewCache.put(skin.name(), image);
+            } catch(IOException | IndexOutOfBoundsException e) {
+                logger.error("Could not load image for skin {} of type {}", skin.name(), skin.type(), e);
+            }
+        }
+        
+        logger.info("Cached {} skin previews", skinPreviewCache.size());
     }
     
     @Override
     public void addHandlers(Javalin javalin) {
+        javalin.get("/dashboard/previewskin", this::handlePreviewSkin);
         javalin.get("/dashboard/dlc", this::handleRetrieveDlcList);
         javalin.get("/dashboard/profile", this::handleRetrieveProfile);
         javalin.post("/dashboard/profile", this::handleUpdateProfile);
@@ -71,6 +104,22 @@ public class DashboardHandler implements HttpHandler {
             staticFileConfig.directory = "/sprites";
             staticFileConfig.hostedPath = "/sprites";
         });
+    }
+    
+    /**
+     * GET request handler for {@code /dashboard/previewskin}
+     */
+    private void handlePreviewSkin(Context ctx) throws IOException {
+        // Make sure that the name is present and exists
+        String name = ctx.queryParam("name");
+        
+        if(name == null || !skinPreviewCache.containsKey(name)) {
+            ctx.status(404);
+            return;
+        }
+        
+        // Write cached image data
+        ImageIO.write(skinPreviewCache.get(name), "png", ctx.outputStream());
     }
     
     /**

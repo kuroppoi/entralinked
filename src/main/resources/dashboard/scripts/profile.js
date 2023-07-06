@@ -325,6 +325,18 @@ function closeItemForm() {
     window.location.href = "#";
 }
 
+function previewSkin(inputElementId) {
+    let value = document.getElementById(inputElementId).value;
+    
+    if(value == "none") {
+        window.alert("Please select a skin to preview it.");
+        return false;
+    }
+    
+    window.open("/dashboard/previewskin?name=" + value);
+    return false;
+}
+
 async function fetchData(path) {
     return fetchData(path, "GET", null);
 }
