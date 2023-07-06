@@ -86,7 +86,7 @@ public class DashboardHandler implements HttpHandler {
         }
         
         // Send result
-        ctx.json(dlcList.getDlcList("IRAO", type).stream().map(Dlc::name).collect(Collectors.toList()));
+        ctx.json(dlcList.getDlcList("IRAO", type).stream().map(Dlc::name).sorted().collect(Collectors.toList()));
     }
     
     /**
