@@ -18,7 +18,14 @@ public class NetworkUtility {
     public static InetAddress getLocalHost() {
         try(Socket socket = new Socket()){
             socket.connect(new InetSocketAddress("github.com", 80));
-            return socket.getLocalAddress();
+            InetAddress address = socket.getLocalAddress();
+            
+            // Fall back to the network interface method if this is not a private IP address
+            if(!address.isSiteLocalAddress()) {
+                return getLocalHostFromNetworkInterfaces();
+            }
+            
+            return address;
         } catch(IOException e) {
             logger.error("Couldn't get local host using socket - falling back to the network interface method", e);
             return getLocalHostFromNetworkInterfaces();
@@ -42,8 +49,8 @@ public class NetworkUtility {
                 while(addresses.hasMoreElements()) {
                     InetAddress address = addresses.nextElement();
                     
-                    // Return if IPv4
-                    if(address instanceof Inet4Address) {
+                    // Return this address if it is a local IPv4 address
+                    if(address.isSiteLocalAddress() && address instanceof Inet4Address) {
                         return address;
                     }
                 }
@@ -52,6 +59,7 @@ public class NetworkUtility {
             logger.error("Could not determine local host - falling back to loopback address", e);
         }
         
+        logger.warn("No local host candidate could be found - loopback address will be used");
         return InetAddress.getLoopbackAddress();
     }
 }
