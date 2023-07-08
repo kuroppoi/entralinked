@@ -128,8 +128,8 @@ a:link, a:visited {
     background-color: #191919;
     position: absolute;
     left: 50%;
-    top: 25%;
-    transform: translate(-50%, 0%);
+    top: 50%;
+    transform: translate(-50%, -50%);
     padding: 20px;
     width: 500px;
 }
