@@ -518,6 +518,6 @@ function stringToWord(string) {
 function addValuesToComboBox(selectorElement, values) {
     for(i in values) {
         let value = values[i];
-        selectorElement.options[selectorElement.options.length] = new Option(value, value);
+        selectorElement.options[selectorElement.options.length] = new Option(value.replace(/\.[^/.]+$/, ""), value);
     }
 }
