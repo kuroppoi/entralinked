@@ -1,6 +1,6 @@
+// HTML document elements
 const ELEMENT_GAME_SUMMARY = document.getElementById("game-summary");
 
-// Dreamer elements
 const ELEMENT_DREAMER_SPRITE = document.getElementById("dreamer-sprite");
 const ELEMENT_DREAMER_SPECIES = document.getElementById("dreamer-species");
 const ELEMENT_DREAMER_NATURE = document.getElementById("dreamer-nature");
@@ -10,18 +10,15 @@ const ELEMENT_DREAMER_TRAINER = document.getElementById("dreamer-trainer");
 const ELEMENT_DREAMER_TRAINER_ID = document.getElementById("dreamer-trainer-id");
 const ELEMENT_DREAMER_LEVEL = document.getElementById("dreamer-level");
 
-// Encounter form elements
 const ELEMENT_ENCOUNTER_SPECIES = document.getElementById("encounter-form-species");
 const ELEMENT_ENCOUNTER_MOVE = document.getElementById("encounter-form-move");
 const ELEMENT_ENCOUNTER_FORM = document.getElementById("encounter-form-form");
 const ELEMENT_ENCOUNTER_GENDER = document.getElementById("encounter-form-gender");
 const ELEMENT_ENCOUNTER_ANIMATION = document.getElementById("encounter-form-animation");
 
-// Item form elements
 const ELEMENT_ITEM_ID = document.getElementById("item-form-id");
 const ELEMENT_ITEM_QUANTITY = document.getElementById("item-form-quantity");
 
-// Join Avenue Visitor form elements
 const ELEMENT_VISITOR_NAME = document.getElementById("visitor-form-name");
 const ELEMENT_VISITOR_TYPE = document.getElementById("visitor-form-type");
 const ELEMENT_VISITOR_SHOP_TYPE = document.getElementById("visitor-form-shop-type");
@@ -29,38 +26,10 @@ const ELEMENT_VISITOR_GAME = document.getElementById("visitor-form-game");
 const ELEMENT_VISITOR_PERSONALITY = document.getElementById("visitor-form-personality");
 const ELEMENT_VISITOR_DREAMER = document.getElementById("visitor-form-dreamer");
 
-// Misc input elements
 const ELEMENT_CGEAR_SKIN_INPUT = document.getElementById("cgear-skin");
 const ELEMENT_DEX_SKIN_INPUT = document.getElementById("dex-skin");
 const ELEMENT_MUSICAL_INPUT = document.getElementById("musical");
 const ELEMENT_LEVEL_GAIN_INPUT = document.getElementById("level-gain-input");
-
-// Create event listeners
-ELEMENT_ENCOUNTER_SPECIES.addEventListener("change", clampValue);
-ELEMENT_ENCOUNTER_MOVE.addEventListener("change", clampValue);
-ELEMENT_ITEM_ID.addEventListener("change", clampValue);
-ELEMENT_ITEM_QUANTITY.addEventListener("change", clampValue);
-ELEMENT_LEVEL_GAIN_INPUT.addEventListener("change", clampValue);
-ELEMENT_VISITOR_PERSONALITY.addEventListener("change", clampValue);
-ELEMENT_VISITOR_DREAMER.addEventListener("change", clampValue);
-
-function clampValue() {
-    let value = parseInt(this.value);
-    
-    if(value < this.min) {
-        this.value = this.min;
-    } else if(value > this.max) {
-        console.log(value);
-        this.value = this.max;
-    }
-}
-
-// Other constant stuff
-const AVAILABLE_GENERATION_V_POKEMON = new Array(
-            505, 507, 510, 511, 513, 515, 519, 523, 525, 527, 529, 531, 533, 535, 538, 539, 542, 545, 546, 548, 
-            550, 553, 556, 558, 559, 561, 564, 569, 572, 575, 578, 580, 583, 587, 588, 594, 596, 600, 605, 607, 
-            610, 613, 616, 618, 619, 621, 622, 624, 626, 628, 630, 631, 632); // Defining this 3 times is a brilliant idea.
-
 
 // Local variables
 var encounterTableIndex = -1;
@@ -72,12 +41,123 @@ var profile = {
     visitors: []
 };
 
+(async function() {
+    // Create event listeners
+    clampOnChange(ELEMENT_ITEM_QUANTITY);
+    clampOnChange(ELEMENT_LEVEL_GAIN_INPUT);
+    clampOnChange(ELEMENT_VISITOR_PERSONALITY);
+    
+    // Fetch profile data
+    await fetchData("GET", "/dashboard/profile").then((response) => {
+        // Update game summary
+        profile.gameVersion = response.gameVersion;
+        ELEMENT_GAME_SUMMARY.innerHTML = "Game Card in use: " + profile.gameVersion;
+        
+        // Update dreamer summary
+        if(response.dreamerInfo) {
+            let dreamerInfo = response.dreamerInfo;
+            ELEMENT_DREAMER_SPRITE.innerHTML = "<image src='" + response.dreamerSprite + "'/>";
+            ELEMENT_DREAMER_SPECIES.innerHTML = POKE_SPECIES_LIST[dreamerInfo.species - 1].name;
+            ELEMENT_DREAMER_NATURE.innerHTML = stringToWord(dreamerInfo.nature);
+            ELEMENT_DREAMER_NAME.innerHTML = dreamerInfo.nickname;
+            ELEMENT_DREAMER_GENDER.innerHTML = stringToWord(dreamerInfo.gender);
+            ELEMENT_DREAMER_TRAINER.innerHTML = dreamerInfo.trainerName;
+            ELEMENT_DREAMER_TRAINER_ID.innerHTML = ("0000" + dreamerInfo.trainerId).slice(-5);
+            ELEMENT_DREAMER_LEVEL.innerHTML = dreamerInfo.level;
+        }
+        
+        // Update encounter table
+        if(response.encounters){
+            profile.encounters = response.encounters;
+            updateEncounterTable(0, 10);
+        } 
+        
+        // Update item table
+        if(response.items){
+            profile.items = response.items;
+            updateItemTable(0, 20);
+        }   
+        
+        // Update Join Avenue visitor table
+        if(response.avenueVisitors) {
+            profile.visitors = response.avenueVisitors;
+            updateVisitorTable(0, 12);
+        }
+        
+        // Update selected DLC
+        profile.cgearSkin = response.cgearSkin ? response.cgearSkin : "none";
+        profile.dexSkin = response.dexSkin ? response.dexSkin : "none";
+        profile.musical = response.musical ? response.musical : "none";
+        fetchDlcData();
+        ELEMENT_LEVEL_GAIN_INPUT.value = response.levelsGained;
+        
+        // Show Join Avenue visitor table if Black 2 or White 2
+        if(isVersion2()) {
+            document.getElementById("visitor-table-container").style.display = "block";
+        }
+        
+        // Show div
+        document.getElementById("main-container").style.display = "flex";
+    });
+    
+    // Add species data
+    for(let i in POKE_SPECIES_LIST) {
+        let species = POKE_SPECIES_LIST[i];
+        let formattedName = "#" + ("00" + species.id).slice(-3) + " - " + species.name;
+        ELEMENT_VISITOR_DREAMER.options[ELEMENT_VISITOR_DREAMER.options.length] = new Option(formattedName, species.id);
+        
+        if(species.downloadable && (isVersion2() || species.id <= 493)) {
+            ELEMENT_ENCOUNTER_SPECIES.options[ELEMENT_ENCOUNTER_SPECIES.options.length] = new Option(formattedName, species.id);
+        }
+    }
+    
+    // Add move data
+    for(let i in POKE_MOVE_LIST) {
+        let move = POKE_MOVE_LIST[i];
+        let formattedName = "#" + ("00" + move.id).slice(-3) + " - " + move.name;
+        ELEMENT_ENCOUNTER_MOVE.options[ELEMENT_ENCOUNTER_MOVE.options.length] = new Option(formattedName, move.id);
+    }
+    
+    // Add item data
+    for(let i in ITEM_LIST) {
+        let item = ITEM_LIST[i];
+        
+        if(isVersion2() || item.id <= 626) {
+            let formattedName = "#" + ("00" + item.id).slice(-3) + " - " + item.name;
+            ELEMENT_ITEM_ID.options[ELEMENT_ITEM_ID.options.length] = new Option(formattedName, item.id);
+        }
+    }
+    
+    // Event listener for changing the form selector contents when species changes
+    ELEMENT_ENCOUNTER_SPECIES.addEventListener("change", function() {
+        updateEncounterFormOptions();
+        ELEMENT_ENCOUNTER_FORM.value = 0;
+    });
+})();
+
+/**
+ * Encounter configuration stuff
+ */
+
+function updateEncounterFormOptions() {
+    clearSelectOptions(ELEMENT_ENCOUNTER_FORM);
+    let species = POKE_SPECIES_LIST[ELEMENT_ENCOUNTER_SPECIES.value - 1];
+    
+    // Update special form options
+    if(species.forms) {
+        for(let i in species.forms) {
+            ELEMENT_ENCOUNTER_FORM.options[ELEMENT_ENCOUNTER_FORM.options.length] = new Option(species.forms[i], i);
+        }
+    } else {
+        ELEMENT_ENCOUNTER_FORM.options[ELEMENT_ENCOUNTER_FORM.options.length] = new Option("Normal", 0);
+    }
+}
+
 function configureEncounter(index) {
     encounterTableIndex = Math.min(10, Math.min(index, profile.encounters.length));
-    
-    // Load existing settings
     let encounter = profile.encounters[encounterTableIndex];
     ELEMENT_ENCOUNTER_SPECIES.value = encounter ? encounter.species : 1;
+    updateEncounterFormOptions();
     ELEMENT_ENCOUNTER_MOVE.value = encounter ? encounter.move : 0;
     ELEMENT_ENCOUNTER_FORM.value = encounter ? encounter.form : 0;
     ELEMENT_ENCOUNTER_GENDER.value = encounter ? encounter.gender : "GENDERLESS";
@@ -86,64 +166,37 @@ function configureEncounter(index) {
 
 function saveEncounter() {
     if(encounterTableIndex < 0) {
+        closeEncounterForm();
         return;
     }
     
-    // Check if this species can be downloaded
-    let species = parseInt(ELEMENT_ENCOUNTER_SPECIES.value);
-    
-    if(species > 493 && !AVAILABLE_GENERATION_V_POKEMON.includes(species)) {
-        alert("This Pokémon species cannot be downloaded. Click 'View list' in the encounter form to view a list of available Pokémon.");
-        return;
-    }
-        
-    // Create encounter data
-    let encounterData = {
-        species: species,
+    profile.encounters[encounterTableIndex] = {
+        species: ELEMENT_ENCOUNTER_SPECIES.value,
         move: ELEMENT_ENCOUNTER_MOVE.value,
         form: ELEMENT_ENCOUNTER_FORM.value,
         gender: ELEMENT_ENCOUNTER_GENDER.value,
         animation: ELEMENT_ENCOUNTER_ANIMATION.value
-    }
-    
-    // Set form to highest form available if it too great
-    let maxForm = 0;
-    
-    switch(species) {
-        case 201: maxForm = 27; break; // Unown
-        case 386: maxForm = 3; break; // Deoxys
-        case 412:
-        case 413: maxForm = 2; break; // Burmy & Wormadam
-        case 422:
-        case 423: 
-        case 487: maxForm = 1; break; // Shellos, Gastrodon & Giratina
-        case 479: maxForm = 5; break; // Rotom
-        case 493: maxForm = 16; break; // Arceus
-        case 550: maxForm = 1; break; // Basculin
-    }
-    
-    if(encounterData.form > maxForm) {
-        encounterData.form = maxForm;
-    }
-    
-    profile.encounters[encounterTableIndex] = encounterData;
+    };
     updateEncounterCell(encounterTableIndex);
     closeEncounterForm();
 }
 
 function removeEncounter() {
     if(encounterTableIndex < 0) {
+        closeEncounterForm();
         return;
     }
     
     let oldLength = profile.encounters.length;
     profile.encounters.splice(encounterTableIndex, 1);
-    
-    for(let i = encounterTableIndex; i < oldLength; i++) {
+    updateEncounterTable(encounterTableIndex, oldLength);
+    closeEncounterForm();
+}
+
+function updateEncounterTable(startIndex, endIndex) {
+    for(let i = startIndex; i < endIndex; i++) {
         updateEncounterCell(i);
     }
-    
-    closeEncounterForm();
 }
 
 function updateEncounterCell(index) {
@@ -155,6 +208,7 @@ function updateEncounterCell(index) {
     if(encounterData) {
         spriteImage = spriteBase + encounterData.species + ".png";
         
+        // Use unique form sprite if it exists
         if(encounterData.form > 0) {
             let formSpriteImage = spriteBase + encounterData.species + "-" + encounterData.form + ".png";
             
@@ -172,10 +226,12 @@ function closeEncounterForm() {
     window.location.href = "#";
 }
 
+/**
+ * Join Avenue visitor configuration stuff
+ */
+
 function configureVisitor(index) {
     visitorTableIndex = Math.min(12, Math.min(index, profile.visitors.length));
-    
-    // Load existing settings
     let visitor = profile.visitors[visitorTableIndex];
     ELEMENT_VISITOR_NAME.value = visitor ? visitor.name : "";
     ELEMENT_VISITOR_TYPE.value = visitor ? visitor.type : "ACE_TRAINER_MALE";
@@ -187,6 +243,7 @@ function configureVisitor(index) {
 
 function saveVisitor() {
     if(visitorTableIndex < 0) {
+        closeVisitorForm();
         return;
     }
     
@@ -209,7 +266,7 @@ function saveVisitor() {
     }
     
     // I'll make country codes configurable later... probably
-    let visitorData = {
+    profile.visitors[visitorTableIndex] = {
         name: ELEMENT_VISITOR_NAME.value,
         type: ELEMENT_VISITOR_TYPE.value,
         shopType: ELEMENT_VISITOR_SHOP_TYPE.value,
@@ -218,26 +275,28 @@ function saveVisitor() {
         stateProvinceCode: 48, // Washington, D.C.
         personality: ELEMENT_VISITOR_PERSONALITY.value,
         dreamerSpecies: ELEMENT_VISITOR_DREAMER.value
-    }
-    
-    profile.visitors[visitorTableIndex] = visitorData;
+    };
+    console.log(profile.visitors[visitorTableIndex]);
     updateVisitorCell(visitorTableIndex);
     closeVisitorForm();
 }
 
 function removeVisitor() {
     if(visitorTableIndex < 0) {
+        closeVisitorForm();
         return;
     }
     
     let oldLength = profile.visitors.length;
     profile.visitors.splice(visitorTableIndex, 1);
-    
-    for(let i = visitorTableIndex; i < oldLength; i++) {
+    updateVisitorTable(visitorTableIndex, oldLength);
+    closeVisitorForm();
+}
+
+function updateVisitorTable(startIndex, endIndex) {
+    for(let i = startIndex; i < endIndex; i++) {
         updateVisitorCell(i);
     }
-    
-    closeVisitorForm();
 }
 
 function updateVisitorCell(index) {
@@ -262,10 +321,12 @@ function closeVisitorForm() {
     window.location.href = "#";
 }
 
+/**
+ * Item configuration stuff
+ */
+
 function configureItem(index) {
     itemTableIndex = Math.min(20, Math.min(index, profile.items.length));
-    
-    // Loadg existing settings
     let item = profile.items[itemTableIndex];
     ELEMENT_ITEM_ID.value = item ? item.id : 1;
     ELEMENT_ITEM_QUANTITY.value = item ? item.quantity : 1;
@@ -273,32 +334,34 @@ function configureItem(index) {
 
 function saveItem() {
     if(itemTableIndex < 0) {
+        closeItemForm();
         return;
     }
     
-    let itemData = {
+    profile.items[itemTableIndex] = {
         id: ELEMENT_ITEM_ID.value,
         quantity: ELEMENT_ITEM_QUANTITY.value
-    }
-    
-    profile.items[itemTableIndex] = itemData;
+    };
     updateItemCell(itemTableIndex);
     closeItemForm();
 }
 
 function removeItem() {
     if(itemTableIndex < 0) {
+        closeItemForm();
         return;
     }
     
     let oldLength = profile.items.length;
     profile.items.splice(itemTableIndex, 1);
-    
-    for(let i = itemTableIndex; i < oldLength; i++) {
+    updateItemTable(itemTableIndex, oldLength);
+    closeItemForm();
+}
+
+function updateItemTable(startIndex, endIndex) {
+    for(let i = startIndex; i < endIndex; i++) {
         updateItemCell(i);
     }
-    
-    closeItemForm();
 }
 
 function updateItemCell(index) {
@@ -325,6 +388,10 @@ function closeItemForm() {
     window.location.href = "#";
 }
 
+/**
+ * Miscellaneous stuff
+ */
+
 function previewSkin(inputElementId, type) {
     let value = document.getElementById(inputElementId).value;
     
@@ -341,146 +408,35 @@ function previewSkin(inputElementId, type) {
     return false;
 }
 
-function isVersion2() {
-    return profile.gameVersion.includes("2");
-}
-
-async function fetchData(path) {
-    return fetchData(path, "GET", null);
-}
-
-async function fetchData(path, method, body) {
-    let response = await fetch(path, {
-        method: method,
-        body: body
-    });
-    
-    // Return to login page if unauthorized
-    if(response.status == 401) {
-        window.location.href = "/dashboard/login.html";
-        return;
-    }
-    
-    try {
-        return await response.json();
-    } catch(error) {
-        window.alert(error);
-    }
-    
-    return null;
-}
-
 function fetchDlcData() {
     // Fetch C-Gear skins
-    fetchData("/dashboard/dlc?type=" + (isVersion2() ? "CGEAR2" : "CGEAR")).then((response) => {
-        addValuesToComboBox(ELEMENT_CGEAR_SKIN_INPUT, response);
+    fetchData("GET", "/dashboard/dlc?type=" + (isVersion2() ? "CGEAR2" : "CGEAR")).then((response) => {
+        addDlcNames(ELEMENT_CGEAR_SKIN_INPUT, response);
         ELEMENT_CGEAR_SKIN_INPUT.value = response.includes(profile.cgearSkin) ? profile.cgearSkin : "none";
     });
     
     // Fetch Dex skins
-    fetchData("/dashboard/dlc?type=ZUKAN").then((response) => {
-        addValuesToComboBox(ELEMENT_DEX_SKIN_INPUT, response);
+    fetchData("GET", "/dashboard/dlc?type=ZUKAN").then((response) => {
+        addDlcNames(ELEMENT_DEX_SKIN_INPUT, response);
         ELEMENT_DEX_SKIN_INPUT.value = response.includes(profile.dexSkin) ? profile.dexSkin : "none";
     });
     
     // Fetch musicals
-    fetchData("/dashboard/dlc?type=MUSICAL").then((response) => {
-        addValuesToComboBox(ELEMENT_MUSICAL_INPUT, response);
+    fetchData("GET", "/dashboard/dlc?type=MUSICAL").then((response) => {
+        addDlcNames(ELEMENT_MUSICAL_INPUT, response);
         ELEMENT_MUSICAL_INPUT.value = response.includes(profile.musical) ? profile.musical : "none";
     });
 }
 
-// TODO
-function fetchProfileData() {
-    fetchData("/dashboard/profile").then((response) => {
-        let gameVersion = response["gameVersion"];
-        let dreamerSprite = response["dreamerSprite"];
-        let dreamerInfo = response["dreamerInfo"];
-        let encounters = response["encounters"];
-        let items = response["items"];
-        let visitors = response["avenueVisitors"];
-        let cgearSkin = response["cgearSkin"];
-        let dexSkin = response["dexSkin"];
-        let musical = response["musical"];
-        let levelsGained = response["levelsGained"];
-        
-        // Update game summary
-        profile.gameVersion = gameVersion;
-        ELEMENT_GAME_SUMMARY.innerHTML = "Game Card in use: " + gameVersion;
-        
-        if(isVersion2()) {
-            ELEMENT_ENCOUNTER_SPECIES.max = 649;
-            ELEMENT_ITEM_ID.max = 638;
-            
-            // Show Join Avenue visitor table
-            document.getElementById("visitor-table-container").style.display = "block";
-        }
-        
-        // Update dreamer summary
-        if(dreamerInfo) {
-            let species = dreamerInfo["species"];
-            let nature = dreamerInfo["nature"];
-            let nickname = dreamerInfo["nickname"];
-            let gender = dreamerInfo["gender"];
-            let trainerName = dreamerInfo["trainerName"];
-            let trainerId = dreamerInfo["trainerId"];
-            let level = dreamerInfo["level"];
-            
-            // Set element values
-            ELEMENT_DREAMER_SPRITE.innerHTML = "<image src='" + dreamerSprite + "'/>";
-            ELEMENT_DREAMER_SPECIES.innerHTML = "#" + species;
-            ELEMENT_DREAMER_NATURE.innerHTML = stringToWord(nature);
-            ELEMENT_DREAMER_NAME.innerHTML = nickname;
-            ELEMENT_DREAMER_GENDER.innerHTML = stringToWord(gender);
-            ELEMENT_DREAMER_TRAINER.innerHTML = trainerName;
-            ELEMENT_DREAMER_TRAINER_ID.innerHTML = ("0000" + trainerId).slice(-5);
-            ELEMENT_DREAMER_LEVEL.innerHTML = level;
-        }
-        
-        // Update encounter table
-        if(encounters){
-            profile.encounters = encounters;
-            
-            for(let i = 0; i < 10; i++) {
-                updateEncounterCell(i);
-            }
-        } 
-        
-        // Update item table
-        if(items){
-            profile.items = items;
-            
-            for(let i = 0; i < 20; i++) {
-                updateItemCell(i);
-            }
-        }   
-        
-        // Update Join Avenue visitor table
-        if(visitors) {
-            profile.visitors = visitors;
-            
-            for(let i = 0; i < 12; i++) {
-                updateVisitorCell(i);
-            }
-        }
-        
-        // Update selected DLC
-        profile.cgearSkin = cgearSkin ? cgearSkin : "none";
-        profile.dexSkin = dexSkin ? dexSkin : "none";
-        profile.musical = musical ? musical : "none";
-        fetchDlcData();
-        
-        // Update level gain
-        ELEMENT_LEVEL_GAIN_INPUT.value = levelsGained;
-        
-        // Show div
-        document.getElementById("main-container").style.display = "flex";
-    });
+function addDlcNames(selectElement, names) {
+    for(let i in names) {
+        let name = names[i];
+        selectElement.options[selectElement.options.length] = new Option(name.replace(/\.[^/.]+$/, ""), name);
+    }
 }
 
 function postProfileData() {
-    // Construct body
-    let profileData = {
+    fetchData("POST", "/dashboard/profile", JSON.stringify({
         encounters: profile.encounters,
         items: profile.items,
         avenueVisitors: profile.visitors,
@@ -488,36 +444,18 @@ function postProfileData() {
         dexSkin: ELEMENT_DEX_SKIN_INPUT.value,
         musical: ELEMENT_MUSICAL_INPUT.value,
         gainedLevels: ELEMENT_LEVEL_GAIN_INPUT.value
-    }
-    
-    // Send data
-    fetchData("/dashboard/profile", "POST", JSON.stringify(profileData)).then((response) => {
+    })).then((response) => {
         alert(response.message);
     });
 }
 
 function postLogout() {
-    fetchData("/dashboard/logout", "POST", null).then((response) => {
+    fetchData("POST", "/dashboard/logout").then((response) => {
         // Assume it succeeded
         window.location.href = "/dashboard/login.html";
     });
 }
 
-// TODO bad
-function checkURL(url) {
-    var request = new XMLHttpRequest();
-    request.open('HEAD', url, false);
-    request.send();
-    return request.status == 200;
-}
-
-function stringToWord(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-
-function addValuesToComboBox(selectorElement, values) {
-    for(i in values) {
-        let value = values[i];
-        selectorElement.options[selectorElement.options.length] = new Option(value.replace(/\.[^/.]+$/, ""), value);
-    }
+function isVersion2() {
+    return profile.gameVersion.includes("2");
 }

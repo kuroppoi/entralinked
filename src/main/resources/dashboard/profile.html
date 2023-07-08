@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles/profile.css">
   </head>
-  <body onload="fetchProfileData()">
+  <body>
     <div id="main-container" class="root-container" style="display:none;">
       <div>
         <div>
@@ -161,12 +161,20 @@
       <div class="content">
         <button class="close-button" onclick="closeEncounterForm()">X</button>
         <form id="encounter-form">
-          <label for="encounter-form-species">Species ID | </label><a href="/dashboard/species.html" target="_blank">View list</a>
-          <input id="encounter-form-species" name="species" type="number" value="1" min="1" max="493"/>
-          <label for="encounter-form-move">Move ID</label>
-          <input id="encounter-form-move" name="move" type="number" value="0" min="0" max="559"/>
-          <label for="encounter-form-form">Forme Index</label>
-          <input id="encounter-form-form" name="form" type="number" value="0" min="0" max="31"/>
+          <label for="encounter-form-species">Species</label>
+          <select id="encounter-form-species" name="species" value="1">
+            <!-- Filled by profile.js -->
+          </select>
+          <label for="encounter-form-move">Special Move</label>
+          <select id="encounter-form-move" name="move" value="0">
+            <option value="0">None</option>
+            <!-- Filled by profile.js -->
+          </select>
+          <label for="encounter-form-form">Form</label>
+          <select id="encounter-form-form" name="form" value="0">
+            <option value="0">Normal</option>
+            <!-- Filled by profile.js -->
+          </select>
           <label for="encounter-form-gender">Gender</label>
           <select id="encounter-form-gender" name="gender" value="GENDERLESS">
             <option value="MALE">Male</option>
@@ -194,8 +202,10 @@
       <div class="content">
         <button class="close-button" onclick="closeEncounterForm()">X</button>
         <form id="item-form">
-          <label for="item-form-id">Item ID | </label><a href="/dashboard/items.html" target="_blank">View list</a>
-          <input id="item-form-id" name="id" type="number" value="1" min="1" max="626"/>
+          <label for="item-form-id">Item</label>
+          <select id="item-form-id" name="id" value="1">
+            <!-- Filled by profile.js -->
+          </select>
           <label for="item-form-quantity">Quantity</label>
           <input id="item-form-quantity" name="quantity" type="number" value="1" min="1" max="20"/>
         </form>
@@ -249,12 +259,16 @@
           <label for="visitor-form-personality">Personality (Affects phrases used)</label>
           <input id="visitor-form-personality" name="personality" type="number" value="0" min="0" max="7"/>
           <label for="visitor-form-dreamer">Tucked-in Pokémon Species</label>
-          <input id="visitor-form-dreamer" name="personality" type="number" value="1" min="1" max="649"/>
+          <select id="visitor-form-dreamer" name="dreamerSpecies" value="1">
+            <!-- Filled by profile.js -->
+          </select>
         </form>
         <button class="big-button" onclick="saveVisitor()">Confirm</button>
         <button class="big-button" onclick="removeVisitor()">Remove</button>
       </div>
     </div>
   </body>
+  <script src="scripts/utility.js"></script>
+  <script src="scripts/pokedata.js"></script>
   <script src="scripts/profile.js"></script>
 </html>
