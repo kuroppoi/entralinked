@@ -49,7 +49,7 @@ public class DashboardHandler implements HttpHandler {
             505, 507, 510, 511, 513, 515, 519, 523, 525, 527, 529, 531, 533, 535, 538, 539, 542, 545, 546, 548, 
             550, 553, 556, 558, 559, 561, 564, 569, 572, 575, 578, 580, 583, 587, 588, 594, 596, 600, 605, 607, 
             610, 613, 616, 618, 619, 621, 622, 624, 626, 628, 630, 631, 632);
-    private final Map<String, BufferedImage> skinPreviewCache = new HashMap<>();
+    private final Map<Dlc, BufferedImage> skinPreviewCache = new HashMap<>();
     private final DlcList dlcList;
     private final PlayerManager playerManager;
     
@@ -67,7 +67,7 @@ public class DashboardHandler implements HttpHandler {
                         skin.type().equals("ZUKAN") ? TiledImageReader.readDexSkin(inputStream) :
                         skin.type().equals("CGEAR") ? TiledImageReader.readCGearSkin(inputStream, true) :
                         TiledImageReader.readCGearSkin(inputStream, false); // CGEAR2
-                skinPreviewCache.put(skin.name(), image);
+                skinPreviewCache.put(skin, image);
             } catch(IOException | IndexOutOfBoundsException e) {
                 logger.error("Could not load image for skin {} of type {}", skin.name(), skin.type(), e);
             }
@@ -110,16 +110,25 @@ public class DashboardHandler implements HttpHandler {
      * GET request handler for {@code /dashboard/previewskin}
      */
     private void handlePreviewSkin(Context ctx) throws IOException {
-        // Make sure that the name is present and exists
+        String type = ctx.queryParam("type");
         String name = ctx.queryParam("name");
         
-        if(name == null || !skinPreviewCache.containsKey(name)) {
+        // Make sure query parameters are present
+        if(type == null || name == null) {
+            ctx.status(404);
+            return;
+        }
+        
+        Dlc dlc = dlcList.getDlc("IRAO", type, name);
+        
+        // Check if DLC exists
+        if(dlc == null) {
             ctx.status(404);
             return;
         }
         
         // Write cached image data
-        ImageIO.write(skinPreviewCache.get(name), "png", ctx.outputStream());
+        ImageIO.write(skinPreviewCache.get(dlc), "png", ctx.outputStream());
     }
     
     /**

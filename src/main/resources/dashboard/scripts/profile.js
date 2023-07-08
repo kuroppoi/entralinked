@@ -325,7 +325,7 @@ function closeItemForm() {
     window.location.href = "#";
 }
 
-function previewSkin(inputElementId) {
+function previewSkin(inputElementId, type) {
     let value = document.getElementById(inputElementId).value;
     
     if(value == "none") {
@@ -333,8 +333,16 @@ function previewSkin(inputElementId) {
         return false;
     }
     
-    window.open("/dashboard/previewskin?name=" + value);
+    if(type == "CGEAR" && isVersion2()) {
+        type = "CGEAR2";
+    }
+    
+    window.open("/dashboard/previewskin?type=" + type + "&name=" + value);
     return false;
+}
+
+function isVersion2() {
+    return profile.gameVersion.includes("2");
 }
 
 async function fetchData(path) {
@@ -363,24 +371,22 @@ async function fetchData(path, method, body) {
 }
 
 function fetchDlcData() {
-    let cgearType = profile.gameVersion.includes("2") ? "CGEAR2" : "CGEAR"; // Not a good way to do this!
-    
-    // Fetch CGear skins
-    fetchData("/dashboard/dlc?type=" + cgearType).then((response) => {
+    // Fetch C-Gear skins
+    fetchData("/dashboard/dlc?type=" + (isVersion2() ? "CGEAR2" : "CGEAR")).then((response) => {
         addValuesToComboBox(ELEMENT_CGEAR_SKIN_INPUT, response);
-        ELEMENT_CGEAR_SKIN_INPUT.value = profile.cgearSkin;
+        ELEMENT_CGEAR_SKIN_INPUT.value = response.includes(profile.cgearSkin) ? profile.cgearSkin : "none";
     });
     
     // Fetch Dex skins
     fetchData("/dashboard/dlc?type=ZUKAN").then((response) => {
         addValuesToComboBox(ELEMENT_DEX_SKIN_INPUT, response);
-        ELEMENT_DEX_SKIN_INPUT.value = profile.dexSkin;
+        ELEMENT_DEX_SKIN_INPUT.value = response.includes(profile.dexSkin) ? profile.dexSkin : "none";
     });
     
     // Fetch musicals
     fetchData("/dashboard/dlc?type=MUSICAL").then((response) => {
         addValuesToComboBox(ELEMENT_MUSICAL_INPUT, response);
-        ELEMENT_MUSICAL_INPUT.value = profile.musical;
+        ELEMENT_MUSICAL_INPUT.value = response.includes(profile.musical) ? profile.musical : "none";
     });
 }
 
@@ -402,8 +408,7 @@ function fetchProfileData() {
         profile.gameVersion = gameVersion;
         ELEMENT_GAME_SUMMARY.innerHTML = "Game Card in use: " + gameVersion;
         
-        // Still don't like this!
-        if(gameVersion.includes("2")) {
+        if(isVersion2()) {
             ELEMENT_ENCOUNTER_SPECIES.max = 649;
             ELEMENT_ITEM_ID.max = 638;
             

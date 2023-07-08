@@ -67,19 +67,8 @@ public class DlsHandler implements HttpHandler {
      * POST handler for {@code /download action=list}
      */
     private void handleRetrieveDlcList(DlsRequest request, Context ctx) throws IOException {
-        String gameCode = switch(request.dlcGameCode()) {
-            case "IRAJ" -> "IRAO";
-            default -> request.dlcGameCode();
-        };
-        
-        // Map to generic type, I doubt there is a real difference between the language codes anyway.
-        String type = switch(request.dlcType()) {
-            case "CGEAR_E", "CGEAR_F", "CGEAR_I", "CGEAR_G", "CGEAR_S", "CGEAR_J", "CGEAR_K" -> "CGEAR";
-            case "CGEAR2_E", "CGEAR2_F", "CGEAR2_I", "CGEAR2_G", "CGEAR2_S", "CGEAR2_J", "CGEAR2_K" -> "CGEAR2";
-            case "ZUKAN_E", "ZUKAN_F", "ZUKAN_I", "ZUKAN_G", "ZUKAN_S", "ZUKAN_J", "ZUKAN_K" -> "ZUKAN";
-            case "MUSICAL_E", "MUSICAL_F", "MUSICAL_I", "MUSICAL_G", "MUSICAL_S", "MUSICAL_J", "MUSICAL_K" -> "MUSICAL";
-            default -> request.dlcType();
-        };
+        String gameCode = getDlcGameCode(request.dlcGameCode());
+        String type = getRegionlessDlcType(request.dlcType());
         
         // TODO NOTE: I assume that in a conventional implementation, certain DLC attributes may be omitted from the request.
         ctx.result(dlcList.getDlcListString(dlcList.getDlcList(gameCode, type, request.dlcIndex())));
@@ -89,9 +78,11 @@ public class DlsHandler implements HttpHandler {
      * POST handler for {@code /download action=contents}
      */
     private void handleRetrieveDlcContent(DlsRequest request, Context ctx) throws IOException {
-        // Check if the requested DLC exists
-        Dlc dlc = dlcList.getDlc(request.dlcName());
+        String gameCode = getDlcGameCode(request.dlcGameCode());
+        String type = getRegionlessDlcType(request.dlcType());
+        Dlc dlc = dlcList.getDlc(gameCode, type, request.dlcName());
         
+        // Check if the requested DLC exists
         if(dlc == null) {
             ctx.status(HttpStatus.NOT_FOUND);
             return;
@@ -107,5 +98,28 @@ public class DlsHandler implements HttpHandler {
                 outputStream.writeShort(dlc.checksum());
             }
         }
+    }
+    
+    /**
+     * @return The game serial that should be used for downloading DLC based on the provided input.
+     */
+    private String getDlcGameCode(String gameCode) {
+        return switch(gameCode) {
+            case "IRAJ" -> "IRAO";
+            default -> gameCode;
+        };
+    }
+    
+    /**
+     * @return The DLC type without the region identifier, or the input if it is an unknown type.
+     */
+    private String getRegionlessDlcType(String dlcType) {
+        return switch(dlcType) {
+            case "CGEAR_E", "CGEAR_F", "CGEAR_I", "CGEAR_G", "CGEAR_S", "CGEAR_J", "CGEAR_K" -> "CGEAR";
+            case "CGEAR2_E", "CGEAR2_F", "CGEAR2_I", "CGEAR2_G", "CGEAR2_S", "CGEAR2_J", "CGEAR2_K" -> "CGEAR2";
+            case "ZUKAN_E", "ZUKAN_F", "ZUKAN_I", "ZUKAN_G", "ZUKAN_S", "ZUKAN_J", "ZUKAN_K" -> "ZUKAN";
+            case "MUSICAL_E", "MUSICAL_F", "MUSICAL_I", "MUSICAL_G", "MUSICAL_S", "MUSICAL_J", "MUSICAL_K" -> "MUSICAL";
+            default -> dlcType;
+        };
     }
 }

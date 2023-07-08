@@ -228,9 +228,9 @@ public class PglHandler implements HttpHandler {
         // Write misc stuff and DLC information
         outputStream.writeShort(player.getLevelsGained());
         outputStream.write(0); // Unknown
-        outputStream.write(dlcList.getDlcIndex(player.getMusical()));
-        outputStream.write(dlcList.getDlcIndex(player.getCGearSkin()));
-        outputStream.write(dlcList.getDlcIndex(player.getDexSkin()));
+        outputStream.write(dlcList.getDlcIndex("IRAO", "MUSICAL", player.getMusical()));
+        outputStream.write(dlcList.getDlcIndex("IRAO", player.getGameVersion().isVersion2() ? "CGEAR2" : "CGEAR", player.getCGearSkin()));
+        outputStream.write(dlcList.getDlcIndex("IRAO", "ZUKAN", player.getDexSkin()));
         outputStream.write(decorList.isEmpty() ? 0 : 1); // Seems to be a flag for indicating whether or not decor data is present
         outputStream.write(0); // Must be zero?
         

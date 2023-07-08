@@ -6,11 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -22,7 +21,7 @@ import entralinked.utility.Crc16;
 public class DlcList {
     
     private static final Logger logger = LogManager.getLogger();
-    private final Map<String, Dlc> dlcMap = new ConcurrentHashMap<>();
+    private final List<Dlc> dlcList = new ArrayList<>();
     private final File dataDirectory = new File("dlc");
     
     public DlcList() {
@@ -83,25 +82,19 @@ public class DlcList {
                     // Load DLC data
                     Dlc dlc = loadDlcFile(file.getName(), subFile.getName(), index, dlcFile);
                     
-                    // Index DLC object if loading succeeded
                     if(dlc != null) {
-                        dlcMap.put(dlc.name(), dlc);
+                        dlcList.add(dlc);
                         index++;
                     }
                 }
             }
         }
         
-        logger.info("Loaded {} DLC file(s)", dlcMap.size());
+        logger.info("Loaded {} DLC file(s)", dlcList.size());
     }
     
     private Dlc loadDlcFile(String gameCode, String type, int index, File dlcFile) {
         String name = dlcFile.getName();
-        
-        if(dlcMap.containsKey(name)) {
-            logger.warn("Duplicate DLC name {}", name);
-            return null;
-        }
         
         if(dlcFile.isDirectory()) {
             logger.warn("Directory '{}' in {} DLC folder", name, gameCode);
@@ -123,6 +116,7 @@ public class DlcList {
             int checksumInFile = (bytes[bytes.length - 2] & 0xFF) | ((bytes[bytes.length - 1] & 0xFF) << 8);
             
             if(checksum != checksumInFile) {
+                logger.warn("Checksum mismatch in DLC '{}'", name);
                 projectedSize += 2;
                 checksum = Crc16.calc(bytes, 0, bytes.length);
                 checksumEmbedded = false;
@@ -167,19 +161,18 @@ public class DlcList {
         return builder.toString();
     }
     
-    public Dlc getDlc(String name) {
-        return dlcMap.get(name);
+    public Dlc getDlc(String gameCode, String type, String name) {
+        List<Dlc> dlcList = getDlcList(gameCode, type).stream()
+                .filter(dlc -> dlc.name().equals(name)).collect(Collectors.toList());
+        return dlcList.isEmpty() ? null : dlcList.get(0);
     }
     
-    public int getDlcIndex(String name) {
-        return dlcExists(name) ? getDlc(name).index() : 0;
-    }
-    
-    public boolean dlcExists(String name) {
-        return name != null && dlcMap.containsKey(name);
+    public int getDlcIndex(String gameCode, String type, String name) {
+        Dlc dlc = getDlc(gameCode, type, name);
+        return dlc == null ? 0 : dlc.index();
     }
     
     public Collection<Dlc> getDlc() {
-        return Collections.unmodifiableCollection(dlcMap.values());
+        return Collections.unmodifiableCollection(dlcList);
     }
 }
