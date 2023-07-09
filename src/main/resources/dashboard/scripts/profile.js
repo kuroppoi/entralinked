@@ -100,31 +100,33 @@ var profile = {
         document.getElementById("main-container").style.display = "flex";
     });
     
+    // Sort data lists alphabetically
+    let sortedSpecies = [...POKE_SPECIES_LIST].sort((a, b) => a.name.localeCompare(b.name));
+    let sortedMoves = [...POKE_MOVE_LIST].sort((a, b) => a.name.localeCompare(b.name));
+    let sortedItems = [...ITEM_LIST].sort((a, b) => a.name.localeCompare(b.name));
+    
     // Add species data
-    for(let i in POKE_SPECIES_LIST) {
-        let species = POKE_SPECIES_LIST[i];
-        let formattedName = "#" + ("00" + species.id).slice(-3) + " - " + species.name;
-        ELEMENT_VISITOR_DREAMER.options[ELEMENT_VISITOR_DREAMER.options.length] = new Option(formattedName, species.id);
+    for(let i in sortedSpecies) {
+        let species = sortedSpecies[i];
+        ELEMENT_VISITOR_DREAMER.options[ELEMENT_VISITOR_DREAMER.options.length] = new Option(species.name, species.id);
         
         if(species.downloadable && (isVersion2() || species.id <= 493)) {
-            ELEMENT_ENCOUNTER_SPECIES.options[ELEMENT_ENCOUNTER_SPECIES.options.length] = new Option(formattedName, species.id);
+            ELEMENT_ENCOUNTER_SPECIES.options[ELEMENT_ENCOUNTER_SPECIES.options.length] = new Option(species.name, species.id);
         }
     }
     
     // Add move data
-    for(let i in POKE_MOVE_LIST) {
-        let move = POKE_MOVE_LIST[i];
-        let formattedName = "#" + ("00" + move.id).slice(-3) + " - " + move.name;
-        ELEMENT_ENCOUNTER_MOVE.options[ELEMENT_ENCOUNTER_MOVE.options.length] = new Option(formattedName, move.id);
+    for(let i in sortedMoves) {
+        let move = sortedMoves[i];
+        ELEMENT_ENCOUNTER_MOVE.options[ELEMENT_ENCOUNTER_MOVE.options.length] = new Option(move.name, move.id);
     }
     
     // Add item data
-    for(let i in ITEM_LIST) {
-        let item = ITEM_LIST[i];
+    for(let i in sortedItems) {
+        let item = sortedItems[i];
         
         if(isVersion2() || item.id <= 626) {
-            let formattedName = "#" + ("00" + item.id).slice(-3) + " - " + item.name;
-            ELEMENT_ITEM_ID.options[ELEMENT_ITEM_ID.options.length] = new Option(formattedName, item.id);
+            ELEMENT_ITEM_ID.options[ELEMENT_ITEM_ID.options.length] = new Option(item.name, item.id);
         }
     }
     
