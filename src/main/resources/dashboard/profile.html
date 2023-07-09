@@ -155,7 +155,7 @@
           <button id="logout" class="big-button" onclick="postLogout()">Log Out</button>
         </div>
       </div>
-	  </div>
+    </div>
     <!-- Entree Forest Encounter Configuration Form -->
     <div id="configureEncounter" class="popup">
       <div class="content">
@@ -172,7 +172,7 @@
           </select>
           <label for="encounter-form-form">Form</label>
           <select id="encounter-form-form" name="form" value="0">
-            <option value="0">Normal</option>
+            <option value="0">N/A</option>
             <!-- Filled by profile.js -->
           </select>
           <label for="encounter-form-gender">Gender</label>
@@ -255,6 +255,15 @@
             <option value="WHITE_ENGLISH">White Version</option>
             <option value="BLACK_2_ENGLISH">Black Version 2</option>
             <option value="WHITE_2_ENGLISH">White Version 2</option>
+          </select>
+          <label for="visitor-form-region">Country</label>
+          <select id="visitor-form-region" name="region" value="1">
+            <!-- Filled by profile.js -->
+          </select>
+          <label for="visitor-form-subregion">State/Province</label>
+          <select id="visitor-form-subregion" name="subregion" value="0">
+            <option value="0">N/A</option>
+            <!-- Filled by profile.js -->
           </select>
           <label for="visitor-form-personality">Personality (Affects phrases used)</label>
           <input id="visitor-form-personality" name="personality" type="number" value="0" min="0" max="7"/>

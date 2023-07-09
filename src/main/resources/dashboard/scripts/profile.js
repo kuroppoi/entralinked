@@ -23,6 +23,8 @@ const ELEMENT_VISITOR_NAME = document.getElementById("visitor-form-name");
 const ELEMENT_VISITOR_TYPE = document.getElementById("visitor-form-type");
 const ELEMENT_VISITOR_SHOP_TYPE = document.getElementById("visitor-form-shop-type");
 const ELEMENT_VISITOR_GAME = document.getElementById("visitor-form-game");
+const ELEMENT_VISITOR_REGION = document.getElementById("visitor-form-region");
+const ELEMENT_VISITOR_SUBREGION = document.getElementById("visitor-form-subregion");
 const ELEMENT_VISITOR_PERSONALITY = document.getElementById("visitor-form-personality");
 const ELEMENT_VISITOR_DREAMER = document.getElementById("visitor-form-dreamer");
 
@@ -130,10 +132,21 @@ var profile = {
         }
     }
     
+    // Add region data (already sorted alphabetically)
+    for(let i in REGION_LIST) {
+        let region = REGION_LIST[i];
+        ELEMENT_VISITOR_REGION.options[ELEMENT_VISITOR_REGION.options.length] = new Option(region.name, region.id);
+    }
+    
     // Event listener for changing the form selector contents when species changes
     ELEMENT_ENCOUNTER_SPECIES.addEventListener("change", function() {
         updateEncounterFormOptions();
         ELEMENT_ENCOUNTER_FORM.value = 0;
+    });
+    
+    // Same thing, but for Join Avenue visitor region & subregion
+    ELEMENT_VISITOR_REGION.addEventListener("change", function() {
+        ELEMENT_VISITOR_SUBREGION.value = updateVisitorSubregionOptions();
     });
 })();
 
@@ -143,7 +156,7 @@ var profile = {
 
 function updateEncounterFormOptions() {
     clearSelectOptions(ELEMENT_ENCOUNTER_FORM);
-    let species = POKE_SPECIES_LIST[ELEMENT_ENCOUNTER_SPECIES.value - 1];
+    let species = POKE_SPECIES_MAP[ELEMENT_ENCOUNTER_SPECIES.value];
     
     // Update special form options
     if(species.forms) {
@@ -151,7 +164,7 @@ function updateEncounterFormOptions() {
             ELEMENT_ENCOUNTER_FORM.options[ELEMENT_ENCOUNTER_FORM.options.length] = new Option(species.forms[i], i);
         }
     } else {
-        ELEMENT_ENCOUNTER_FORM.options[ELEMENT_ENCOUNTER_FORM.options.length] = new Option("Normal", 0);
+        ELEMENT_ENCOUNTER_FORM.options[ELEMENT_ENCOUNTER_FORM.options.length] = new Option("N/A", 0);
     }
 }
 
@@ -231,6 +244,27 @@ function closeEncounterForm() {
 /**
  * Join Avenue visitor configuration stuff
  */
+ 
+ function updateVisitorSubregionOptions() {
+    clearSelectOptions(ELEMENT_VISITOR_SUBREGION);
+    let region = REGION_MAP[ELEMENT_VISITOR_REGION.value];
+    
+    // Update subregion options
+    if(region.subregions) {
+        let sortedSubregions = [...region.subregions].sort((a, b) => a.name.localeCompare(b.name));
+        
+        for(let i in sortedSubregions) {
+            let subregion = sortedSubregions[i];
+            ELEMENT_VISITOR_SUBREGION.options[ELEMENT_VISITOR_SUBREGION.options.length] = new Option(subregion.name, subregion.id);
+        }
+        
+        return 1;
+    } else {
+        ELEMENT_VISITOR_SUBREGION.options[ELEMENT_VISITOR_SUBREGION.options.length] = new Option("N/A", 0);
+    }
+    
+    return 0;
+}
 
 function configureVisitor(index) {
     visitorTableIndex = Math.min(12, Math.min(index, profile.visitors.length));
@@ -239,6 +273,9 @@ function configureVisitor(index) {
     ELEMENT_VISITOR_TYPE.value = visitor ? visitor.type : "ACE_TRAINER_MALE";
     ELEMENT_VISITOR_SHOP_TYPE.value = visitor ? visitor.shopType : "RAFFLE";
     ELEMENT_VISITOR_GAME.value = visitor ? visitor.gameVersion : "BLACK_ENGLISH";
+    ELEMENT_VISITOR_REGION.value = visitor ? visitor.countryCode : 1;
+    updateVisitorSubregionOptions();
+    ELEMENT_VISITOR_SUBREGION.value = visitor ? visitor.stateProvinceCode : 0;
     ELEMENT_VISITOR_PERSONALITY.value = visitor ? visitor.personality : 0;
     ELEMENT_VISITOR_DREAMER.value = visitor ? visitor.dreamerSpecies : 1;
 }
@@ -267,18 +304,16 @@ function saveVisitor() {
         }
     }
     
-    // I'll make country codes configurable later... probably
     profile.visitors[visitorTableIndex] = {
         name: ELEMENT_VISITOR_NAME.value,
         type: ELEMENT_VISITOR_TYPE.value,
         shopType: ELEMENT_VISITOR_SHOP_TYPE.value,
         gameVersion: ELEMENT_VISITOR_GAME.value,
-        countryCode: 220, // United States
-        stateProvinceCode: 48, // Washington, D.C.
+        countryCode: ELEMENT_VISITOR_REGION.value,
+        stateProvinceCode: ELEMENT_VISITOR_SUBREGION.value,
         personality: ELEMENT_VISITOR_PERSONALITY.value,
         dreamerSpecies: ELEMENT_VISITOR_DREAMER.value
     };
-    console.log(profile.visitors[visitorTableIndex]);
     updateVisitorCell(visitorTableIndex);
     closeVisitorForm();
 }
