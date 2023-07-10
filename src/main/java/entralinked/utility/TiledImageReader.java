@@ -81,9 +81,10 @@ public class TiledImageReader {
         
         // Read tile data.
         for(int i = 0; i < tileCount; i++) {
-            // TODO This next loop is a bottleneck
-            for(int j = 0; j < TILE_SIZE / 2; j++) {
-                int paletteIndices = inputStream.read(); // Contains color palette indices for 2 adjacent pixels.
+            byte[] rawTileData = inputStream.readNBytes(TILE_SIZE / 2);
+            
+            for(int j = 0; j < rawTileData.length; j++) {
+                int paletteIndices = rawTileData[j]; // Contains color palette indices for 2 adjacent pixels.
                 tileData[i * TILE_SIZE + j * 2] = paletteIndices & (COLOR_PALETTE_SIZE - 1);
                 tileData[i * TILE_SIZE + j * 2 + 1] = (paletteIndices >> 4) & (COLOR_PALETTE_SIZE - 1);
             }
