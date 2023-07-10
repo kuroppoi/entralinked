@@ -70,14 +70,13 @@ public class TiledImageReader {
      * @param normalizedIndices Indicates that tile indices are not linear (Black & White C-Gear skins) and should be normalized.
      * @return A {@link BufferedImage} representing the read image data.
      */
-    public static BufferedImage readTiledImage(InputStream inputStream, 
-            int tileCount, int backgroundColorCount, byte[] backgroundColorIndices, boolean normalizeIndices) throws IOException {
+    public static BufferedImage readTiledImage(InputStream inputStream, int tileCount, int backgroundColorCount,
+            byte[] backgroundColorIndices, boolean normalizeIndices) throws IOException {
         BufferedImage image = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB); // Result image
         int[] tileData = new int[tileCount * TILE_SIZE];
         int[] tileIndices = new int[tileCount]; // Tile index lookup table
         int[] colorPalette = new int[COLOR_PALETTE_SIZE];
         int[] backgroundColorPalette = new int[backgroundColorCount];
-        boolean[] transparencyMarkers = new boolean[COLOR_PALETTE_SIZE]; // Keeps track of which colors should become background colors
         
         // Read tile data.
         for(int i = 0; i < tileCount; i++) {
@@ -94,18 +93,10 @@ public class TiledImageReader {
         }
         
         // Read foreground color data.
+        // In cases where background colors are present, pixels that use the *first* foreground color
+        // will be replaced by the background color at that pixel's location.
         for(int i = 0; i < COLOR_PALETTE_SIZE; i++) {
-            int leftBits = inputStream.read();
-            int rightBits = inputStream.read();
-            
-            // So far, the least significant bits of colors that are replaced by background colors are always 0x2A.
-            // TODO Needs more thorough testing -- is this check reliable? What do the most significant bits signify here?
-            if(backgroundColorIndices != null && rightBits == 0x2A) {
-                transparencyMarkers[i] = true;
-                continue;
-            }
-            
-            colorPalette[i] = convertColor(leftBits | rightBits << 8);
+            colorPalette[i] = convertColor(inputStream.read() | inputStream.read() << 8);
         }
         
         // Read background color data.
@@ -153,8 +144,9 @@ public class TiledImageReader {
                     int pixelY = y + j / TILE_WIDTH;
                     int paletteIndex = tileData[tileIndex * TILE_SIZE + tilePixelIndex];
                     
-                    // If this color has been marked as a 'transparent' color, use the color from the background instead.
-                    int color = !transparencyMarkers[paletteIndex] ? colorPalette[paletteIndex]
+                    // If a background is present and the foreground color index of this pixel is 0, use the background color instead.
+                    // The background color index is determined by the pixel location.
+                    int color = backgroundColorIndices == null || paletteIndex > 0 ? colorPalette[paletteIndex]
                             : backgroundColorPalette[backgroundColorIndices[pixelY * SCREEN_WIDTH + pixelX]];
                     
                     // Finally, set the pixel!
@@ -171,7 +163,7 @@ public class TiledImageReader {
                     int pixelX = x + j % TILE_WIDTH;
                     int pixelY = y + j / TILE_WIDTH;
                     int paletteIndex = tileData[i * TILE_SIZE + j];
-                    int color = !transparencyMarkers[paletteIndex] ? colorPalette[paletteIndex]
+                    int color = backgroundColorIndices == null || paletteIndex > 0 ? colorPalette[paletteIndex]
                             : backgroundColorPalette[backgroundColorIndices[pixelY * SCREEN_WIDTH + pixelX]];
                     image.setRGB(pixelX, pixelY, color);
                 }
