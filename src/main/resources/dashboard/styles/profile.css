@@ -100,20 +100,13 @@ a:link, a:visited {
 }
 
 .popup {
+    display: none;
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     background: rgba(0, 0, 0, 0.6);
-    opacity: 0;
-    transition: opacity 200ms;
-    visibility: hidden;
-}
-
-.popup:target {
-    opacity: 1;
-    visibility: visible;
 }
 
 .popup .close-button {
@@ -147,6 +140,7 @@ a:link, a:visited {
     width: 96px;
     height: 96px;
     text-align: center;
+    cursor: pointer;
 }
 
 .item-table {
@@ -163,6 +157,7 @@ a:link, a:visited {
     width: 48px;
     height: 48px;
     text-align: center;
+    cursor: pointer;
 }
 
 .item-table td a {
@@ -185,6 +180,7 @@ a:link, a:visited {
     width: 80px;
     height: 80px;
     text-align: center;
+    cursor: pointer;
 }
 
 .big-button {

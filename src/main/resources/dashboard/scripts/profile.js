@@ -11,15 +11,18 @@ const ELEMENT_DREAMER_TRAINER = document.getElementById("dreamer-trainer");
 const ELEMENT_DREAMER_TRAINER_ID = document.getElementById("dreamer-trainer-id");
 const ELEMENT_DREAMER_LEVEL = document.getElementById("dreamer-level");
 
+const ELEMENT_ENCOUNTER_CONFIG = document.getElementById("encounter-config");
 const ELEMENT_ENCOUNTER_SPECIES = document.getElementById("encounter-form-species");
 const ELEMENT_ENCOUNTER_MOVE = document.getElementById("encounter-form-move");
 const ELEMENT_ENCOUNTER_FORM = document.getElementById("encounter-form-form");
 const ELEMENT_ENCOUNTER_GENDER = document.getElementById("encounter-form-gender");
 const ELEMENT_ENCOUNTER_ANIMATION = document.getElementById("encounter-form-animation");
 
+const ELEMENT_ITEM_CONFIG = document.getElementById("item-config");
 const ELEMENT_ITEM_ID = document.getElementById("item-form-id");
 const ELEMENT_ITEM_QUANTITY = document.getElementById("item-form-quantity");
 
+const ELEMENT_VISITOR_CONFIG = document.getElementById("visitor-config");
 const ELEMENT_VISITOR_NAME = document.getElementById("visitor-form-name");
 const ELEMENT_VISITOR_TYPE = document.getElementById("visitor-form-type");
 const ELEMENT_VISITOR_SHOP_TYPE = document.getElementById("visitor-form-shop-type");
@@ -179,6 +182,7 @@ function configureEncounter(index) {
     ELEMENT_ENCOUNTER_FORM.value = encounter ? encounter.form : 0;
     ELEMENT_ENCOUNTER_GENDER.value = encounter ? encounter.gender : "GENDERLESS";
     ELEMENT_ENCOUNTER_ANIMATION.value = encounter ? encounter.animation : "WALK_AROUND";
+    ELEMENT_ENCOUNTER_CONFIG.style.display = "block";
 }
 
 function saveEncounter() {
@@ -240,7 +244,7 @@ function updateEncounterCell(index) {
 
 function closeEncounterForm() {
     encounterTableIndex = -1;
-    window.location.href = "#";
+    ELEMENT_ENCOUNTER_CONFIG.style.display = "none";
 }
 
 /**
@@ -280,6 +284,7 @@ function configureVisitor(index) {
     ELEMENT_VISITOR_SUBREGION.value = visitor ? visitor.stateProvinceCode : 0;
     ELEMENT_VISITOR_PERSONALITY.value = visitor ? visitor.personality : 0;
     ELEMENT_VISITOR_DREAMER.value = visitor ? visitor.dreamerSpecies : 1;
+    ELEMENT_VISITOR_CONFIG.style.display = "block";
 }
 
 function saveVisitor() {
@@ -357,7 +362,7 @@ function updateVisitorCell(index) {
 
 function closeVisitorForm() {
     visitorTableIndex = -1;
-    window.location.href = "#";
+    ELEMENT_VISITOR_CONFIG.style.display = "none";
 }
 
 /**
@@ -369,6 +374,7 @@ function configureItem(index) {
     let item = profile.items[itemTableIndex];
     ELEMENT_ITEM_ID.value = item ? item.id : 1;
     ELEMENT_ITEM_QUANTITY.value = item ? item.quantity : 1;
+    ELEMENT_ITEM_CONFIG.style.display = "block";
 }
 
 function saveItem() {
@@ -424,7 +430,7 @@ function updateItemCell(index) {
 
 function closeItemForm() {
     itemTableIndex = -1;
-    window.location.href = "#";
+    ELEMENT_ITEM_CONFIG.style.display = "none";
 }
 
 /**
