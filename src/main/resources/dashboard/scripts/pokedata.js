@@ -1,7 +1,9 @@
-const POKE_SPECIES_MAP = {};
-const POKE_SPECIES_LIST = [];
-const POKE_MOVE_MAP = {};
-const POKE_MOVE_LIST = [];
+const SPECIES_MAP = {};
+const SPECIES_LIST = [];
+const MOVE_MAP = {};
+const MOVE_LIST = [];
+const ABILITY_MAP = {};
+const ABILITY_LIST = [];
 const ITEM_MAP = {};
 const ITEM_LIST = [];
 const REGION_MAP = {};
@@ -1228,6 +1230,174 @@ const REGION_LIST = [];
         {id: 559, name: "Fusion Bolt"}
     ];
     
+    // Abilities
+    let abilities = [
+        {id: 1, name: "Stench"},
+        {id: 2, name: "Drizzle"},
+        {id: 3, name: "Speed Boost"},
+        {id: 4, name: "Battle Armor"},
+        {id: 5, name: "Sturdy"},
+        {id: 6, name: "Damp"},
+        {id: 7, name: "Limber"},
+        {id: 8, name: "Sand Veil"},
+        {id: 9, name: "Static"},
+        {id: 10, name: "Volt Absorb"},
+        {id: 11, name: "Water Absorb"},
+        {id: 12, name: "Oblivious"},
+        {id: 13, name: "Cloud Nine"},
+        {id: 14, name: "Compound Eyes"},
+        {id: 15, name: "Insomnia"},
+        {id: 16, name: "Color Change"},
+        {id: 17, name: "Immunity"},
+        {id: 18, name: "Flash Fire"},
+        {id: 19, name: "Shield Dust"},
+        {id: 20, name: "Own Tempo"},
+        {id: 21, name: "Suction Cups"},
+        {id: 22, name: "Intimidate"},
+        {id: 23, name: "Shadow Tag"},
+        {id: 24, name: "Rough Skin"},
+        {id: 25, name: "Wonder Guard"},
+        {id: 26, name: "Levitate"},
+        {id: 27, name: "Effect Spore"},
+        {id: 28, name: "Synchronize"},
+        {id: 29, name: "Clear Body"},
+        {id: 30, name: "Natural Cure"},
+        {id: 31, name: "Lightning Rod"},
+        {id: 32, name: "Serene Grace"},
+        {id: 33, name: "Swift Swim"},
+        {id: 34, name: "Chlorophyll"},
+        {id: 35, name: "Illuminate"},
+        {id: 36, name: "Trace"},
+        {id: 37, name: "Huge Power"},
+        {id: 38, name: "Poison Point"},
+        {id: 39, name: "Inner Focus"},
+        {id: 40, name: "Magma Armor"},
+        {id: 41, name: "Water Veil"},
+        {id: 42, name: "Magnet Pull"},
+        {id: 43, name: "Soundproof"},
+        {id: 44, name: "Rain Dish"},
+        {id: 45, name: "Sand Stream"},
+        {id: 46, name: "Pressure"},
+        {id: 47, name: "Thick Fat"},
+        {id: 48, name: "Early Bird"},
+        {id: 49, name: "Flame Body"},
+        {id: 50, name: "Run Away"},
+        {id: 51, name: "Keen Eye"},
+        {id: 52, name: "Hyper Cutter"},
+        {id: 53, name: "Pickup"},
+        {id: 54, name: "Truant"},
+        {id: 55, name: "Hustle"},
+        {id: 56, name: "Cute Charm"},
+        {id: 57, name: "Plus"},
+        {id: 58, name: "Minus"},
+        {id: 59, name: "Forecast"},
+        {id: 60, name: "Sticky Hold"},
+        {id: 61, name: "Shed Skin"},
+        {id: 62, name: "Guts"},
+        {id: 63, name: "Marvel Scale"},
+        {id: 64, name: "Liquid Ooze"},
+        {id: 65, name: "Overgrow"},
+        {id: 66, name: "Blaze"},
+        {id: 67, name: "Torrent"},
+        {id: 68, name: "Swarm"},
+        {id: 69, name: "Rock Head"},
+        {id: 70, name: "Drought"},
+        {id: 71, name: "Arena Trap"},
+        {id: 72, name: "Vital Spirit"},
+        {id: 73, name: "White Smoke"},
+        {id: 74, name: "Pure Power"},
+        {id: 75, name: "Shell Armor"},
+        {id: 76, name: "Air Lock"},
+        {id: 77, name: "Tangled Feet"},
+        {id: 78, name: "Motor Drive"},
+        {id: 79, name: "Rivalry"},
+        {id: 80, name: "Steadfast"},
+        {id: 81, name: "Snow Cloak"},
+        {id: 82, name: "Gluttony"},
+        {id: 83, name: "Anger Point"},
+        {id: 84, name: "Unburden"},
+        {id: 85, name: "Heatproof"},
+        {id: 86, name: "Simple"},
+        {id: 87, name: "Dry Skin"},
+        {id: 88, name: "Download"},
+        {id: 89, name: "Iron Fist"},
+        {id: 90, name: "Poison Heal"},
+        {id: 91, name: "Adaptability"},
+        {id: 92, name: "Skill Link"},
+        {id: 93, name: "Hydration"},
+        {id: 94, name: "Solar Power"},
+        {id: 95, name: "Quick Feet"},
+        {id: 96, name: "Normalize"},
+        {id: 97, name: "Sniper"},
+        {id: 98, name: "Magic Guard"},
+        {id: 99, name: "No Guard"},
+        {id: 100, name: "Stall"},
+        {id: 101, name: "Technician"},
+        {id: 102, name: "Leaf Guard"},
+        {id: 103, name: "Klutz"},
+        {id: 104, name: "Mold Breaker"},
+        {id: 105, name: "Super Luck"},
+        {id: 106, name: "Aftermath"},
+        {id: 107, name: "Anticipation"},
+        {id: 108, name: "Forewarn"},
+        {id: 109, name: "Unaware"},
+        {id: 110, name: "Tinted Lens"},
+        {id: 111, name: "Filter"},
+        {id: 112, name: "Slow Start"},
+        {id: 113, name: "Scrappy"},
+        {id: 114, name: "Storm Drain"},
+        {id: 115, name: "Ice Body"},
+        {id: 116, name: "Solid Rock"},
+        {id: 117, name: "Snow Warning"},
+        {id: 118, name: "Honey Gather"},
+        {id: 119, name: "Frisk"},
+        {id: 120, name: "Reckless"},
+        {id: 121, name: "Multitype"},
+        {id: 122, name: "Flower Gift"},
+        {id: 123, name: "Bad Dreams"},
+        {id: 124, name: "Pickpocket"},
+        {id: 125, name: "Sheer Force"},
+        {id: 126, name: "Contrary"},
+        {id: 127, name: "Unnerve"},
+        {id: 128, name: "Defiant"},
+        {id: 129, name: "Defeatist"},
+        {id: 130, name: "Cursed Body"},
+        {id: 131, name: "Healer"},
+        {id: 132, name: "Friend Guard"},
+        {id: 133, name: "Weak Armor"},
+        {id: 134, name: "Heavy Metal"},
+        {id: 135, name: "Light Metal"},
+        {id: 136, name: "Multiscale"},
+        {id: 137, name: "Toxic Boost"},
+        {id: 138, name: "Flare Boost"},
+        {id: 139, name: "Harvest"},
+        {id: 140, name: "Telepathy"},
+        {id: 141, name: "Moody"},
+        {id: 142, name: "Overcoat"},
+        {id: 143, name: "Poison Touch"},
+        {id: 144, name: "Regenerator"},
+        {id: 145, name: "Big Pecks"},
+        {id: 146, name: "Sand Rush"},
+        {id: 147, name: "Wonder Skin"},
+        {id: 148, name: "Analytic"},
+        {id: 149, name: "Illusion"},
+        {id: 150, name: "Imposter"},
+        {id: 151, name: "Infiltrator"},
+        {id: 152, name: "Mummy"},
+        {id: 153, name: "Moxie"},
+        {id: 154, name: "Justified"},
+        {id: 155, name: "Rattled"},
+        {id: 156, name: "Magic Bounce"},
+        {id: 157, name: "Sap Sipper"},
+        {id: 158, name: "Prankster"},
+        {id: 159, name: "Sand Force"},
+        {id: 160, name: "Iron Barbs"},
+        {id: 161, name: "Zen Mode"},
+        {id: 162, name: "Victory Star"},
+        {id: 163, name: "Turboblaze"},
+        {id: 164, name: "Teravolt"}
+    ];
+    
     // Items
     let items = [
         {id: 1, name: "Master Ball"},
@@ -2390,14 +2560,20 @@ const REGION_LIST = [];
     // Index data
     for(let i in species) {
         let entry = species[i];
-        POKE_SPECIES_MAP[entry.id] = entry;
-        POKE_SPECIES_LIST[i] = entry;
+        SPECIES_MAP[entry.id] = entry;
+        SPECIES_LIST[i] = entry;
     }
     
     for(let i in moves) {
         let move = moves[i];
-        POKE_MOVE_MAP[move.id] = move;
-        POKE_MOVE_LIST[i] = move;
+        MOVE_MAP[move.id] = move;
+        MOVE_LIST[i] = move;
+    }
+    
+    for(let i in abilities) {
+        let ability = abilities[i];
+        ABILITY_MAP[ability.id] = ability;
+        ABILITY_LIST[i] = ability;
     }
     
     for(let i in items) {

@@ -58,7 +58,7 @@ public class PkmnInfoReader {
         
         // Read Pokémon data
         int species = buffer.getShortLE(8);
-        int item = buffer.getShortLE(10) & 0xFFFF;
+        int heldItem = buffer.getShortLE(10) & 0xFFFF;
         int trainerId = buffer.getShortLE(12) & 0xFFFF;
         int trainerSecretId = buffer.getShortLE(14) & 0xFFFF;
         int level = buffer.getByte(140);
@@ -78,14 +78,14 @@ public class PkmnInfoReader {
         
         // Loosely verify data
         if(species < 1 || species > 649) throw new IOException("Invalid species");
-        if(item < 0 || item > 638) throw new IOException("Invalid held item");
+        if(heldItem < 0 || heldItem > 638) throw new IOException("Invalid held item");
         if(ability < 1 || ability > 164) throw new IOException("Invalid ability");
         if(level < 1 || level > 100) throw new IOException("Level is out of range");
         if(nature == null) throw new IOException("Invalid nature");
         
         // Create record
-        PkmnInfo info = new PkmnInfo(personality, species, item, trainerId, trainerSecretId, level, form, nature, gender, nickname, trainerName);
-        return info;
+        return new PkmnInfo(nickname, trainerName, nature, gender, species, personality,
+                trainerId, trainerSecretId, level, form, ability, heldItem);
     }
     
     private static void decryptData(ByteBuf buffer, int offset, int length, int seed) throws IOException {

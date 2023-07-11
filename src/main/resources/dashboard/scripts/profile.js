@@ -3,6 +3,7 @@ const ELEMENT_GAME_SUMMARY = document.getElementById("game-summary");
 
 const ELEMENT_DREAMER_SPRITE = document.getElementById("dreamer-sprite");
 const ELEMENT_DREAMER_SPECIES = document.getElementById("dreamer-species");
+const ELEMENT_DREAMER_ABILITY = document.getElementById("dreamer-ability");
 const ELEMENT_DREAMER_NATURE = document.getElementById("dreamer-nature");
 const ELEMENT_DREAMER_NAME = document.getElementById("dreamer-name");
 const ELEMENT_DREAMER_GENDER = document.getElementById("dreamer-gender");
@@ -59,7 +60,8 @@ var profile = {
         if(response.dreamerInfo) {
             let dreamerInfo = response.dreamerInfo;
             ELEMENT_DREAMER_SPRITE.innerHTML = "<image src='" + response.dreamerSprite + "'/>";
-            ELEMENT_DREAMER_SPECIES.innerHTML = POKE_SPECIES_LIST[dreamerInfo.species - 1].name;
+            ELEMENT_DREAMER_SPECIES.innerHTML = SPECIES_MAP[dreamerInfo.species] ? (SPECIES_MAP[dreamerInfo.species].name) : "N/A";
+            ELEMENT_DREAMER_ABILITY.innerHTML = ABILITY_MAP[dreamerInfo.ability] ? ABILITY_MAP[dreamerInfo.ability].name : "N/A";
             ELEMENT_DREAMER_NATURE.innerHTML = stringToWord(dreamerInfo.nature);
             ELEMENT_DREAMER_NAME.innerHTML = dreamerInfo.nickname;
             ELEMENT_DREAMER_GENDER.innerHTML = stringToWord(dreamerInfo.gender);
@@ -103,8 +105,8 @@ var profile = {
     });
     
     // Sort data lists alphabetically
-    let sortedSpecies = [...POKE_SPECIES_LIST].sort((a, b) => a.name.localeCompare(b.name));
-    let sortedMoves = [...POKE_MOVE_LIST].sort((a, b) => a.name.localeCompare(b.name));
+    let sortedSpecies = [...SPECIES_LIST].sort((a, b) => a.name.localeCompare(b.name));
+    let sortedMoves = [...MOVE_LIST].sort((a, b) => a.name.localeCompare(b.name));
     let sortedItems = [...ITEM_LIST].sort((a, b) => a.name.localeCompare(b.name));
     
     // Add species data
@@ -156,7 +158,7 @@ var profile = {
 
 function updateEncounterFormOptions() {
     clearSelectOptions(ELEMENT_ENCOUNTER_FORM);
-    let species = POKE_SPECIES_MAP[ELEMENT_ENCOUNTER_SPECIES.value];
+    let species = SPECIES_MAP[ELEMENT_ENCOUNTER_SPECIES.value];
     
     // Update special form options
     if(species.forms) {
