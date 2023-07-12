@@ -30,4 +30,4 @@ In order for your game to connect, you must configure the DNS settings of your D
 By default, Entralinked is configured to automatically use the local host of the system.\
 This approach is not always accurate, however, and you may need to manually configure it in `config.json`.\
 If you receive error code `60000` when trying to connect, erase the WFC Configuration of your DS and try again.\
-After tucking in a Pokémon, navigate to http://localhost/dashboard/profile.html in a web browser to configure Game Sync settings.
+After tucking in a Pokémon, navigate to http://localhost/dashboard/profile.html to configure Game Sync settings.
