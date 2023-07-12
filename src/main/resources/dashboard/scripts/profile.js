@@ -143,10 +143,10 @@ var profile = {
         ELEMENT_VISITOR_REGION.options[ELEMENT_VISITOR_REGION.options.length] = new Option(region.name, region.id);
     }
     
-    // Event listener for changing the form selector contents when species changes
+    // Event listener for changing the form & gender selector contents when species changes
     ELEMENT_ENCOUNTER_SPECIES.addEventListener("change", function() {
-        updateEncounterFormOptions();
-        ELEMENT_ENCOUNTER_FORM.value = 0;
+        ELEMENT_ENCOUNTER_FORM.value = updateEncounterFormOptions();
+        ELEMENT_ENCOUNTER_GENDER.value = updateEncounterGenderOptions();
     });
     
     // Same thing, but for Join Avenue visitor region & subregion
@@ -171,16 +171,45 @@ function updateEncounterFormOptions() {
     } else {
         ELEMENT_ENCOUNTER_FORM.options[ELEMENT_ENCOUNTER_FORM.options.length] = new Option("N/A", 0);
     }
+    
+    return 0;
+}
+
+function updateEncounterGenderOptions() {
+    clearSelectOptions(ELEMENT_ENCOUNTER_GENDER);
+    let species = SPECIES_MAP[ELEMENT_ENCOUNTER_SPECIES.value];
+    
+    // Update gender options
+    if(species.gender) {
+        console.log(species.gender);
+        switch(species.gender) {
+            case "male":
+                ELEMENT_ENCOUNTER_GENDER.options[0] = new Option("Male", "MALE");
+                return "MALE";
+            case "female":
+                ELEMENT_ENCOUNTER_GENDER.options[0] = new Option("Female", "FEMALE");
+                return "FEMALE";
+            case "unknown":
+                ELEMENT_ENCOUNTER_GENDER.options[0] = new Option("N/A", "GENDERLESS");
+                return "GENDERLESS";
+        }
+    }
+    
+    ELEMENT_ENCOUNTER_GENDER.options[0] = new Option("Male", "MALE");
+    ELEMENT_ENCOUNTER_GENDER.options[1] = new Option("Female", "FEMALE");
+    ELEMENT_ENCOUNTER_GENDER.options[2] = new Option("Random", "GENDERLESS");
+    return "GENDERLESS";
 }
 
 function configureEncounter(index) {
     encounterTableIndex = Math.min(10, Math.min(index, profile.encounters.length));
     let encounter = profile.encounters[encounterTableIndex];
     ELEMENT_ENCOUNTER_SPECIES.value = encounter ? encounter.species : 493;
-    updateEncounterFormOptions();
+    let form = updateEncounterFormOptions();
+    let gender = updateEncounterGenderOptions();
     ELEMENT_ENCOUNTER_MOVE.value = encounter ? encounter.move : 0;
-    ELEMENT_ENCOUNTER_FORM.value = encounter ? encounter.form : 0;
-    ELEMENT_ENCOUNTER_GENDER.value = encounter ? encounter.gender : "GENDERLESS";
+    ELEMENT_ENCOUNTER_FORM.value = encounter ? encounter.form : form;
+    ELEMENT_ENCOUNTER_GENDER.value = encounter ? encounter.gender : gender;
     ELEMENT_ENCOUNTER_ANIMATION.value = encounter ? encounter.animation : "LOOK_AROUND";
     ELEMENT_ENCOUNTER_CONFIG.style.display = "block";
 }
