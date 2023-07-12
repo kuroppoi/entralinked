@@ -505,7 +505,7 @@ const REGION_LIST = [];
         {id: 489, name: "Phione", downloadable: true},
         {id: 490, name: "Manaphy", downloadable: true},
         {id: 491, name: "Darkrai", downloadable: true},
-        {id: 492, name: "Shaymin", downloadable: true},
+        {id: 492, name: "Shaymin", downloadable: true, forms: ["Land", "Sky"]},
         {id: 493, name: "Arceus", downloadable: true, forms: [
             "Normal", "Fighting", "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost",
             "Steel", "Fire", "Water", "Grass", "Electric", "Psychic", "Ice", "Dragon", "Dark"]},
