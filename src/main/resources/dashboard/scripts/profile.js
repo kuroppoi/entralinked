@@ -229,12 +229,19 @@ function updateEncounterCell(index) {
     if(encounterData) {
         spriteImage = spriteBase + encounterData.species + ".png";
         
-        // Use unique form sprite if it exists
         if(encounterData.form > 0) {
+            // Use unique form sprite if it exists
             let formSpriteImage = spriteBase + encounterData.species + "-" + encounterData.form + ".png";
             
             if(checkURL(formSpriteImage)){
                 spriteImage = formSpriteImage;
+            }
+        } else if(encounterData.gender == "FEMALE") {
+            // Otherwise, use female sprite if it exists
+            let femaleSpriteImage = spriteBase + "female/" + encounterData.species + ".png";
+            
+            if(checkURL(femaleSpriteImage)){
+                spriteImage = femaleSpriteImage;
             }
         }
     }
