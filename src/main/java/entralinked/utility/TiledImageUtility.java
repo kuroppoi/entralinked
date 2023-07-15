@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Utility class for reading tiled images (C-Gear & Pokédex skin data) into a usable {@link BufferedImage}.
+ * Utility class for reading/writing tiled images to/from {@link BufferedImage} objects.
  */
 public class TiledImageUtility {
     
