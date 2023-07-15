@@ -76,6 +76,7 @@ public class PlayerManager {
                     String name = file.getName();
                     
                     try {
+                        // Skip if game save data file has an invalid name
                         if(!name.matches("^SAV-[A-HJ-NP-Z2-9]{10}.bin$")) {
                             logger.warn("Game save data {} will not be migrated because the file name is invalid", name);
                             file.delete();
@@ -85,6 +86,7 @@ public class PlayerManager {
                         String gameSyncId = name.split("-")[1].replace(".bin", "");
                         File outputDirectory = new File(dataDirectory, gameSyncId);
                         
+                        // Skip if game save data does not belong to any existing Game Sync data
                         if(!outputDirectory.isDirectory()) {
                             logger.warn("Game save data {} will not be migrated because no Game Sync data exists for it", name);
                             file.delete();

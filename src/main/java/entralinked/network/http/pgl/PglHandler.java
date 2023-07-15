@@ -234,7 +234,7 @@ public class PglHandler implements HttpHandler {
             user.setDlcOverride("ZUKAN", new Dlc(player.getDexSkinFile().getAbsolutePath(),
                     "custom", "IRAO", "ZUKAN", dexSkinIndex, 25090, 0, true));
         } else {
-            dexSkinIndex = dlcList.getDlcIndex("IRAO", "ZUKAN", player.getDexSkin());
+            dexSkinIndex = dlcList.getDlcIndex("IRAO", "ZUKAN", dexSkin);
             user.removeDlcOverride("ZUKAN");
         }
         
