@@ -128,7 +128,16 @@ public class TiledImageUtility {
         // In cases where background colors are present, pixels that use the *first* foreground color
         // will be replaced by the background color at that pixel's location.
         for(int i = 0; i < COLOR_PALETTE_SIZE; i++) {
-            colorPalette[i] = ColorUtility.convertBGR555ToRGB888(inputStream.readShort());
+            int color = inputStream.readShort();
+            
+            // The game seems to always replace the first color of the foreground with the background,
+            // so let's just set it to black so that C-Gear skin previews are more accurate.
+            // This won't do anything for Pokédex skins, as they use a special background color palette.
+            if(i == 0) {
+                colorPalette[i] = 0;
+            } else {
+                colorPalette[i] = ColorUtility.convertBGR555ToRGB888(color);
+            }
         }
         
         // Read background color data.
