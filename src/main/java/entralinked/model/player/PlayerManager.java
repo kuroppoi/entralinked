@@ -67,7 +67,7 @@ public class PlayerManager {
         }
         
         // Migrate game save data files
-        File gameSaveDirectory = new File("savedata");
+        File gameSaveDirectory = new File(dataDirectory, "savedata");
         
         if(gameSaveDirectory.exists()) {
             for(File file : gameSaveDirectory.listFiles()) {
