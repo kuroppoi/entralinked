@@ -133,11 +133,7 @@ public class TiledImageUtility {
             // The game seems to always replace the first color of the foreground with the background,
             // so let's just set it to black so that C-Gear skin previews are more accurate.
             // This won't do anything for Pokédex skins, as they use a special background color palette.
-            if(i == 0) {
-                colorPalette[i] = 0;
-            } else {
-                colorPalette[i] = ColorUtility.convertBGR555ToRGB888(color);
-            }
+            colorPalette[i] = i == 0 ? 0 : ColorUtility.convertBGR555ToRGB888(color);
         }
         
         // Read background color data.
