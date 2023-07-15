@@ -158,13 +158,19 @@ public class TiledImageUtility {
                 int flipBits = rightBits & 12;
                 
                 // The normalized tile index is the index of the in-memory tile index in the lookup table.
-                int tileIndex = 0;
+                int tileIndex = -1;
                 
                 for(int k = 0; k < tileIndices.length; k++) {
                     if(memoryIndex == tileIndices[k]) {
                         tileIndex = k;
                         break;
                     }
+                }
+                
+                // If no tile could be found, then just skip it.
+                // TODO It is possible that it uses background colors in this case, but just leaving the tile black should be good enough.
+                if(tileIndex == -1) {
+                    continue;
                 }
                 
                 // Apply the pixels of this tile to the resulting image.
