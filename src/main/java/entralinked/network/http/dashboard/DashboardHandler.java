@@ -284,6 +284,12 @@ public class DashboardHandler implements HttpHandler {
             BufferedImage image = ImageIO.read(ctx.bodyInputStream());
             BufferedImage previewImage = null;
             
+            // Make sure file is a valid image
+            if(image == null) {
+                ctx.json(new DashboardStatusMessage("File is either not an image or uses an unsupported format.", true));
+                return;
+            }
+            
             // Make sure image has the correct dimensions
             if(image.getWidth() != 256 || image.getHeight() != 192) {
                 ctx.json(new DashboardStatusMessage("Image must be 256 x 192 pixels.", true));
