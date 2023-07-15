@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -58,7 +59,7 @@ public class PlayerManager {
                     PlayerDto player = mapper.readValue(file, PlayerDto.class);
                     File outputDirectory = new File(dataDirectory, player.gameSyncId());
                     outputDirectory.mkdirs();
-                    Files.copy(file.toPath(), new File(outputDirectory, "data.json").toPath());
+                    Files.copy(file.toPath(), new File(outputDirectory, "data.json").toPath(), StandardCopyOption.REPLACE_EXISTING);
                     file.delete();
                 } catch(IOException e) {
                     logger.error("Could not migrate player data {}", file.getName());
@@ -90,10 +91,10 @@ public class PlayerManager {
                             continue;
                         }
                         
-                        Files.copy(file.toPath(), new File(outputDirectory, "save.bin").toPath());
+                        Files.copy(file.toPath(), new File(outputDirectory, "save.bin").toPath(), StandardCopyOption.REPLACE_EXISTING);
                         file.delete();
                     } catch(IOException e) {
-                        logger.error("Could not migrate game save data {}", name);
+                        logger.error("Could not migrate game save data {}", name, e);
                     }
                 }
             }
