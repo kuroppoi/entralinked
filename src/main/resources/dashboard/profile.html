@@ -132,7 +132,7 @@
                 <option disabled>──────────────────────</option>
               </select>
               <button onclick="openFileChooser('cgear-file-input')">Upload Custom</button>
-              <input id="cgear-file-input" type="file" accept="image/*" onchange="uploadSkin('CGEAR', this.files[0])" onclick="this.value = null;" hidden/>
+              <input id="cgear-file-input" type="file" accept=".png, .bmp, .jpg, .jpeg" onchange="uploadSkin('CGEAR', this.files[0])" onclick="this.value = null;" hidden/>
             </div>
             <div>
               <label>Pokédex Skin | </label><a href="#" onclick="return previewSkin('dex-skin', 'ZUKAN')">Preview</a>
@@ -141,7 +141,7 @@
                 <option disabled>──────────────────────</option>
               </select>
               <button onclick="openFileChooser('dex-file-input')">Upload Custom</button>
-              <input id="dex-file-input" type="file" accept="image/*" onchange="uploadSkin('ZUKAN', this.files[0])" onclick="this.value = null;" hidden/>
+              <input id="dex-file-input" type="file" accept=".png, .bmp, .jpg, .jpeg" onchange="uploadSkin('ZUKAN', this.files[0])" onclick="this.value = null;" hidden/>
             </div>
             <div>
               <label>Musical Show</label>
