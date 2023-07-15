@@ -1,7 +1,11 @@
 package entralinked.network.http.dashboard;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,6 +19,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.bouncycastle.util.Arrays;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,8 +35,11 @@ import entralinked.model.player.Player;
 import entralinked.model.player.PlayerManager;
 import entralinked.model.player.PlayerStatus;
 import entralinked.network.http.HttpHandler;
+import entralinked.utility.ColorUtility;
+import entralinked.utility.Crc16;
 import entralinked.utility.GsidUtility;
-import entralinked.utility.TiledImageReader;
+import entralinked.utility.LEOutputStream;
+import entralinked.utility.TiledImageUtility;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.http.Context;
@@ -45,7 +53,7 @@ import io.javalin.json.JavalinJackson;
 public class DashboardHandler implements HttpHandler {
     
     private static final Logger logger = LogManager.getLogger();
-    private final Map<Dlc, BufferedImage> skinPreviewCache = new HashMap<>();
+    private final Map<Object, BufferedImage> skinPreviewCache = new HashMap<>();
     private final DlcList dlcList;
     private final PlayerManager playerManager;
     
@@ -57,15 +65,49 @@ public class DashboardHandler implements HttpHandler {
         logger.info("Loading C-Gear and Pokédex skin previews ...");
         List<Dlc> skins = dlcList.getDlcList(dlc -> dlc.type().startsWith("CGEAR") || dlc.type().equals("ZUKAN"));
         
+        // Cache default skins
         for(Dlc skin : skins) {
             try(FileInputStream inputStream = new FileInputStream(skin.path())) {
-                BufferedImage image = 
-                        skin.type().equals("ZUKAN") ? TiledImageReader.readDexSkin(inputStream) :
-                        skin.type().equals("CGEAR") ? TiledImageReader.readCGearSkin(inputStream, true) :
-                        TiledImageReader.readCGearSkin(inputStream, false); // CGEAR2
+                BufferedImage image = skin.type().equals("ZUKAN") ? TiledImageUtility.readDexSkin(inputStream, true)
+                        : skin.type().equals("CGEAR") ? TiledImageUtility.readCGearSkin(inputStream, true)
+                        : TiledImageUtility.readCGearSkin(inputStream, false); // CGEAR2
                 skinPreviewCache.put(skin, image);
             } catch(IOException | IndexOutOfBoundsException e) {
                 logger.error("Could not load image for skin {} of type {}", skin.name(), skin.type(), e);
+            }
+        }
+        
+        // Cache custom skins for each player
+        for(Player player : playerManager.getPlayers()) {
+            File cgearSkinFile = player.getCGearSkinFile();
+            File dexSkinFile = player.getDexSkinFile();
+            
+            // Cache custom C-Gear skin preview if it exists
+            if(cgearSkinFile.exists()) {
+                try(FileInputStream inputStream = new FileInputStream(cgearSkinFile)) {
+                    boolean version2 = player.getGameVersion().isVersion2();
+                    
+                    // Read the C-Gear skin image
+                    BufferedImage image = TiledImageUtility.readCGearSkin(inputStream, !version2);
+                    
+                    // Cache the result
+                    skinPreviewCache.put("%s/%s".formatted(player.getGameSyncId(), version2 ? "CGEAR2" : "CGEAR"), image);
+                } catch(IOException | IndexOutOfBoundsException e) {
+                    logger.error("Could not load custom C-Gear skin preview for player {}", player.getGameSyncId(), e);
+                }
+            }
+            
+            // Cache custom Pokédex skin preview if it exists
+            if(dexSkinFile.exists()) {
+                try(FileInputStream inputStream = new FileInputStream(dexSkinFile)) {
+                    // Read the Pokédex skin image
+                    BufferedImage image = TiledImageUtility.readDexSkin(inputStream, true);
+                    
+                    // Cache the result
+                    skinPreviewCache.put("%s/ZUKAN".formatted(player.getGameSyncId()), image);
+                } catch(IOException | IndexOutOfBoundsException e) {
+                    logger.error("Could not load custom Pokédex skin preview for player {}", player.getGameSyncId(), e);
+                }
             }
         }
         
@@ -77,6 +119,7 @@ public class DashboardHandler implements HttpHandler {
         javalin.get("/dashboard/previewskin", this::handlePreviewSkin);
         javalin.get("/dashboard/dlc", this::handleRetrieveDlcList);
         javalin.get("/dashboard/profile", this::handleRetrieveProfile);
+        javalin.post("/dashboard/uploadskin", this::handleUploadSkin);
         javalin.post("/dashboard/profile", this::handleUpdateProfile);
         javalin.post("/dashboard/login", this::handleLogin);
         javalin.post("/dashboard/logout", this::handleLogout);
@@ -111,15 +154,38 @@ public class DashboardHandler implements HttpHandler {
         
         // Make sure query parameters are present
         if(type == null || name == null) {
-            ctx.status(404);
+            ctx.status(HttpStatus.NOT_FOUND);
             return;
         }
         
+        // Handle custom skin preview
+        if(name.equals("custom")) {
+            Player player = ctx.sessionAttribute("player");
+            
+            // Check if player exists
+            if(player == null) {
+                ctx.status(HttpStatus.NOT_FOUND);
+                return;
+            }
+            
+            BufferedImage previewImage = skinPreviewCache.get("%s/%s".formatted(player.getGameSyncId(), type));
+            
+            // Check if preview image exists
+            if(previewImage == null) {
+                ctx.status(HttpStatus.NOT_FOUND);
+                return;
+            }
+            
+            ImageIO.write(previewImage, "png", ctx.outputStream());
+            return;
+        }
+        
+        // Handle DLC skin preview
         Dlc dlc = dlcList.getDlc("IRAO", type, name);
         
         // Check if DLC exists
         if(dlc == null) {
-            ctx.status(404);
+            ctx.status(HttpStatus.NOT_FOUND);
             return;
         }
         
@@ -188,7 +254,118 @@ public class DashboardHandler implements HttpHandler {
         
         // Store session attribute and send response
         ctx.sessionAttribute("player", player);
-        ctx.json(new DashboardStatusMessage("ok")); // heh
+        ctx.json(Collections.EMPTY_MAP);
+    }
+    
+    /**
+     * POST request handler for {@code /dashboard/uploadskin}
+     */
+    private void handleUploadSkin(Context ctx) throws IOException {
+        Player player = ctx.sessionAttribute("player");
+        
+        // Check if player exists
+        if(player == null) {
+            ctx.json(new DashboardStatusMessage("Unauthorized", true));
+            ctx.status(HttpStatus.UNAUTHORIZED);
+            return;
+        }
+        
+        String type = ctx.queryParam("type");
+        String fileName = ctx.queryParam("filename");
+        
+        // Check if type & file name are present and are valid
+        if(type == null || fileName == null ||
+                (!type.equals("CGEAR") && !type.equals("CGEAR2") && !type.equals("ZUKAN"))) {
+            ctx.status(HttpStatus.BAD_REQUEST);
+            return;
+        }
+        
+        try {
+            BufferedImage image = ImageIO.read(ctx.bodyInputStream());
+            BufferedImage previewImage = null;
+            
+            // Make sure image has the correct dimensions
+            if(image.getWidth() != 256 || image.getHeight() != 192) {
+                ctx.json(new DashboardStatusMessage("Image must be 256 x 192 pixels.", true));
+                return;
+            }
+            
+            File outputFile = type.equals("ZUKAN") ? player.getDexSkinFile() : player.getCGearSkinFile();
+            ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
+            byte[] skinBytes = null;
+            
+            // Write skin data to buffer and generate a preview image
+            switch(type) {
+                case "CGEAR":
+                case "CGEAR2":
+                    boolean offsetIndices = type.equals("CGEAR");
+                    TiledImageUtility.writeCGearSkin(byteOutputStream, image, offsetIndices);
+                    skinBytes = byteOutputStream.toByteArray();
+                    previewImage = TiledImageUtility.readCGearSkin(new ByteArrayInputStream(skinBytes), offsetIndices);
+                    break;
+                case "ZUKAN":
+                    // Generate some background colors based roughly on what's in the image
+                    int[] backgroundColors = Arrays.copyOf(TiledImageUtility.DEFAULT_DEX_BACKGROUND_COLORS, 64);
+                    int backgroundColor = image.getRGB(0, 0);
+                    int dexColor = image.getRGB(0, 134);
+                    int buttonColor = image.getRGB(128, 134);
+                    
+                    // Background colors (58, 59, 60)
+                    for(int i = 0; i < 3; i++) {
+                        backgroundColors[i + 58] = ColorUtility.multiplyColor(backgroundColor, 0.7 + i * 0.15);
+                    }
+                    
+                    // Pokédex colors (48, 49, 50, 51, 52)
+                    for(int i = 0; i < 5; i++) {
+                        backgroundColors[i + 48] = ColorUtility.multiplyColor(dexColor, 1.15 - i * 0.15);
+                    }
+                    
+                    // Pokédex button colors (53, 54, 55, 56)
+                    for(int i = 0; i < 4; i++) {
+                        backgroundColors[i + 53] = ColorUtility.multiplyColor(buttonColor, 0.55 + i * 0.15);
+                    }
+                    
+                    // Process skin data
+                    TiledImageUtility.writeDexSkin(byteOutputStream, image, backgroundColors);
+                    skinBytes = byteOutputStream.toByteArray();
+                    previewImage = TiledImageUtility.readDexSkin(new ByteArrayInputStream(skinBytes), true);
+                    break;
+            }
+            
+            // Write custom skin to output file
+            try(LEOutputStream outputStream = new LEOutputStream(new FileOutputStream(outputFile))) {
+                outputStream.write(skinBytes);
+                outputStream.writeShort(Crc16.calc(skinBytes));
+            }
+            
+            // Cache preview image
+            skinPreviewCache.put("%s/%s".formatted(player.getGameSyncId(), type), previewImage);
+        } catch(IOException e) {
+            logger.error("An error occured while processing custom skin data", e);
+            ctx.status(HttpStatus.INTERNAL_SERVER_ERROR);
+            return;
+        } catch(IllegalArgumentException e) {
+            // Silently discard exception, only send feedback to the client
+            ctx.json(new DashboardStatusMessage(e.getMessage(), true));
+            return;
+        }
+        
+        // Update player information
+        if(type.equals("ZUKAN")) {
+            player.setDexSkin("custom");
+            player.setCustomDexSkin(fileName);
+        } else {
+            player.setCGearSkin("custom");
+            player.setCustomCGearSkin(fileName);
+        }
+        
+        // Try to save player data
+        if(!playerManager.savePlayer(player)) {
+            ctx.json(new DashboardStatusMessage("Profile data could not be saved due to an error.", true));
+            return;
+        }
+        
+        ctx.json(Collections.EMPTY_MAP);
     }
     
     /**

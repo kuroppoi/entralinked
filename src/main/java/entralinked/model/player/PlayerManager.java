@@ -25,7 +25,6 @@ public class PlayerManager {
     private final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
     private final Map<String, Player> playerMap = new ConcurrentHashMap<>();
     private final File dataDirectory = new File("players");
-    private final File gameSaveDirectory = new File(dataDirectory, "savedata");
     
     public PlayerManager() {
         logger.info("Loading player data ...");
@@ -35,14 +34,72 @@ public class PlayerManager {
             return;
         }
         
+        // Migrate player data if necessary
+        migrateLegacyData();
+        
         // Load player data
         for(File file : dataDirectory.listFiles()) {
-            if(!file.isDirectory()) {
-                loadPlayer(file);
+            if(file.isDirectory()) {
+                loadPlayer(new File(file, "data.json"));
             }
         }
         
         logger.info("Loaded {} player(s)", playerMap.size());
+    }
+    
+    /**
+     * Migrates player data from the old storage format.
+     */
+    private void migrateLegacyData() {
+        // Migrate player configuration files
+        for(File file : dataDirectory.listFiles()) {
+            if(!file.isDirectory()) {
+                try {
+                    PlayerDto player = mapper.readValue(file, PlayerDto.class);
+                    File outputDirectory = new File(dataDirectory, player.gameSyncId());
+                    outputDirectory.mkdirs();
+                    Files.copy(file.toPath(), new File(outputDirectory, "data.json").toPath());
+                    file.delete();
+                } catch(IOException e) {
+                    logger.error("Could not migrate player data {}", file.getName());
+                }
+            }
+        }
+        
+        // Migrate game save data files
+        File gameSaveDirectory = new File("savedata");
+        
+        if(gameSaveDirectory.exists()) {
+            for(File file : gameSaveDirectory.listFiles()) {
+                if(!file.isDirectory()) {
+                    String name = file.getName();
+                    
+                    try {
+                        if(!name.matches("^SAV-[A-HJ-NP-Z2-9]{10}.bin$")) {
+                            logger.warn("Game save data {} will not be migrated because the file name is invalid", name);
+                            file.delete();
+                            continue;
+                        }
+                        
+                        String gameSyncId = name.split("-")[1].replace(".bin", "");
+                        File outputDirectory = new File(dataDirectory, gameSyncId);
+                        
+                        if(!outputDirectory.isDirectory()) {
+                            logger.warn("Game save data {} will not be migrated because no Game Sync data exists for it", name);
+                            file.delete();
+                            continue;
+                        }
+                        
+                        Files.copy(file.toPath(), new File(outputDirectory, "save.bin").toPath());
+                        file.delete();
+                    } catch(IOException e) {
+                        logger.error("Could not migrate game save data {}", name);
+                    }
+                }
+            }
+            
+            gameSaveDirectory.delete();
+        }
     }
     
     /**
@@ -60,6 +117,7 @@ public class PlayerManager {
                 throw new IOException("Duplicate Game Sync ID %s".formatted(gameSyncId));
             }
             
+            player.setDataDirectory(inputFile.getParentFile());
             playerMap.put(gameSyncId, player);
         } catch(IOException e) {
             logger.error("Could not load player data at {}", inputFile.getAbsolutePath(), e);
@@ -75,12 +133,9 @@ public class PlayerManager {
     
     /**
      * Saves the data of the specified player to disk, and returns {@code true} if it succeeds.
-     * The output file is generated as follows:
-     * 
-     * {@code new File(dataDirectory, "PGL-%s".formatted(gameSyncId))}
      */
     public boolean savePlayer(Player player) {
-        return savePlayer(player, new File(dataDirectory, "PGL-%s.json".formatted(player.getGameSyncId())));
+        return savePlayer(player, player.getDataFile());
     }
     
     /**
@@ -124,9 +179,18 @@ public class PlayerManager {
             return null;
         }
         
+        // Create data directory
+        File playerDataDirectory = new File(dataDirectory, gameSyncId);
+        
+        if(playerDataDirectory.exists()) {
+            logger.warn("Can't register player {} because the data directory already exists!", gameSyncId);
+            return null;
+        }
+        
         // Construct player object
         Player player = new Player(gameSyncId);
         player.setStatus(PlayerStatus.AWAKE);
+        player.setDataDirectory(playerDataDirectory);
         
         // Try to save player data
         if(!savePlayer(player)) {
@@ -140,33 +204,17 @@ public class PlayerManager {
     
     /**
      * Stores a game save file read from the specified input stream to a file.
-     * The output file is generated as follows:
-     * 
-     * {@code new File(gameSaveDirectory, "SAV-%s.bin".formatted(gameSyncId))}
      * 
      * @return {@code true} if the game save file was written successfully, otherwise {@code false}.
      */
     public boolean storePlayerGameSaveFile(Player player, InputStream inputStream) {
-        // Try create directories
-        if(!gameSaveDirectory.exists() && !gameSaveDirectory.mkdirs()) {
-            return false;
-        }
-        
-        // Write the save data        
-        try(FileOutputStream outputStream = new FileOutputStream(getPlayerGameSaveFile(player))) {
+        try(FileOutputStream outputStream = new FileOutputStream(player.getSaveFile())) {
             inputStream.transferTo(outputStream);
             return true;
         } catch(IOException e) {
             logger.error("Could not write game save data for player {}", player.getGameSyncId());
             return false;
         }
-    }
-    
-    /**
-     * @return The game save data {@link File} object associated with this player.
-     */
-    public File getPlayerGameSaveFile(Player player) {
-        return new File(gameSaveDirectory, "SAV-%s.bin".formatted(player.getGameSyncId()));
     }
     
     /**

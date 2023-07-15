@@ -5,11 +5,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import entralinked.model.dlc.Dlc;
+
 public class User {
     
     private final String id;
     private final String password; // I debated hashing it, but.. it's a 3-digit password...
     private final Map<String, GameProfile> profiles = new HashMap<>();
+    private final Map<String, Dlc> dlcOverrides = new HashMap<>();
     
     public User(String id, String password) {
         this.id = id;
@@ -46,5 +49,25 @@ public class User {
     
     protected Map<String, GameProfile> getProfileMap() {
         return Collections.unmodifiableMap(profiles);
+    }
+    
+    public void setDlcOverride(String type, Dlc target) {
+        if(target == null) {
+            dlcOverrides.remove(type);
+        } else {
+            dlcOverrides.put(type, target);
+        }
+    }
+    
+    public void removeDlcOverride(String type) {
+        dlcOverrides.remove(type);
+    }
+    
+    public boolean hasDlcOverride(String type) {
+        return dlcOverrides.containsKey(type);
+    }
+    
+    public Dlc getDlcOverride(String type) {
+        return dlcOverrides.get(type);
     }
 }

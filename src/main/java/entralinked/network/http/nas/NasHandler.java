@@ -117,6 +117,14 @@ public class NasHandler implements HttpHandler {
      * POST handler for {@code /ac action=SVCLOC}
      */
     private void handleRetrieveServiceLocation(NasRequest request, Context ctx) throws IOException {
+        // Authenticate user
+        User user = userManager.authenticateUser(request.userId(), request.password());
+        
+        if(user == null) {
+            result(ctx, NasReturnCode.USER_NOT_FOUND);
+            return;
+        }
+        
         // Determine service location from type
         String service = switch(request.serviceType()) {
             case "0000" -> "external"; // External game-specific service
@@ -125,7 +133,7 @@ public class NasHandler implements HttpHandler {
         };
         
         // Prepare user credentials
-        ServiceCredentials credentials = userManager.createServiceSession(null, service, null);
+        ServiceCredentials credentials = userManager.createServiceSession(user, service, null);
         result(ctx, new NasServiceLocationResponse(true, service, credentials.authToken()));
     }
     

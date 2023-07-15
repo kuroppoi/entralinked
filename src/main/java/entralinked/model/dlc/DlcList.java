@@ -79,6 +79,15 @@ public class DlcList {
                 
                 // DLC Content level
                 for(File dlcFile : subFile.listFiles()) {
+                    String name = dlcFile.getName();
+                    
+                    // Check if DLC name is reserved as an internal identifier
+                    if(name.equals("none") || name.equals("custom")) {
+                        logger.warn("DLC '{}/{}/{}' could not be loaded because it uses a reserved name.",
+                                file.getName(), subFile.getName(), name);
+                        continue;
+                    }
+                    
                     // Load DLC data
                     Dlc dlc = loadDlcFile(file.getName(), subFile.getName(), index, dlcFile);
                     

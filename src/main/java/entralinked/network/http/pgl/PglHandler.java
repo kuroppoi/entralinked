@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import entralinked.Configuration;
 import entralinked.Entralinked;
 import entralinked.model.avenue.AvenueVisitor;
+import entralinked.model.dlc.Dlc;
 import entralinked.model.dlc.DlcList;
 import entralinked.model.pkmn.PkmnInfo;
 import entralinked.model.pkmn.PkmnInfoReader;
@@ -26,6 +27,7 @@ import entralinked.model.player.Player;
 import entralinked.model.player.PlayerManager;
 import entralinked.model.player.PlayerStatus;
 import entralinked.model.user.ServiceSession;
+import entralinked.model.user.User;
 import entralinked.model.user.UserManager;
 import entralinked.network.http.HttpHandler;
 import entralinked.network.http.HttpRequestHandler;
@@ -108,8 +110,9 @@ public class PglHandler implements HttpHandler {
             return;
         }
         
-        // Store request object for subsequent handlers
+        // Store attributes for subsequent handlers
         ctx.attribute("request", request);
+        ctx.attribute("user", session.user());
     }
     
     /**
@@ -142,7 +145,7 @@ public class PglHandler implements HttpHandler {
             writeStatusCode(outputStream, 1); // Unauthorized
             return;
         }
-                
+        
         // Create bitlist
         byte[] bitlist = new byte[128]; // TODO pool? maybe just cache
         
@@ -187,6 +190,7 @@ public class PglHandler implements HttpHandler {
     private void handleDownloadSaveData(PglRequest request, Context ctx) throws IOException {
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
         Player player = playerManager.getPlayer(request.gameSyncId());
+        User user = ctx.attribute("user");
         
         // Check if player exists
         if(player == null) {
@@ -206,6 +210,33 @@ public class PglHandler implements HttpHandler {
         
         List<DreamEncounter> encounters = player.getEncounters();
         List<DreamItem> items = player.getItems();
+        
+        // Prepare DLC information
+        String cgearType = player.getGameVersion().isVersion2() ? "CGEAR2" : "CGEAR";
+        String cgearSkin = player.getCGearSkin();
+        String dexSkin = player.getDexSkin();
+        int cgearSkinIndex = 0;
+        int dexSkinIndex = 0;
+        
+        // Create or remove custom C-Gear skin DLC override
+        if("custom".equals(cgearSkin)) {
+            cgearSkinIndex = 1;
+            user.setDlcOverride(cgearType, new Dlc(player.getCGearSkinFile().getAbsolutePath(),
+                    "custom", "IRAO", cgearType, cgearSkinIndex, 9730, 0, true));
+        } else {
+            cgearSkinIndex = dlcList.getDlcIndex("IRAO", cgearType, cgearSkin);
+            user.removeDlcOverride(cgearType);
+        }
+        
+        // Create or remove custom Pokédex skin DLC override
+        if("custom".equals(dexSkin)) {
+            dexSkinIndex = 1;
+            user.setDlcOverride("ZUKAN", new Dlc(player.getDexSkinFile().getAbsolutePath(),
+                    "custom", "IRAO", "ZUKAN", dexSkinIndex, 25090, 0, true));
+        } else {
+            dexSkinIndex = dlcList.getDlcIndex("IRAO", "ZUKAN", player.getDexSkin());
+            user.removeDlcOverride("ZUKAN");
+        }
         
          // When waking up a Pokémon, these 4 bytes are written to 0x1D304 in the save file.
          // If the bytes in the game's save file match the new bytes, they will be set to 0x00000000
@@ -229,8 +260,8 @@ public class PglHandler implements HttpHandler {
         outputStream.writeShort(player.getLevelsGained());
         outputStream.write(0); // Unknown
         outputStream.write(dlcList.getDlcIndex("IRAO", "MUSICAL", player.getMusical()));
-        outputStream.write(dlcList.getDlcIndex("IRAO", player.getGameVersion().isVersion2() ? "CGEAR2" : "CGEAR", player.getCGearSkin()));
-        outputStream.write(dlcList.getDlcIndex("IRAO", "ZUKAN", player.getDexSkin()));
+        outputStream.write(cgearSkinIndex);
+        outputStream.write(dexSkinIndex);
         outputStream.write(decorList.isEmpty() ? 0 : 1); // Seems to be a flag for indicating whether or not decor data is present
         outputStream.write(0); // Must be zero?
         
@@ -326,7 +357,7 @@ public class PglHandler implements HttpHandler {
         }
         
         // Check if the game save data exists
-        File file = playerManager.getPlayerGameSaveFile(player);
+        File file = player.getSaveFile();
         
         if(!file.exists()) {
             writeStatusCode(outputStream, 5); // No game save data exists for this Game Sync ID
@@ -419,7 +450,7 @@ public class PglHandler implements HttpHandler {
         // Read save data
         PkmnInfo dreamerInfo = null;
         
-        try(FileInputStream inputStream = new FileInputStream(playerManager.getPlayerGameSaveFile(player))) {
+        try(FileInputStream inputStream = new FileInputStream(player.getSaveFile())) {
             inputStream.skip(0x1D300); // Skip to dream world data
             inputStream.skip(8); // Skip to Pokémon data
             dreamerInfo = PkmnInfoReader.readPokeInfo(inputStream);

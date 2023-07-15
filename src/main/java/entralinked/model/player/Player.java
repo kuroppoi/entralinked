@@ -1,5 +1,6 @@
 package entralinked.model.player;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,6 +23,9 @@ public class Player {
     private String cgearSkin;
     private String dexSkin;
     private String musical;
+    private String customCGearSkin;
+    private String customDexSkin;
+    private File dataDirectory;
     
     public Player(String gameSyncId) {
         this.gameSyncId = gameSyncId;
@@ -131,5 +135,47 @@ public class Player {
     
     public String getMusical() {
         return musical;
+    }
+    
+    public void setCustomCGearSkin(String customCGearSkin) {
+        this.customCGearSkin = customCGearSkin;
+    }
+    
+    public String getCustomCGearSkin() {
+        return customCGearSkin;
+    }
+    
+    public void setCustomDexSkin(String customDexSkin) {
+        this.customDexSkin = customDexSkin;
+    }
+    
+    public String getCustomDexSkin() {
+        return customDexSkin;
+    }
+    
+    // IO stuff
+    
+    public void setDataDirectory(File dataDirectory) {
+        this.dataDirectory = dataDirectory;
+    }
+    
+    public File getDataDirectory() {
+        return dataDirectory;
+    }
+    
+    public File getDataFile() {
+        return new File(dataDirectory, "data.json");
+    }
+    
+    public File getSaveFile() {
+        return new File(dataDirectory, "save.bin");
+    }
+    
+    public File getCGearSkinFile() {
+        return new File(dataDirectory, "cgear.bin");
+    }
+    
+    public File getDexSkinFile() {
+        return new File(dataDirectory, "zukan.bin");
     }
 }

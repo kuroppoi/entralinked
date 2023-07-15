@@ -15,6 +15,8 @@ public record DashboardProfileMessage(
         String cgearSkin, 
         String dexSkin, 
         String musical, 
+        String customCGearSkin,
+        String customDexSkin,
         int levelsGained,
         Collection<DreamEncounter> encounters,
         Collection<DreamItem> items,
@@ -22,7 +24,8 @@ public record DashboardProfileMessage(
     
     public DashboardProfileMessage(String dreamerSprite, Player player) {
         this(player.getGameVersion().getDisplayName(), dreamerSprite, player.getDreamerInfo(), 
-                player.getCGearSkin(), player.getDexSkin(), player.getMusical(), player.getLevelsGained(), 
-                player.getEncounters(), player.getItems(), player.getAvenueVisitors());
+                player.getCGearSkin(), player.getDexSkin(), player.getMusical(), player.getCustomCGearSkin(), 
+                player.getCustomDexSkin(), player.getLevelsGained(),  player.getEncounters(), player.getItems(),
+                player.getAvenueVisitors());
     }
 }

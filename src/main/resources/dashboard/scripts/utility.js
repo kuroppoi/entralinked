@@ -42,11 +42,11 @@ async function fetchData(method, path, body) {
     if(response.status != 200) {
         if(response.status == 401) {
             window.location.href = "/dashboard/login.html"; // TODO not epic idea to put this here
-            return {};
+            return false;
         }
         
         window.alert("Server returned status code " + response.status + " while fetching " + path);
-        return {};
+        return false;
     }
     
     try {
@@ -55,5 +55,5 @@ async function fetchData(method, path, body) {
         window.alert("Could not deserialize JSON response: " + error);
     }
     
-    return {};
+    return false;
 }

@@ -127,17 +127,21 @@
           <div class="grid-container">
             <div>
               <label>C-Gear Skin | </label><a href="#" onclick="return previewSkin('cgear-skin', 'CGEAR')">Preview</a>
-              <select id="cgear-skin">
+              <select id="cgear-skin" style="margin-bottom:0px;">
                 <option value="none">Do not change</option>
                 <option disabled>──────────────────────</option>
               </select>
+              <button onclick="openFileChooser('cgear-file-input')">Upload Custom</button>
+              <input id="cgear-file-input" type="file" accept="image/*" onchange="uploadSkin('CGEAR', this.files[0])" onclick="this.value = null;" hidden/>
             </div>
             <div>
               <label>Pokédex Skin | </label><a href="#" onclick="return previewSkin('dex-skin', 'ZUKAN')">Preview</a>
-              <select id="dex-skin">
+              <select id="dex-skin" style="margin-bottom:0px;">
                 <option value="none">Do not change</option>
                 <option disabled>──────────────────────</option>
               </select>
+              <button onclick="openFileChooser('dex-file-input')">Upload Custom</button>
+              <input id="dex-file-input" type="file" accept="image/*" onchange="uploadSkin('ZUKAN', this.files[0])" onclick="this.value = null;" hidden/>
             </div>
             <div>
               <label>Musical Show</label>

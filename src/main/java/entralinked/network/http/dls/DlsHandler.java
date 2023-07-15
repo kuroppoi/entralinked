@@ -2,6 +2,7 @@ package entralinked.network.http.dls;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -9,6 +10,7 @@ import entralinked.Entralinked;
 import entralinked.model.dlc.Dlc;
 import entralinked.model.dlc.DlcList;
 import entralinked.model.user.ServiceSession;
+import entralinked.model.user.User;
 import entralinked.model.user.UserManager;
 import entralinked.network.http.HttpHandler;
 import entralinked.network.http.HttpRequestHandler;
@@ -59,6 +61,9 @@ public class DlsHandler implements HttpHandler {
             default -> throw new IllegalArgumentException("Invalid POST request action: " + request.action());
         };
         
+        // Store user attribute for subsequent handlers
+        ctx.attribute("user", session.user());
+        
         // Handle the request
         handler.process(request, ctx);
     }
@@ -67,8 +72,15 @@ public class DlsHandler implements HttpHandler {
      * POST handler for {@code /download action=list}
      */
     private void handleRetrieveDlcList(DlsRequest request, Context ctx) throws IOException {
+        User user = ctx.attribute("user");
         String gameCode = getDlcGameCode(request.dlcGameCode());
         String type = getRegionlessDlcType(request.dlcType());
+        
+        // If an overriding DLC is present, send the data for that instead.
+        if(user.hasDlcOverride(type)) {
+            ctx.result(dlcList.getDlcListString(List.of(user.getDlcOverride(type))));
+            return;
+        }
         
         // TODO NOTE: I assume that in a conventional implementation, certain DLC attributes may be omitted from the request.
         ctx.result(dlcList.getDlcListString(dlcList.getDlcList(gameCode, type, request.dlcIndex())));
@@ -78,9 +90,10 @@ public class DlsHandler implements HttpHandler {
      * POST handler for {@code /download action=contents}
      */
     private void handleRetrieveDlcContent(DlsRequest request, Context ctx) throws IOException {
+        User user = ctx.attribute("user");
         String gameCode = getDlcGameCode(request.dlcGameCode());
         String type = getRegionlessDlcType(request.dlcType());
-        Dlc dlc = dlcList.getDlc(gameCode, type, request.dlcName());
+        Dlc dlc = user.hasDlcOverride(type) ? user.getDlcOverride(type) : dlcList.getDlc(gameCode, type, request.dlcName());
         
         // Check if the requested DLC exists
         if(dlc == null) {

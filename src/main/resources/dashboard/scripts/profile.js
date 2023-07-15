@@ -95,6 +95,17 @@ var profile = {
         profile.cgearSkin = response.cgearSkin ? response.cgearSkin : "none";
         profile.dexSkin = response.dexSkin ? response.dexSkin : "none";
         profile.musical = response.musical ? response.musical : "none";
+        
+        if(response.customCGearSkin) {
+            profile.customCGearSkin = response.customCGearSkin;
+            ELEMENT_CGEAR_SKIN_INPUT.add(new Option(response.customCGearSkin, "custom"), 1);
+        }
+        
+        if(response.customDexSkin) {
+            profile.customDexSkin = response.customDexSkin;
+            ELEMENT_DEX_SKIN_INPUT.add(new Option(response.customDexSkin, "custom"), 1);
+        }
+        
         fetchDlcData();
         ELEMENT_LEVEL_GAIN_INPUT.value = response.levelsGained;
         
@@ -473,6 +484,42 @@ function closeItemForm() {
  * Miscellaneous stuff
  */
 
+function openFileChooser(inputDocumentId) {
+    document.getElementById(inputDocumentId).click();
+}
+
+function uploadSkin(type, file) {
+    fetchData("POST", "/dashboard/uploadskin?type=" + (type == "CGEAR" && isVersion2() ? "CGEAR2" : type)
+            + "&filename=" + file.name, file).then((response) => {
+        if(!response) {
+            return;
+        }
+        
+        // Display message if there is one
+        if(response.message) {
+            window.alert(response.message);
+        }
+        
+        // Return if error
+        if(response.error) {
+            return;
+        }
+        
+        // Update selector option
+        let selectElement = type == "CGEAR" ? ELEMENT_CGEAR_SKIN_INPUT : ELEMENT_DEX_SKIN_INPUT;
+        
+        // Add option for custom skin if one does not already exist
+        // Otherwise, update the existing one
+        if(selectElement.options[1].value == "custom") {
+            selectElement.options[1].innerHTML = file.name;
+        } else{
+            selectElement.add(new Option(file.name, "custom"), 1);
+        }
+        
+        selectElement.value = "custom";
+    });
+}
+
 function previewSkin(inputElementId, type) {
     let value = document.getElementById(inputElementId).value;
     
@@ -492,20 +539,28 @@ function previewSkin(inputElementId, type) {
 function fetchDlcData() {
     // Fetch C-Gear skins
     fetchData("GET", "/dashboard/dlc?type=" + (isVersion2() ? "CGEAR2" : "CGEAR")).then((response) => {
-        addDlcNames(ELEMENT_CGEAR_SKIN_INPUT, response);
-        ELEMENT_CGEAR_SKIN_INPUT.value = response.includes(profile.cgearSkin) ? profile.cgearSkin : "none";
+        if(response) {
+            addDlcNames(ELEMENT_CGEAR_SKIN_INPUT, response);
+            ELEMENT_CGEAR_SKIN_INPUT.value = profile.cgearSkin == "custom" && profile.customCGearSkin ? "custom" 
+                    : response.includes(profile.cgearSkin) ? profile.cgearSkin : "none";
+        }
     });
     
     // Fetch Dex skins
     fetchData("GET", "/dashboard/dlc?type=ZUKAN").then((response) => {
-        addDlcNames(ELEMENT_DEX_SKIN_INPUT, response);
-        ELEMENT_DEX_SKIN_INPUT.value = response.includes(profile.dexSkin) ? profile.dexSkin : "none";
+        if(response) {
+            addDlcNames(ELEMENT_DEX_SKIN_INPUT, response);
+            ELEMENT_DEX_SKIN_INPUT.value = profile.dexSkin == "custom" && profile.customDexSkin ? "custom" 
+                    : response.includes(profile.dexSkin) ? profile.dexSkin : "none";
+        }
     });
     
     // Fetch musicals
     fetchData("GET", "/dashboard/dlc?type=MUSICAL").then((response) => {
-        addDlcNames(ELEMENT_MUSICAL_INPUT, response);
-        ELEMENT_MUSICAL_INPUT.value = response.includes(profile.musical) ? profile.musical : "none";
+        if(response) {
+            addDlcNames(ELEMENT_MUSICAL_INPUT, response);
+            ELEMENT_MUSICAL_INPUT.value = response.includes(profile.musical) ? profile.musical : "none";
+        }
     });
 }
 
@@ -526,7 +581,9 @@ function postProfileData() {
         musical: ELEMENT_MUSICAL_INPUT.value,
         gainedLevels: ELEMENT_LEVEL_GAIN_INPUT.value
     })).then((response) => {
-        alert(response.message);
+        if(response) {
+            alert(response.message);
+        }
     });
 }
 
