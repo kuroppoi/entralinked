@@ -92,7 +92,7 @@ public class DashboardHandler implements HttpHandler {
                     
                     // Cache the result
                     skinPreviewCache.put("%s/%s".formatted(player.getGameSyncId(), version2 ? "CGEAR2" : "CGEAR"), image);
-                } catch(IOException | IndexOutOfBoundsException e) {
+                } catch(IOException | IndexOutOfBoundsException | NullPointerException e) {
                     logger.error("Could not load custom C-Gear skin preview for player {}", player.getGameSyncId(), e);
                 }
             }

@@ -33,7 +33,6 @@ public class Player {
     
     public void resetDreamInfo() {
         status = PlayerStatus.AWAKE;
-        gameVersion = null;
         dreamerInfo = null;
         encounters.clear();
         items.clear();

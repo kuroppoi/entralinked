@@ -425,10 +425,13 @@ public class PglHandler implements HttpHandler {
         // Prepare response
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
         
-        // Check if the player exists and does not already have a Pokémon tucked in
+        // Check if the player exists, has no Pokémon tucked in already and uses the same game version
         Player player = playerManager.getPlayer(request.gameSyncId());
         
-        if(player == null || (player.getStatus() != PlayerStatus.AWAKE && !configuration.allowOverwritingPlayerDreamInfo())) {
+        if(player == null
+                || (!configuration.allowOverwritingPlayerDreamInfo() && player.getStatus() != PlayerStatus.AWAKE)
+                || (!configuration.allowPlayerGameVersionMismatch() && player.getGameVersion() != null 
+                        && request.gameVersion() != player.getGameVersion())) {
             // Skip everything
             ServletInputStream inputStream = ctx.req().getInputStream();
             

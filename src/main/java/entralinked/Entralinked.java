@@ -143,21 +143,25 @@ public class Entralinked {
     
     private Configuration loadConfigFile() {
         logger.info("Loading configuration ...");
+        Configuration configuration = null;
         
         try {
             File configFile = new File("config.json");
             
             if(!configFile.exists()) {
                 logger.info("No configuration file exists - default configuration will be used");
-                mapper.writeValue(configFile, Configuration.DEFAULT);
-                return Configuration.DEFAULT;
+                configuration = Configuration.DEFAULT;
             } else {
-                return mapper.readValue(configFile, Configuration.class);
+                configuration = mapper.readValue(configFile, Configuration.class);
             }
+            
+            mapper.writeValue(configFile, configuration);
         } catch(IOException e) {
             logger.error("Could not load configuration - default configuration will be used", e);
-            return Configuration.DEFAULT;
+            configuration = Configuration.DEFAULT;
         }
+        
+        return configuration;
     }
     
     public Configuration getConfiguration() {
