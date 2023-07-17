@@ -12,12 +12,15 @@ img {
     image-rendering: pixelated;
 }
 
-input, select {
-    color: white;
-    background-color: #262626;
+input[type=text], input[type=number], select {
     border: 0px;
     border-radius: 10px;
     width: 100%;
+}
+
+input, select {
+    color: white;
+    background-color: #262626;
     margin-top: 4px;
     margin-bottom: 16px;
     padding: 4px 4px;
@@ -39,14 +42,14 @@ a:link, a:visited {
     color: white;
 }
 
-.root-container {
+.centered-container {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
 }
 
-.root-container div:first-child {
+.centered-container div:first-child {
     max-width: 532px;
     margin: auto;
 }
@@ -87,12 +90,6 @@ a:link, a:visited {
     padding-left: 5px;
 }
 
-.dreamer-summary td#dreamer-sprite {
-    width: 96px;
-    text-align: center;
-    padding-left: 0px;
-}
-
 .header-text {
     text-align: center;
     font-weight: bold;
@@ -110,21 +107,18 @@ a:link, a:visited {
     background: rgba(0, 0, 0, 0.6);
 }
 
-.popup .close-button {
-    position: absolute;
-    background-color: #3D3D3D;
-    top: 10px;
-    right: 10px;
+.content {
+    position: relative;
+    background-color: #191919;
+    width: 500px;
+    padding: 20px 20px 0px 20px;
 }
 
-.popup .content {
-    background-color: #191919;
+.close-button {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    width: 500px;
+    top: 8px;
+    right: 8px;
+    background-color: #3D3D3D;
 }
 
 .encounter-image-table {
@@ -187,5 +181,25 @@ a:link, a:visited {
 .big-button {
     font-size: 16px;
     padding: 16px 32px;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
+}
+
+#cgear-skin, #dex-skin {
+    margin-bottom: 0px;
+}
+
+#dreamer-sprite {
+    width: 96px;
+    text-align: center;
+    padding-left: 0px;
+}
+
+#skin-preview-content {
+    width: auto;
+}
+
+#skin-preview-image {
+    box-shadow: 0px 0px 10px 3px #0A0A0A;
+    margin-top: 4px;
+    margin-bottom: 12px;
 }

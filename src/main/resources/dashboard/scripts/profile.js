@@ -32,6 +32,9 @@ const ELEMENT_VISITOR_SUBREGION = document.getElementById("visitor-form-subregio
 const ELEMENT_VISITOR_PERSONALITY = document.getElementById("visitor-form-personality");
 const ELEMENT_VISITOR_DREAMER = document.getElementById("visitor-form-dreamer");
 
+const ELEMENT_SKIN_PREVIEW = document.getElementById("skin-preview");
+const ELEMENT_SKIN_PREVIEW_IMAGE = document.getElementById("skin-preview-image");
+
 const ELEMENT_CGEAR_SKIN_INPUT = document.getElementById("cgear-skin");
 const ELEMENT_DEX_SKIN_INPUT = document.getElementById("dex-skin");
 const ELEMENT_MUSICAL_INPUT = document.getElementById("musical");
@@ -532,8 +535,19 @@ function previewSkin(inputElementId, type) {
         type = "CGEAR2";
     }
     
-    window.open("/dashboard/previewskin?type=" + type + "&name=" + value);
+    let revisionParam = value == "custom" ? "&revision=" + new Date().getTime() : ""; // Hack to work around the browser cache
+    ELEMENT_SKIN_PREVIEW_IMAGE.src = "/dashboard/previewskin?type=" + type + "&name=" + value + revisionParam;
+    ELEMENT_SKIN_PREVIEW.style.display = "block";
     return false;
+}
+
+function setSkinPreviewResolution(width, height) {
+    ELEMENT_SKIN_PREVIEW_IMAGE.width = width;
+    ELEMENT_SKIN_PREVIEW_IMAGE.height = height;
+}
+
+function closeSkinPreview() {
+    ELEMENT_SKIN_PREVIEW.style.display = "none";
 }
 
 function fetchDlcData() {

@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="styles/profile.css">
   </head>
   <body>
-    <div id="main-container" class="root-container" style="display:none;">
+    <div id="main-container" class="centered-container" style="display:none;">
       <div>
         <div>
           <label id="game-summary" class="header-text"></label>
@@ -127,7 +127,7 @@
           <div class="grid-container">
             <div>
               <label>C-Gear Skin | </label><a href="#" onclick="return previewSkin('cgear-skin', 'CGEAR')">Preview</a>
-              <select id="cgear-skin" style="margin-bottom:0px;">
+              <select id="cgear-skin">
                 <option value="none">Do not change</option>
                 <option disabled>──────────────────────</option>
               </select>
@@ -136,7 +136,7 @@
             </div>
             <div>
               <label>Pokédex Skin | </label><a href="#" onclick="return previewSkin('dex-skin', 'ZUKAN')">Preview</a>
-              <select id="dex-skin" style="margin-bottom:0px;">
+              <select id="dex-skin">
                 <option value="none">Do not change</option>
                 <option disabled>──────────────────────</option>
               </select>
@@ -164,122 +164,144 @@
     </div>
     <!-- Entree Forest Encounter Configuration Form -->
     <div id="encounter-config" class="popup">
-      <div class="content">
-        <button class="close-button" onclick="closeEncounterForm()">X</button>
-        <form id="encounter-form">
-          <label for="encounter-form-species">Species</label>
-          <select id="encounter-form-species" name="species" value="1">
-            <!-- Filled by profile.js -->
-          </select>
-          <label for="encounter-form-move">Special Move</label>
-          <select id="encounter-form-move" name="move" value="0">
-            <option value="0">None</option>
-            <!-- Filled by profile.js -->
-          </select>
-          <label for="encounter-form-form">Form</label>
-          <select id="encounter-form-form" name="form" value="0">
-            <option value="0">N/A</option>
-            <!-- Filled by profile.js -->
-          </select>
-          <label for="encounter-form-gender">Gender</label>
-          <select id="encounter-form-gender" name="gender" value="GENDERLESS">
-            <option value="MALE">Male</option>
-            <option value="FEMALE">Female</option>
-            <option value="GENDERLESS">Random</option>
-          </select>
-          <label for="encounter-form-animation">Animation</label>
-          <select id="encounter-form-animation" name="animation">
-            <option value="LOOK_AROUND">Look Around</option>
-            <option value="WALK_AROUND">Walk Around</option>
-            <option value="WALK_LOOK_AROUND">Walk and Look Around</option>
-            <option value="WALK_VERTICALLY">Walk Vertically</option>
-            <option value="WALK_HORIZONTALLY">Walk Horizontally</option>
-            <option value="WALK_HORIZONTALLY_LOOK_AROUND">Walk Horizontally and Look Around</option>
-            <option value="SPIN_RIGHT">Spin Right</option>
-            <option value="SPIN_LEFT">Spin Left</option>
-          </select>
-        </form>
-        <button class="big-button" onclick="saveEncounter()">Confirm</button>
-        <button class="big-button" onclick="removeEncounter()">Remove</button>
+      <div class="centered-container">
+        <div class="content">
+          <button class="close-button" onclick="closeEncounterForm()">X</button>
+          <form id="encounter-form">
+            <label for="encounter-form-species">Species</label>
+            <select id="encounter-form-species" name="species" value="1">
+              <!-- Filled by profile.js -->
+            </select>
+            <label for="encounter-form-move">Special Move</label>
+            <select id="encounter-form-move" name="move" value="0">
+              <option value="0">None</option>
+              <!-- Filled by profile.js -->
+            </select>
+            <label for="encounter-form-form">Form</label>
+            <select id="encounter-form-form" name="form" value="0">
+              <option value="0">N/A</option>
+              <!-- Filled by profile.js -->
+            </select>
+            <label for="encounter-form-gender">Gender</label>
+            <select id="encounter-form-gender" name="gender" value="GENDERLESS">
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+              <option value="GENDERLESS">Random</option>
+            </select>
+            <label for="encounter-form-animation">Animation</label>
+            <select id="encounter-form-animation" name="animation">
+              <option value="LOOK_AROUND">Look Around</option>
+              <option value="WALK_AROUND">Walk Around</option>
+              <option value="WALK_LOOK_AROUND">Walk and Look Around</option>
+              <option value="WALK_VERTICALLY">Walk Vertically</option>
+              <option value="WALK_HORIZONTALLY">Walk Horizontally</option>
+              <option value="WALK_HORIZONTALLY_LOOK_AROUND">Walk Horizontally and Look Around</option>
+              <option value="SPIN_RIGHT">Spin Right</option>
+              <option value="SPIN_LEFT">Spin Left</option>
+            </select>
+          </form>
+          <button class="big-button" onclick="saveEncounter()">Confirm</button>
+          <button class="big-button" onclick="removeEncounter()">Remove</button>
+        </div>
       </div>
     </div>
     <!-- Item Configuration Form -->
     <div id="item-config" class="popup">
-      <div class="content">
-        <button class="close-button" onclick="closeItemForm()">X</button>
-        <form id="item-form">
-          <label for="item-form-id">Item</label>
-          <select id="item-form-id" name="id" value="1">
-            <!-- Filled by profile.js -->
-          </select>
-          <label for="item-form-quantity">Quantity</label>
-          <input id="item-form-quantity" name="quantity" type="number" value="1" min="1" max="20"/>
-        </form>
-        <button class="big-button" onclick="saveItem()">Confirm</button>
-        <button class="big-button" onclick="removeItem()">Remove</button>
+      <div class="centered-container">
+        <div class="content">
+          <button class="close-button" onclick="closeItemForm()">X</button>
+          <form id="item-form">
+            <label for="item-form-id">Item</label>
+            <select id="item-form-id" name="id" value="1">
+              <!-- Filled by profile.js -->
+            </select>
+            <label for="item-form-quantity">Quantity</label>
+            <input id="item-form-quantity" name="quantity" type="number" value="1" min="1" max="20"/>
+          </form>
+          <button class="big-button" onclick="saveItem()">Confirm</button>
+          <button class="big-button" onclick="removeItem()">Remove</button>
+        </div>
       </div>
     </div>
     <!-- Join Avenue Visitor Configuration Form -->
     <div id="visitor-config" class="popup">
-      <div class="content">
-        <button class="close-button" onclick="closeVisitorForm()">X</button>
-        <form id="visitor-form">
-          <label for="visitor-form-name">Name (Max. 7 characters)</label>
-          <input id="visitor-form-name" name="name" placeholder="Trainer" maxlength="7"/>
-          <label for="visitor-form-type">Trainer Class</label>
-          <select id="visitor-form-type" name="type" value="ACE_TRAINER_MALE">
-            <option value="YOUNGSTER">Youngster</option>
-            <option value="LASS">Lass</option>
-            <option value="ACE_TRAINER_MALE">Ace Trainer (Male)</option>
-            <option value="ACE_TRAINER_FEMALE">Ace Trainer (Female)</option>
-            <option value="RANGER_MALE">Pokémon Ranger (Male)</option>
-            <option value="RANGER_FEMALE">Pokémon Ranger (Female)</option>
-            <option value="BREEDER_MALE">Pokémon Breeder (Male)</option>
-            <option value="BREEDER_FEMALE">Pokémon Breeder (Female)</option>
-            <option value="SCIENTIST_MALE">Scientist (Male)</option>
-            <option value="SCIENTIST_FEMALE">Scientist (Female)</option>
-            <option value="HIKER">Hiker</option>
-            <option value="PARASOL_LADY">Parasol Lady</option>
-            <option value="ROUGHNECK">Roughneck</option>
-            <option value="NURSE">Nurse</option>
-            <option value="PRESCHOOLER_MALE">Preschooler (Male)</option>
-            <option value="PRESCHOOLER_FEMALE">Preschooler (Female)</option>
-          </select>
-          <label for="visitor-form-shop-type">Shop Type</label>
-          <select id="visitor-form-shop-type" name="shopType" value="RAFFLE">
-            <option value="RAFFLE">Raffle Shop</option>
-            <option value="FLORIST">Flower Shop</option>
-            <option value="SALON">Beauty Salon</option>
-            <option value="ANTIQUE">Antique Shop</option>
-            <option value="DOJO">Training Dojo</option>
-            <option value="CAFE">Café</option>
-            <option value="MARKET">Market</option>
-          </select>
-          <label for="visitor-form-game">Game of Origin (Affects which goods/services are sold)</label>
-          <select id="visitor-form-game" name="gameVersion" value="BLACK_ENGLISH">
-            <option value="BLACK_ENGLISH">Black Version</option>
-            <option value="WHITE_ENGLISH">White Version</option>
-            <option value="BLACK_2_ENGLISH">Black Version 2</option>
-            <option value="WHITE_2_ENGLISH">White Version 2</option>
-          </select>
-          <label for="visitor-form-region">Country</label>
-          <select id="visitor-form-region" name="region" value="1">
-            <!-- Filled by profile.js -->
-          </select>
-          <label for="visitor-form-subregion">State/Province</label>
-          <select id="visitor-form-subregion" name="subregion" value="0">
-            <option value="0">N/A</option>
-            <!-- Filled by profile.js -->
-          </select>
-          <label for="visitor-form-personality">Personality (Affects phrases used)</label>
-          <input id="visitor-form-personality" name="personality" type="number" value="0" min="0" max="7"/>
-          <label for="visitor-form-dreamer">Tucked-in Pokémon Species</label>
-          <select id="visitor-form-dreamer" name="dreamerSpecies" value="1">
-            <!-- Filled by profile.js -->
-          </select>
-        </form>
-        <button class="big-button" onclick="saveVisitor()">Confirm</button>
-        <button class="big-button" onclick="removeVisitor()">Remove</button>
+      <div class="centered-container">
+        <div class="content">
+          <button class="close-button" onclick="closeVisitorForm()">X</button>
+          <form id="visitor-form">
+            <label for="visitor-form-name">Name (Max. 7 characters)</label>
+            <input id="visitor-form-name" type="text" name="name" placeholder="Trainer" maxlength="7"/>
+            <label for="visitor-form-type">Trainer Class</label>
+            <select id="visitor-form-type" name="type" value="ACE_TRAINER_MALE">
+              <option value="YOUNGSTER">Youngster</option>
+              <option value="LASS">Lass</option>
+              <option value="ACE_TRAINER_MALE">Ace Trainer (Male)</option>
+              <option value="ACE_TRAINER_FEMALE">Ace Trainer (Female)</option>
+              <option value="RANGER_MALE">Pokémon Ranger (Male)</option>
+              <option value="RANGER_FEMALE">Pokémon Ranger (Female)</option>
+              <option value="BREEDER_MALE">Pokémon Breeder (Male)</option>
+              <option value="BREEDER_FEMALE">Pokémon Breeder (Female)</option>
+              <option value="SCIENTIST_MALE">Scientist (Male)</option>
+              <option value="SCIENTIST_FEMALE">Scientist (Female)</option>
+              <option value="HIKER">Hiker</option>
+              <option value="PARASOL_LADY">Parasol Lady</option>
+              <option value="ROUGHNECK">Roughneck</option>
+              <option value="NURSE">Nurse</option>
+              <option value="PRESCHOOLER_MALE">Preschooler (Male)</option>
+              <option value="PRESCHOOLER_FEMALE">Preschooler (Female)</option>
+            </select>
+            <label for="visitor-form-shop-type">Shop Type</label>
+            <select id="visitor-form-shop-type" name="shopType" value="RAFFLE">
+              <option value="RAFFLE">Raffle Shop</option>
+              <option value="FLORIST">Flower Shop</option>
+              <option value="SALON">Beauty Salon</option>
+              <option value="ANTIQUE">Antique Shop</option>
+              <option value="DOJO">Training Dojo</option>
+              <option value="CAFE">Café</option>
+              <option value="MARKET">Market</option>
+            </select>
+            <label for="visitor-form-game">Game of Origin (Affects which goods/services are sold)</label>
+            <select id="visitor-form-game" name="gameVersion" value="BLACK_ENGLISH">
+              <option value="BLACK_ENGLISH">Black Version</option>
+              <option value="WHITE_ENGLISH">White Version</option>
+              <option value="BLACK_2_ENGLISH">Black Version 2</option>
+              <option value="WHITE_2_ENGLISH">White Version 2</option>
+            </select>
+            <label for="visitor-form-region">Country</label>
+            <select id="visitor-form-region" name="region" value="1">
+              <!-- Filled by profile.js -->
+            </select>
+            <label for="visitor-form-subregion">State/Province</label>
+            <select id="visitor-form-subregion" name="subregion" value="0">
+              <option value="0">N/A</option>
+              <!-- Filled by profile.js -->
+            </select>
+            <label for="visitor-form-personality">Personality (Affects phrases used)</label>
+            <input id="visitor-form-personality" name="personality" type="number" value="0" min="0" max="7"/>
+            <label for="visitor-form-dreamer">Tucked-in Pokémon Species</label>
+            <select id="visitor-form-dreamer" name="dreamerSpecies" value="1">
+              <!-- Filled by profile.js -->
+            </select>
+          </form>
+          <button class="big-button" onclick="saveVisitor()">Confirm</button>
+          <button class="big-button" onclick="removeVisitor()">Remove</button>
+        </div>
+      </div>
+    </div>
+    <div id="skin-preview" class="popup">
+      <div class="centered-container">
+        <div id="skin-preview-content" class="content">
+          <button class="close-button" onclick="closeSkinPreview()">X</button>
+          <label>Skin Preview</label><br>
+          <img id="skin-preview-image" width=256 height=192/>
+          <div>
+            <label>Resolution</label><br>
+            <input id="resolution-x1" type="radio" name="resolution" onclick="setSkinPreviewResolution(256, 192);" checked/>
+            <label for="resolution-x1">x1</label>
+            <input id="resolution-x2" type="radio" name="resolution" onclick="setSkinPreviewResolution(512, 384);"/>
+            <label for="resolution-x2">x2</label>
+          </div>
+        </div>
       </div>
     </div>
   </body>
