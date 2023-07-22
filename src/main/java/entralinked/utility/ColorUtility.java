@@ -29,9 +29,9 @@ public class ColorUtility {
      */
     public static int convertBGR555ToRGB888(int color) {
         int red = (color & 0x1F) << 3;
-        int green = ((color & 0x3E0) >> 5) << 3;
-        int blue = ((color & 0x7C00) >> 10) << 3;
-        return (red << 16) | (green << 8) | blue;
+        int green = (color >> 5 & 0x1F) << 3;
+        int blue = (color >> 10 & 0x1F) << 3;
+        return ((red | red >> 5) << 16) | ((green | green >> 5) << 8) | (blue | blue >> 5);
     }
     
     /**

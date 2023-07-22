@@ -55,7 +55,6 @@ public class CertificateGenerator {
             + "Fw2ewOxmIyw3d4HFGrLx9yvk6Q5HpTlSgvbgO22k/vo0N43dO7utgfn/e4Xo9alIAktnewGqj5nRm75H7iaLEJBo983jJdugeXdp6y5X6sDmaDmyw/p91TKPrKmD"
             + "4ebbTY38D5WT67fONjW/X1OLNHg46GYYZa6etbxQ7671f7GypgwnI=";
     
-    
     private static final String issuerPrivateKeyString = 
             "eNod0Em2a0AAANAFGRBNYVgK0QalfWaIPproZfX/nH+XcG1dR4mnSxCaUu3JKUe5WLR1rND+Q+gwb3NO3ws5e0YXcydZcUtNV/35votzw9SsDstssI0TPxg5q1XPUq"
             + "EpGgfib4UnATQKiAcZHsBOsEWg2nShyhd7CoLQznBPWW/+iLfW3bMujf723htqG+n0p30h/SClZIRZibH7I5hGgQHRqgvpuJ/IDWpH9HQZelCC0xPK8uXZ87jcwv"
