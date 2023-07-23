@@ -75,7 +75,6 @@ public class HttpServer {
     
     public boolean start() {
         if(started) {
-            logger.warn("start() was called while HTTP server was already running!");
             return true;
         }
         
@@ -94,7 +93,6 @@ public class HttpServer {
     
     public boolean stop() {
         if(!started) {
-            logger.warn("stop() was called while HTTP server wasn't running!");
             return true;
         }
         

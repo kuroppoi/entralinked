@@ -2,9 +2,6 @@ package entralinked.network.dns;
 
 import java.net.InetAddress;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import entralinked.network.NettyServerBase;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -17,13 +14,11 @@ import io.netty.handler.codec.dns.DatagramDnsResponseEncoder;
 
 public class DnsServer extends NettyServerBase {
         
-    private static final Logger logger = LogManager.getLogger();
     private InetAddress hostAddress;
     
     public DnsServer(InetAddress hostAddress) {
         super("DNS", 53);
         this.hostAddress = hostAddress;
-        logger.info("DNS queries will be resolved to {}", hostAddress.getHostAddress());
     }
     
     @Override

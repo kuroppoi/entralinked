@@ -40,7 +40,6 @@ public abstract class NettyServerBase {
     
     public boolean start() {
         if(started) {
-            logger.warn("start() was called while {} server was already running!", name);
             return true;
         }
         
@@ -59,7 +58,6 @@ public abstract class NettyServerBase {
     
     public boolean stop() {
         if(!started) {
-            logger.warn("stop() was called while {} server wasn't running!", name);
             return true;
         }
         

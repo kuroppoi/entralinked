@@ -45,6 +45,8 @@ public class Entralinked {
     private MainView mainView;
     
     public Entralinked(String[] args) {
+        long beginTime = System.currentTimeMillis();
+        
         // Read command line arguments
         CommandLineArguments arguments = new CommandLineArguments(args);
         
@@ -92,16 +94,11 @@ public class Entralinked {
         userManager = new UserManager();
         playerManager = new PlayerManager();
         
-        // Start servers
-        boolean started = true;
-        
         // Create DNS server
         dnsServer = new DnsServer(hostAddress);
-        started &= dnsServer.start();
         
         // Create GameSpy server
         gameSpyServer = new GameSpyServer(this);
-        started &= gameSpyServer.start();
         
         // Create HTTP server
         httpServer = new HttpServer(this);
@@ -109,25 +106,41 @@ public class Entralinked {
         httpServer.addHandler(new PglHandler(this));
         httpServer.addHandler(new DlsHandler(this));
         httpServer.addHandler(new DashboardHandler(this));
-        started &= httpServer.start();
         
-        // Handle post-startup GUI stuff
-        if(mainView != null) {
-            if(!started) {
-                SwingUtilities.invokeLater(() -> mainView.setStatusLabelText(
-                        "ERROR: One or more servers failed to start! Please check the logs for info."));
-                return;
-            }
-            
+        // Start servers
+        boolean started = startServers();
+        
+        // Post-startup
+        if(started) {
+            logger.info("Startup complete! Took a total of {} milliseconds", System.currentTimeMillis() - beginTime);
             String hostIpAddress = hostAddress.getHostAddress();
-            SwingUtilities.invokeLater(() -> {
-                mainView.setDashboardButtonEnabled(true);
-                mainView.setStatusLabelText("Configure your DS to use the following DNS server: %s".formatted(hostIpAddress));
-            });
+            
+            if(mainView == null) {
+                logger.info("Configure your DS to use the following DNS server: {}", hostIpAddress);
+            } else {
+                SwingUtilities.invokeLater(() -> {
+                    mainView.setDashboardButtonEnabled(true);
+                    mainView.setStatusLabelText("Configure your DS to use the following DNS server: %s".formatted(hostIpAddress));
+                });
+            }
+        } else {
+            stopServers();
+            
+            if(mainView != null) {
+                SwingUtilities.invokeLater(() -> mainView.setStatusLabelText(
+                        "ERROR: Entralinked failed to start. Please check the logs for info."));
+            }
         }
     }
     
+    public boolean startServers() {
+        logger.info("Starting servers ...");
+        return httpServer.start() && gameSpyServer.start() && dnsServer.start();
+    }
+    
     public void stopServers() {
+        logger.info("Stopping servers ...");
+        
         if(httpServer != null) {
             httpServer.stop();
         }
