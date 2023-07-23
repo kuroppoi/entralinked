@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.Core;
 import org.apache.logging.log4j.core.Filter;
@@ -25,7 +26,8 @@ import org.apache.logging.log4j.core.config.plugins.PluginFactory;
     printObject = true)
 public class ConsumerAppender extends AbstractAppender {
     
-    protected static final Map<String, List<Consumer<String>>> consumerMap = new ConcurrentHashMap<>();
+    public record LogMessage(Level level, String rawMessage, String formattedMessage) {}
+    protected static final Map<String, List<Consumer<LogMessage>>> consumerMap = new ConcurrentHashMap<>();
     
     protected ConsumerAppender(String name, Filter filter, Layout<? extends Serializable> layout, 
             boolean ignoreExceptions, Property[] properties) {
@@ -41,8 +43,8 @@ public class ConsumerAppender extends AbstractAppender {
         return new ConsumerAppender(name, filter, layout, ignoreExceptions, null);
     }
     
-    public static void addConsumer(String appenderName, Consumer<String> consumer) {
-        List<Consumer<String>> consumers = consumerMap.getOrDefault(appenderName, new ArrayList<>());
+    public static void addConsumer(String appenderName, Consumer<LogMessage> consumer) {
+        List<Consumer<LogMessage>> consumers = consumerMap.getOrDefault(appenderName, new ArrayList<>());
         consumers.add(consumer);
         consumerMap.putIfAbsent(appenderName, consumers);
     }
@@ -50,11 +52,12 @@ public class ConsumerAppender extends AbstractAppender {
     @Override
     public void append(LogEvent event) {
         String formattedMessage = getLayout().toSerializable(event).toString();
-        List<Consumer<String>> consumers = consumerMap.get(getName());
+        List<Consumer<LogMessage>> consumers = consumerMap.get(getName());
+        LogMessage logMessage = new LogMessage(event.getLevel(), event.getMessage().getFormattedMessage(), formattedMessage);
         
         if(consumers != null) {
-            for(Consumer<String> consumer : consumers) {
-                consumer.accept(formattedMessage);
+            for(Consumer<LogMessage> consumer : consumers) {
+                consumer.accept(logMessage);
             }
         }
     }

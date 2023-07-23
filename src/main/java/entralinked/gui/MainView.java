@@ -1,6 +1,7 @@
 package entralinked.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -18,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultCaret;
@@ -27,8 +27,9 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Level;
+
+import com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme;
 
 import entralinked.Entralinked;
 import entralinked.utility.ConsumerAppender;
@@ -38,19 +39,18 @@ import entralinked.utility.ConsumerAppender;
  */
 public class MainView {
     
-    private static Logger logger = LogManager.getLogger();
+    public static final Color TEXT_COLOR = Color.WHITE.darker();
+    public static final Color TEXT_COLOR_WARN = Color.YELLOW.darker();
+    public static final Color TEXT_COLOR_ERROR = Color.RED.darker();
     private final StyleContext styleContext = StyleContext.getDefaultStyleContext();
     private final AttributeSet fontAttribute = styleContext.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.FontFamily, "Consolas");
     private final JButton dashboardButton;
     private final JLabel statusLabel;
     
     public MainView(Entralinked entralinked) {
-        // Try set Look and Feel
-         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ReflectiveOperationException | UnsupportedLookAndFeelException e) {
-            logger.error("Could not set Look and Feel", e);
-        }
+        // Set look and feel
+        FlatOneDarkIJTheme.setup();
+        UIManager.getDefaults().put("Component.focusedBorderColor", UIManager.get("Component.borderColor"));
         
         // Create dashboard button
         dashboardButton = new JButton("Open User Dashboard");
@@ -87,8 +87,12 @@ public class MainView {
         // Create console output appender
         ConsumerAppender.addConsumer("GuiOutput", message -> {
             Document document = consoleOutputPane.getDocument();
+            Level level = message.level();
+            Color color = level == Level.ERROR ? TEXT_COLOR_ERROR : level == Level.WARN ? TEXT_COLOR_WARN : TEXT_COLOR;
+            AttributeSet colorAttribute = styleContext.addAttribute(fontAttribute, StyleConstants.Foreground, color);
+            
             try {
-                consoleOutputPane.getDocument().insertString(document.getLength(), message, fontAttribute);
+                consoleOutputPane.getDocument().insertString(document.getLength(), message.formattedMessage(), colorAttribute);
             } catch(BadLocationException e) {}
         });
         
@@ -130,7 +134,6 @@ public class MainView {
     public void setDashboardButtonEnabled(boolean enabled) {
         dashboardButton.setEnabled(enabled);
     }
-    
     
     public void setStatusLabelText(String text) {
         statusLabel.setText(text);
