@@ -10,8 +10,10 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -123,6 +125,10 @@ public class MainView {
                 });
             }
         });
+        frame.setIconImages(List.of(
+                new ImageIcon(getClass().getResource("/icon-64x.png")).getImage(),
+                new ImageIcon(getClass().getResource("/icon-32x.png")).getImage(),
+                new ImageIcon(getClass().getResource("/icon-16x.png")).getImage()));
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setMinimumSize(new Dimension(512, 288));
         frame.add(panel);
