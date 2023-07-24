@@ -1,6 +1,11 @@
-# Entralinked
-[![build](https://github.com/kuroppoi/entralinked/actions/workflows/dist-upload-artifact.yml/badge.svg)](https://github.com/kuroppoi/entralinked/actions)
-[![release](https://img.shields.io/github/v/release/kuroppoi/entralinked?labelColor=30373D&label=Release&logoColor=959DA5&logo=github)](https://github.com/kuroppoi/entralinked/releases/latest)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kuroppoi/entralinked/master/images/icon.png" alt="icon"/>
+</p>
+<h1 align="center">Entralinked</h1>
+<p align="center">
+  <a href="https://github.com/kuroppoi/entralinked/actions"><img src="https://github.com/kuroppoi/entralinked/actions/workflows/dist-upload-artifact.yml/badge.svg" alt="build"/></a>
+  <a href="https://github.com/kuroppoi/entralinked/releases/latest"><img src="https://img.shields.io/github/v/release/kuroppoi/entralinked?labelColor=30373D&label=Release&logoColor=959DA5&logo=github" alt="release"/></a>
+</p>
 
 Entralinked is a standalone Game Sync emulator developed for use with Pokémon Black & White and its sequels.\
 Its purpose is to serve as a simple utility for downloading Pokémon, Items, C-Gear skins, Pokédex skins, Musicals\
