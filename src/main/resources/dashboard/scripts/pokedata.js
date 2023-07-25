@@ -509,7 +509,7 @@ const REGION_LIST = [];
         {id: 493, name: "Arceus", downloadable: true, gender: "unknown", forms: [
             "Normal", "Fighting", "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost",
             "Steel", "Fire", "Water", "Grass", "Electric", "Psychic", "Ice", "Dragon", "Dark"]},
-        {id: 494, name: "Victini", downloadable: true, gender: "unknown"},
+        {id: 494, name: "Victini", downloadable: false, gender: "unknown"},
         {id: 495, name: "Snivy", downloadable: false},
         {id: 496, name: "Servine", downloadable: false},
         {id: 497, name: "Serperior", downloadable: false},
