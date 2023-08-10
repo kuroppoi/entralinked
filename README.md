@@ -12,6 +12,8 @@ Its purpose is to serve as a simple utility for downloading Pokémon, Items, C-G
 and, in Black 2 & White 2 only, Join Avenue visitors to your game without needing to edit your save file.\
 It can also be used to Memory Link with a Black or White save file if you don't have a second DS system.
 
+For users: [Quick Setup Guide](https://github.com/kuroppoi/entralinked/wiki/Setup)
+
 ## Building
 
 #### Prerequisites
