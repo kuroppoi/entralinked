@@ -30,7 +30,6 @@ public class UserManager {
     private static final Logger logger = LogManager.getLogger();
     private final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
     private final Map<String, User> users = new ConcurrentHashMap<>();
-    private final Map<Integer, GameProfile> profiles = new ConcurrentHashMap<>();
     private final Map<String, ServiceSession> serviceSessions = new ConcurrentHashMap<>();
     private final File dataDirectory = new File("users");
     
@@ -49,7 +48,7 @@ public class UserManager {
             }
         }
         
-        logger.info("Loaded {} user(s) with a total of {} profile(s)", users.size(), profiles.size());
+        logger.info("Loaded {} user(s)", users.size());
     }
     
     /**
@@ -75,20 +74,8 @@ public class UserManager {
                 throw new IOException("Duplicate user ID %s".formatted(id));
             }
             
-            // Check for duplicate profile IDs before indexing anything
-            Collection<GameProfile> userProfiles = user.getProfiles();
-            
-            if(userProfiles.stream().map(GameProfile::getId).anyMatch(profiles::containsKey)) {
-                throw new IOException("Duplicate profile ID in user %s".formatted(id));
-            }
-            
             // Index user
             users.put(id, user);
-            
-            // Index profiles
-            for(GameProfile profile : userProfiles) {
-                profiles.put(profile.getId(), profile);
-            }
         } catch(IOException e) {
             logger.error("Could not load user data at {}", inputFile.getAbsolutePath(), e);
         }
@@ -233,7 +220,7 @@ public class UserManager {
             return null;
         }
         
-        int profileId = nextProfileId();
+        int profileId = (int)(Math.random() * Integer.MAX_VALUE);
         GameProfile profile = new GameProfile(profileId);
         user.addProfile(branchCode, profile);
         
@@ -243,22 +230,27 @@ public class UserManager {
             return null;
         }
         
-        profiles.put(profileId, profile);
         return profile;
     }
     
     /**
-     * @return A unique random 32-bit profile ID.
+     * This will forcibly set the profile id of all profiles of this user to the specified one.
+     * Potentially a destructive operation; use with caution.
+     * 
+     * @return {@code true} if the operation was successful, otherwise {@code false}.
      */
-    private int nextProfileId() {
-        int profileId = (int)(Math.random() * Integer.MAX_VALUE);
-        
-        // I live for that microscopic chance of StackOverflowError
-        if(profiles.containsKey(profileId)) {
-            return nextProfileId();
+    public boolean updateProfileIdForUser(User user, int profileId) {
+        // Set the id of all profiles
+        for(GameProfile profile : user.getProfiles()) {
+            profile.setId(profileId);
         }
         
-        return profileId;
+        // Try to save user
+        if(!saveUser(user)) {
+            return false;
+        }
+        
+        return true;
     }
     
     /**

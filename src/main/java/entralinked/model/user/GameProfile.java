@@ -2,7 +2,7 @@ package entralinked.model.user;
 
 public class GameProfile {
     
-    private final int id;
+    private int id;
     private String firstName;
     private String lastName;
     private String aimName;
@@ -18,6 +18,10 @@ public class GameProfile {
         this.lastName = lastName;
         this.aimName = aimName;
         this.zipCode = zipCode;
+    }
+    
+    public void setId(int id) {
+        this.id = id;
     }
     
     public int getId() {

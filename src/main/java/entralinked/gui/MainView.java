@@ -17,6 +17,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -35,6 +37,7 @@ import com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme;
 
 import entralinked.Entralinked;
 import entralinked.utility.ConsumerAppender;
+import entralinked.utility.SwingUtility;
 
 /**
  * Simple Swing user interface.
@@ -110,6 +113,15 @@ public class MainView {
         
         // Create window
         JFrame frame = new JFrame("Entralinked");
+        
+        // Create menu bar
+        JMenuBar menuBar = new JMenuBar();
+        JMenu helpMenu = new JMenu("Help");
+        helpMenu.add(SwingUtility.createAction("Update PID (Error 60000)", () -> new PidToolDialog(entralinked, frame)));
+        helpMenu.add(SwingUtility.createAction("GitHub", () -> openUrl("https://github.com/kuroppoi/entralinked")));
+        menuBar.add(helpMenu);
+        
+        // Set window properties
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
@@ -131,6 +143,7 @@ public class MainView {
                 new ImageIcon(getClass().getResource("/icon-16x.png")).getImage()));
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setMinimumSize(new Dimension(512, 288));
+        frame.setJMenuBar(menuBar);
         frame.add(panel);
         frame.pack();
         frame.setLocationRelativeTo(null);

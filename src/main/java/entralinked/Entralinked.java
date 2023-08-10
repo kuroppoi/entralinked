@@ -43,6 +43,7 @@ public class Entralinked {
     private final GameSpyServer gameSpyServer;
     private final HttpServer httpServer;
     private MainView mainView;
+    private boolean initialized;
     
     public Entralinked(String[] args) {
         long beginTime = System.currentTimeMillis();
@@ -131,6 +132,8 @@ public class Entralinked {
                         "ERROR: Entralinked failed to start. Please check the logs for info."));
             }
         }
+        
+        initialized = true;
     }
     
     public boolean startServers() {
@@ -191,5 +194,9 @@ public class Entralinked {
     
     public PlayerManager getPlayerManager() {
         return playerManager;
+    }
+    
+    public boolean isInitialized() {
+        return initialized;
     }
 }
