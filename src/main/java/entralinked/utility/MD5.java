@@ -21,6 +21,13 @@ public class MD5 {
      * @return A hex-formatted MD5 hash of the specified input.
      */
     public static String digest(String string) {
+        return StringUtil.toHexStringPadded(digest(string.getBytes(StandardCharsets.ISO_8859_1)));
+    }
+    
+    /**
+     * @return An MD5 hash of the specified input.
+     */
+    public static byte[] digest(byte[] bytes) {
         if(digest == null) {
             try {
                 digest = MessageDigest.getInstance("MD5");
@@ -29,6 +36,6 @@ public class MD5 {
             }
         }
         
-        return StringUtil.toHexStringPadded(digest.digest(string.getBytes(StandardCharsets.ISO_8859_1)));
+        return digest.digest(bytes);
     }
 }
