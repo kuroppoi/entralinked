@@ -119,6 +119,15 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
             }
         }
         
+        // Update profile id if an override is set
+        int profileIdOverride = user.getProfileIdOverride();
+        
+        if(profileIdOverride > 0) {
+            profile.setId(profileIdOverride);
+            user.setProfileIdOverride(0);
+            userManager.saveUser(user); // It's not too big of a deal if this fails for some reason
+        }
+                
         // Prepare and send response
         sessionKey = secureRandom.nextInt(Integer.MAX_VALUE);
         String proof = createCredentialHash(partnerChallengeHash, authToken, serverChallenge, clientChallenge);

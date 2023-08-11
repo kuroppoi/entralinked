@@ -15,7 +15,6 @@ import com.formdev.flatlaf.extras.components.FlatTextField;
 
 import entralinked.Entralinked;
 import entralinked.model.user.User;
-import entralinked.model.user.UserManager;
 import entralinked.utility.SwingUtility;
 
 public class PidToolDialog {
@@ -56,8 +55,7 @@ public class PidToolDialog {
                 return;
             }
             
-            UserManager userManager = entralinked.getUserManager();
-            User user = userManager.getUser(userId.substring(0, 13));
+            User user = entralinked.getUserManager().getUser(userId.substring(0, 13));
             int profileId = (int)(Long.parseLong(friendCode) & 0x7FFFFFFF);
             
             // Make sure user exists
@@ -66,17 +64,9 @@ public class PidToolDialog {
                 return;
             }
             
-            // Show warning if this user has multiple profiles
-            if(user.getProfiles().size() > 1) {
-                if(JOptionPane.showConfirmDialog(dialog, "Multiple profiles detected. Do you want to update all of them?\n"
-                        + "This may cause error 60000 to occur on your other game cartridges.",
-                        "Attention", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
-                    return;
-                }
-            }
-            
-            userManager.updateProfileIdForUser(user, profileId);
-            JOptionPane.showMessageDialog(dialog, "Profile has been updated. Please restart your game and use Game Sync.");
+            user.setProfileIdOverride(profileId);
+            JOptionPane.showMessageDialog(dialog,
+                    "All done! Please restart your game and use Game Sync.\nGame profile data will be updated and saved once you do so.");
         });
         
         // Create content panel

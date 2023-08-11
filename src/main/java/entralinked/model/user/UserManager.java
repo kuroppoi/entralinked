@@ -234,26 +234,6 @@ public class UserManager {
     }
     
     /**
-     * This will forcibly set the profile id of all profiles of this user to the specified one.
-     * Potentially a destructive operation; use with caution.
-     * 
-     * @return {@code true} if the operation was successful, otherwise {@code false}.
-     */
-    public boolean updateProfileIdForUser(User user, int profileId) {
-        // Set the id of all profiles
-        for(GameProfile profile : user.getProfiles()) {
-            profile.setId(profileId);
-        }
-        
-        // Try to save user
-        if(!saveUser(user)) {
-            return false;
-        }
-        
-        return true;
-    }
-    
-    /**
      * @return {@code true} if a user with the specified ID exists, otherwise {@code false}.
      */
     public boolean doesUserExist(String id) {

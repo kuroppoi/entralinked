@@ -13,6 +13,7 @@ public class User {
     private final String password; // I debated hashing it, but.. it's a 3-digit password...
     private final Map<String, GameProfile> profiles = new HashMap<>();
     private final Map<String, Dlc> dlcOverrides = new HashMap<>();
+    private int profileIdOverride; // For making it easier for the user to fix error 60000
     
     public User(String id, String password) {
         this.id = id;
@@ -69,5 +70,13 @@ public class User {
     
     public Dlc getDlcOverride(String type) {
         return dlcOverrides.get(type);
+    }
+    
+    public void setProfileIdOverride(int profileIdOverride) {
+        this.profileIdOverride = profileIdOverride;
+    }
+    
+    public int getProfileIdOverride() {
+        return profileIdOverride;
     }
 }
