@@ -113,12 +113,11 @@ public class Entralinked {
         
         // Post-startup
         if(started) {
-            logger.info("Startup complete! Took a total of {} milliseconds", System.currentTimeMillis() - beginTime);
             String hostIpAddress = hostAddress.getHostAddress();
+            logger.info("Startup complete! Took a total of {} milliseconds", System.currentTimeMillis() - beginTime);
+            logger.info("Configure your DS to use the following DNS server: {}", hostIpAddress);
             
-            if(mainView == null) {
-                logger.info("Configure your DS to use the following DNS server: {}", hostIpAddress);
-            } else {
+            if(mainView != null) {
                 SwingUtilities.invokeLater(() -> {
                     mainView.setDashboardButtonEnabled(true);
                     mainView.setStatusLabelText("Configure your DS to use the following DNS server: %s".formatted(hostIpAddress));
