@@ -6,9 +6,12 @@
   <body>
     <div class="root-container">
       <div>
-        <label for="gsid">Game Sync ID</label><br>
-        <input type='text' id="gsid" name='gsid' placeholder='XXXXXXXXXX'>
-        <button id="login" onclick="postLogin()">Login</button>
+        <form onsubmit="return postLogin()">
+          <label for="gsid">Game Sync ID</label><br>
+          <input type="text" id="gsid" name="gsid" placeholder="XXXXXXXXXX" autocomplete="on">
+          <label for="submit" class="big-button">Login</label>
+          <input type="submit" id="submit" hidden/>
+        </form>
       </div>
     </div>
   </body>

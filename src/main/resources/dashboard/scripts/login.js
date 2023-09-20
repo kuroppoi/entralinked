@@ -10,4 +10,6 @@ function postLogin() {
             window.location.href = "/dashboard/profile.html";
         }
     });
+    
+    return false;
 }

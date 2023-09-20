@@ -11,21 +11,22 @@ input {
     border-radius: 10px;
     width: 100%;
     margin-top: 4px;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
     padding: 4px 4px;
     font-size: 16px;
 }
 
-button {
+.big-button {
     color: white;
     background-color: #3D3D3D;
     border: 0px;
     border-radius: 10px;
     font-size: 16px;
+    font-family: sans-serif;
     padding: 16px 32px;
 }
 
-button:active {
+.big-button:active {
     background-color: #333333;
 }
 
