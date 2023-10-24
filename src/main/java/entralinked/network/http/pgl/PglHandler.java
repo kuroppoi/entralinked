@@ -186,6 +186,7 @@ public class PglHandler implements HttpHandler {
      * GET handler for {@code /dsio/gw?p=savedata.download}
      * 
      * Black 2 - {@code sub_21B6C9C} (overlay #199)
+     * White - {@code sub_021D7378} (overlay #123)
      */
     private void handleDownloadSaveData(PglRequest request, Context ctx) throws IOException {
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
