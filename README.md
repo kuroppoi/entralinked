@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">Entralinked</h1>
 <p align="center">
-  <a href="https://github.com/kuroppoi/entralinked/actions"><img src="https://github.com/kuroppoi/entralinked/actions/workflows/dist-upload-artifact.yml/badge.svg" alt="build"/></a>
+  <a href="https://github.com/kuroppoi/entralinked/actions"><img src="https://github.com/kuroppoi/entralinked/actions/workflows/build.yml/badge.svg" alt="build"/></a>
   <a href="https://github.com/kuroppoi/entralinked/releases/latest"><img src="https://img.shields.io/github/v/release/kuroppoi/entralinked?labelColor=30373D&label=Release&logoColor=959DA5&logo=github" alt="release"/></a>
 </p>
 
