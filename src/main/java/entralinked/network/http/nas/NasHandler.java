@@ -2,6 +2,9 @@ package entralinked.network.http.nas;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -21,6 +24,7 @@ import io.javalin.http.Context;
  */
 public class NasHandler implements HttpHandler {
     
+    private static final Logger logger = LogManager.getLogger();
     private final ObjectMapper mapper = new ObjectMapper(new UrlEncodedFormFactory()).registerModule(new JavaTimeModule());
     private final Configuration configuration;
     private final UserManager userManager;
@@ -42,6 +46,7 @@ public class NasHandler implements HttpHandler {
     private void handleNasRequest(Context ctx) throws IOException {
         // Deserialize body into a request object
         NasRequest request = mapper.readValue(ctx.body(), NasRequest.class);
+        logger.debug("Received {}", request);
         
         // Determine handler function based on request action
         HttpRequestHandler<NasRequest> handler = switch(request.action()) {
@@ -61,6 +66,7 @@ public class NasHandler implements HttpHandler {
     private void handleLogin(NasRequest request, Context ctx) throws IOException {
         // Make sure branch code is present
         if(request.branchCode() == null) {
+            logger.debug("Rejecting NAS login request because no branch code is present");
             result(ctx, NasReturnCode.BAD_REQUEST);
             return;
         }
@@ -77,7 +83,7 @@ public class NasHandler implements HttpHandler {
             
             // Try to register, if the configuration allows it
             if(!UserManager.isValidUserId(userId) || userManager.doesUserExist(userId) 
-                    || !userManager.registerUser(userId, request.password())) {
+                    || userManager.registerUser(userId, request.password()) == null) {
                 // Oh well, try again!
                 result(ctx, NasReturnCode.USER_NOT_FOUND);
                 return;
@@ -85,10 +91,12 @@ public class NasHandler implements HttpHandler {
             
             // Should *never* return null in this location
             user = userManager.authenticateUser(userId, request.password());
+            logger.info("Created account for user {}", user.getFormattedId());
         }
         
         // Prepare GameSpy server credentials
         ServiceCredentials credentials = userManager.createServiceSession(user, "gamespy", request.branchCode());
+        logger.info("Created GameSpy session for user {}", user.getFormattedId());
         result(ctx, new NasLoginResponse("gamespy.com", credentials.authToken(), credentials.challenge()));
     }
     
@@ -105,11 +113,14 @@ public class NasHandler implements HttpHandler {
         }
         
         // Try to register user
-        if(!userManager.registerUser(userId, request.password())) {
+        User user = userManager.registerUser(userId, request.password());
+        
+        if(user == null) {
             result(ctx, NasReturnCode.INTERNAL_SERVER_ERROR);
             return;
         }
         
+        logger.info("Created account for user {}", user.getFormattedId());
         result(ctx, NasReturnCode.REGISTRATION_SUCCESS);
     }
     
@@ -125,15 +136,19 @@ public class NasHandler implements HttpHandler {
             return;
         }
         
+        String type = request.serviceType();
+        
         // Determine service location from type
-        String service = switch(request.serviceType()) {
+        String service = switch(type) {
             case "0000" -> "external"; // External game-specific service
             case "9000" -> "dls1.nintendowifi.net"; // Download server
-            default -> throw new IllegalArgumentException("Invalid service type: " + request.serviceType());
+            default -> throw new IllegalArgumentException("Invalid service type: " + type);
         };
-        
+                
         // Prepare user credentials
         ServiceCredentials credentials = userManager.createServiceSession(user, service, null);
+        logger.info("Created {} session for user {}", 
+                type.equals("0000") ? "PGL" : type.equals("9000") ? "DLS1" : "this should never be logged", user.getFormattedId());
         result(ctx, new NasServiceLocationResponse(true, service, credentials.authToken()));
     }
     

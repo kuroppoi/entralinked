@@ -17,4 +17,11 @@ public record PglRequest(
     public GameVersion gameVersion() {
         return GameVersion.lookup(romCode(), languageCode());
     }
+    
+    @Override
+    public String toString() {
+        // Exlude token
+        return "PglRequest[gameSyncId=%s, type=%s, romCode=%s, languageCode=%s, dreamWorld=%s]"
+                .formatted(gameSyncId, type, romCode, languageCode, dreamWorld);
+    }
 }

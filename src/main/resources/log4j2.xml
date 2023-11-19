@@ -1,25 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
-<Configuration status="off" packages="entralinked.utility">
+<Configuration status="WARN" packages="entralinked.utility">
+  <Properties>
+    <Property name="LOGS_DIR">logs</Property>
+    <Property name="PATTERN_MINIMAL">%d{yyyy-MM-dd HH:mm:ss.SSS} %5level : %msg%n</Property>
+    <Property name="PATTERN_DETAILED">%d{yyyy-MM-dd HH:mm:ss.SSS} %5level [%32t] %-48c{1.2*} : %msg%n</Property>
+  </Properties>
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level [%32t] %-48c{1.2*} : %msg%n"/>
+      <PatternLayout pattern="${PATTERN_DETAILED}"/>
     </Console>
-    <RollingFile name="LogFile" fileName="logs/latest.log" filePattern="logs/%d{yyyy-MM-dd}-%i.log.gz">
-      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level [%16t] %-48c{1.2*} : %msg%n"/>
+    <RollingFile name="LogFile" fileName="${LOGS_DIR}/latest.log" filePattern="${LOGS_DIR}/%d{yyyy-MM-dd}-%i.log.gz">
+      <PatternLayout pattern="${PATTERN_DETAILED}"/>
+      <ThresholdFilter level="INFO"/>
       <Policies>
         <OnStartupTriggeringPolicy/>
       </Policies>
     </RollingFile>
     <ConsumerAppender name="GuiOutput">
-      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level : %msg%n"/>
+      <PatternLayout pattern="${PATTERN_MINIMAL}"/>
+      <ThresholdFilter level="INFO"/>
     </ConsumerAppender>
+    <File name="DebugLogFile" fileName="${LOGS_DIR}/debug.log" append="false">
+      <PatternLayout pattern="${PATTERN_DETAILED}"/>
+      <ThresholdFilter level="DEBUG"/>
+    </File>
   </Appenders>
   <Loggers>
-    <Root level="info">
-      <AppenderRef ref="Console"/>
+    <Logger name="entralinked" additivity="false">
       <AppenderRef ref="LogFile"/>
       <AppenderRef ref="GuiOutput"/>
+      <AppenderRef ref="DebugLogFile"/>
+    </Logger>
+    <Root level="all">
+      <AppenderRef ref="Console"/>
     </Root>
   </Loggers>
 </Configuration>

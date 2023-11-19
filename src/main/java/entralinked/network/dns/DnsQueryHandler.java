@@ -28,6 +28,7 @@ public class DnsQueryHandler extends SimpleChannelInboundHandler<DatagramDnsQuer
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, DatagramDnsQuery query) throws Exception {
         DefaultDnsQuestion question = query.recordAt(DnsSection.QUESTION);
+        logger.debug("Received {}", question);
         DnsRecordType type = question.type();
         
         // We only need type A (32 bit IPv4) for the DS

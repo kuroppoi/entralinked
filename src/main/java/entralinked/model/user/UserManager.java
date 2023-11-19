@@ -177,14 +177,14 @@ public class UserManager {
     /**
      * Registers a user with the given ID and password.
 
-     * @return {@code true} if the registration was successful.
-     * Otherwise, if this user ID has already been registered, or if the user data could not be saved, {@code false} is returned instead.
+     * @return The {@link User} object of the newly registered user if the registration was successful.
+     * Otherwise, if this user ID has already been registered, or if the user data could not be saved, {@code null} is returned instead.
      */
-    public boolean registerUser(String userId, String plainPassword) {
+    public User registerUser(String userId, String plainPassword) {
         // Check if user id already exists
         if(users.containsKey(userId)) {
             logger.warn("Attempted to register user with duplicate ID: {}", userId);
-            return false;
+            return null;
         }
         
         // Create user
@@ -192,11 +192,11 @@ public class UserManager {
         
         // Save user data and return null if it fails
         if(!saveUser(user)) {
-            return false;
+            return null;
         }
         
         users.put(userId, user);
-        return true;
+        return user;
     }
     
     /**

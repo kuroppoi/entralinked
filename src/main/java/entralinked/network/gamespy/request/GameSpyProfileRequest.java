@@ -16,4 +16,10 @@ public record GameSpyProfileRequest(
             handler.handleProfileRequest(this);
         }
     }
+    
+    @Override
+    public String toString() {
+        // Exlude session key
+        return "GameSpyProfileRequest[sequenceId=%s, profileId=%s]".formatted(sequenceId, profileId);
+    }
 }

@@ -29,4 +29,13 @@ public record NasRequest(
         // Request-specific info
         @JsonProperty(value = "action", required = true) String action,
         @JsonProperty("gsbrcd") String branchCode, // action=login
-        @JsonProperty("svc")    String serviceType) {} // action=SVCLOC
+        @JsonProperty("svc")    String serviceType) { // action=SVCLOC
+    
+    @Override
+    public String toString() {
+        return ("NasRequest[userId=%s, gameCode=%s, makerCode=%s, unitCode=%s, sdkVersion=%s, language=%s, bssid=%s, "
+                + "accessPointInfo=%s, deviceTime=%s, action=%s, serviceType=%s]")
+                .formatted(userId, gameCode, makerCode, unitCode, sdkVersion, language, bssid, 
+                        accessPointInfo, deviceTime, action, serviceType);
+    }
+}

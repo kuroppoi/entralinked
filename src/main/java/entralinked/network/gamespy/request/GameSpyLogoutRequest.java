@@ -10,6 +10,14 @@ public record GameSpyLogoutRequest(
     
     @Override
     public void process(GameSpyHandler handler) {
-        handler.destroySessionKey(sessionKey);
+        if(handler.validateSessionKey(sessionKey)) {
+            handler.handleLogout();
+        }
+    }
+    
+    @Override
+    public String toString() {
+        // Exlude session key
+        return "GameSpyLogoutRequest[]";
     }
 }

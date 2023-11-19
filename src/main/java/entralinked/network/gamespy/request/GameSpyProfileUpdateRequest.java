@@ -21,4 +21,11 @@ public record GameSpyProfileUpdateRequest(
             handler.handleUpdateProfileRequest(this);
         }
     }
+    
+    @Override
+    public String toString() {
+        // Exlude session key
+        return "GameSpyProfileUpdateRequest[partnerId=%s, firstName=%s, lastName=%s, aimName=%s, zipCode=%s]"
+                .formatted(partnerId, firstName, lastName, aimName, zipCode);
+    }
 }

@@ -14,4 +14,10 @@ public record GameSpyStatusRequest(
     public void process(GameSpyHandler handler) {
         handler.validateSessionKey(sessionKey);
     }
+    
+    @Override
+    public String toString() {
+        // Exlude session key
+        return "GameSpyStatusRequest[statusString=%s, locationString=%s]".formatted(statusString, locationString);
+    }
 }

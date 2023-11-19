@@ -26,6 +26,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.util.concurrent.DefaultEventExecutor;
 import io.netty.util.concurrent.EventExecutorGroup;
 
@@ -64,6 +65,7 @@ public class GameSpyServer extends NettyServerBase {
             @Override
             protected void initChannel(Channel channel) throws Exception {
                 ChannelPipeline pipeline = channel.pipeline();
+                pipeline.addLast(new ReadTimeoutHandler(180));
                 pipeline.addLast(new DelimiterBasedFrameDecoder(512, Unpooled.wrappedBuffer("\\final\\".getBytes())));
                 pipeline.addLast(new GameSpyRequestDecoder(mapper, requestTypes));
                 pipeline.addLast(new GameSpyMessageEncoder(mapper));

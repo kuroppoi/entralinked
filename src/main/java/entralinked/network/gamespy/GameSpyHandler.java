@@ -28,6 +28,7 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.timeout.ReadTimeoutException;
 
 /**
  * GameSpy request handler.
@@ -50,6 +51,7 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         channel = ctx.channel();
+        logger.debug("Sending GameSpy server challenge");
         
         // Generate random server challenge
         serverChallenge = CredentialGenerator.generateChallenge(10);
@@ -60,6 +62,8 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
     
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
+        logger.debug("User {} disconnected from GameSpy server", user == null ? null : user.getFormattedId());
+        
         // Clear data
         serverChallenge = null;
         sessionKey = -1;
@@ -69,13 +73,21 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
     
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, GameSpyRequest request) throws Exception {
+        logger.debug("Received {}", request);
         request.process(this);
     }
     
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         if(cause instanceof ClosedChannelException) {
+            logger.debug("Silently discarded ClosedChannelException");
             return; // Ignore this stupid exception.
+        }
+        
+        // Handle timeout
+        if(cause instanceof ReadTimeoutException) {
+            logger.debug("User {} timed out", user == null ? null : user.getFormattedId());
+            return;
         }
         
         logger.error("Exception caught in GameSpy handler", cause);
@@ -92,6 +104,7 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
         ServiceSession session = userManager.getServiceSession(authToken, "gamespy");
         
         if(session == null) {
+            logger.debug("Rejecting GameSpy login request because the partner token is invalid");
             sendErrorMessage(0x200, "Invalid partner token.", request.sequenceId());
             return;
         }
@@ -101,6 +114,7 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
         String expectedResponse = createCredentialHash(partnerChallengeHash, authToken, clientChallenge, serverChallenge);
         
         if(!expectedResponse.equals(request.response())) {
+            logger.debug("Rejecting GameSpy login request because the challenge response is invalid");
             sendErrorMessage(0x202, "Invalid response.", request.sequenceId());
             return;
         }
@@ -127,7 +141,9 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
             user.setProfileIdOverride(0);
             userManager.saveUser(user); // It's not too big of a deal if this fails for some reason
         }
-                
+        
+        logger.info("User {} logged in with profile {}", user.getFormattedId(), profile.getId());
+        
         // Prepare and send response
         sessionKey = secureRandom.nextInt(Integer.MAX_VALUE);
         String proof = createCredentialHash(partnerChallengeHash, authToken, serverChallenge, clientChallenge);
@@ -180,10 +196,9 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
                 passwordHash));
     }
     
-    public void destroySessionKey(int sessionKey) {
-        if(validateSessionKey(sessionKey)) {
-            sessionKey = -1;
-        }
+    public void handleLogout() {
+        logger.info("User {} logged out of profile {}", user.getFormattedId(), profile.getId());
+        sessionKey = -1; // Is there a point?
     }
     
     public boolean validateSessionKey(int sessionKey) {

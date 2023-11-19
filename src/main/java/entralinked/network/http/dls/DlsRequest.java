@@ -21,5 +21,13 @@ public record DlsRequest(
         @JsonProperty("contents") String dlcName, // action=contents
         @JsonProperty("attr1")    String dlcType, // action=list
         @JsonProperty("attr2")    int dlcIndex, // action=list
-        @JsonProperty("offset")   int offset, // ?
-        @JsonProperty("num")      int num) {} // ?
+        @JsonProperty("offset")   int offset, // Start offset in the list
+        @JsonProperty("num")      int num) { // Number of entries
+    
+    @Override
+    public String toString() {
+        return ("DlsRequest[userId=%s, gameCode=%s, accessPointInfo=%s, action=%s, dlcGameCode=%s, dlcName=%s, dlcType=%s, "
+                + "dlcIndex=%s, offset=%s, num=%s]")
+                .formatted(userId, gameCode, accessPointInfo, action, dlcGameCode, dlcName, dlcType, dlcIndex, offset, num);
+    }
+}

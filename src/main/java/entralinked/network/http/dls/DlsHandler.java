@@ -4,6 +4,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import entralinked.Entralinked;
@@ -25,6 +28,7 @@ import io.javalin.http.HttpStatus;
  */
 public class DlsHandler implements HttpHandler {
     
+    private static final Logger logger = LogManager.getLogger();
     private final ObjectMapper mapper = new ObjectMapper(new UrlEncodedFormFactory());
     private final DlcList dlcList;
     private final UserManager userManager;
@@ -45,11 +49,13 @@ public class DlsHandler implements HttpHandler {
     private void handleDownloadRequest(Context ctx) throws IOException {
         // Deserialize request body
         DlsRequest request = mapper.readValue(ctx.body().replace("%2A", "*"), DlsRequest.class);
+        logger.debug("Received {}", request);
         
         // Check if service session is valid
         ServiceSession session = userManager.getServiceSession(request.serviceToken(), "dls1.nintendowifi.net");
         
         if(session == null) {
+            logger.debug("Rejecting DLS request because the service session has expired");
             ctx.status(HttpStatus.UNAUTHORIZED);
             return;
         }

@@ -93,6 +93,7 @@ public class PglHandler implements HttpHandler {
         
         if(credentials == null || 
                 !username.equals(credentials.getUsername()) || !password.equals(credentials.getPassword())) {
+            logger.debug("Rejecting PGL request because the auth credentials were incorrect");
             ctx.status(HttpStatus.UNAUTHORIZED);
             clearTasks(ctx);
             return;
@@ -100,11 +101,13 @@ public class PglHandler implements HttpHandler {
         
         // Deserialize the request
         PglRequest request = mapper.readValue(ctx.queryString(), PglRequest.class);
+        logger.debug("Received {}", request);
         
         // Verify the service session token
         ServiceSession session = userManager.getServiceSession(request.token(), "external");
         
         if(session == null) {
+            logger.debug("Rejecting PGL request because the service session has expired");
             ctx.status(HttpStatus.UNAUTHORIZED);
             clearTasks(ctx);
             return;
@@ -131,7 +134,7 @@ public class PglHandler implements HttpHandler {
         };
         
         // Handle the request
-        handler.process(request, ctx);    
+        handler.process(request, ctx);
     }
     
     /**
@@ -198,13 +201,14 @@ public class PglHandler implements HttpHandler {
             return;
         }
         
+        logger.info("Player {} is downloading save data as user {}", player.getGameSyncId(), user.getFormattedId());
+        
         // Write status code
         writeStatusCode(outputStream, 0);
         
         // Allow it to wake up anyway, maybe the poor sap is stuck..
         // Just don't send any other data.
         if(player.getStatus() == PlayerStatus.AWAKE) {
-            logger.info("Player {} is downloading save data, but is already awake!", player.getGameSyncId());
             return;
         }
         
@@ -312,7 +316,7 @@ public class PglHandler implements HttpHandler {
                 
                 // Full visitor type consists of a trainer class and what I call a 'personality' index
                 // that, along with the trainer class, determines which phrases the visitor uses.
-                // The shope type is calculated in such an odd manner because for some reason,
+                // The shop type is calculated in such an odd manner because for some reason,
                 // the 'starting' index of the shop type used increases by 2 for each visitor type.
                 // For example, if the visitor type is '0', then shop type '0' would be a raffle.
                 // However, if the visitor type is '2', then shop type '0' results in a dojo instead.
@@ -343,6 +347,7 @@ public class PglHandler implements HttpHandler {
     private void handleMemoryLink(PglRequest request, Context ctx) throws IOException {
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
         Player player = playerManager.getPlayer(request.gameSyncId());
+        User user = ctx.attribute("user");
         
         // Check if player exists
         if(player == null) {
@@ -363,6 +368,8 @@ public class PglHandler implements HttpHandler {
             writeStatusCode(outputStream, 5); // No game save data exists for this Game Sync ID
             return;
         }
+        
+        logger.info("User {} is Memory Linking with player {}", user.getFormattedId(), player.getGameSyncId());
         
         // Send the save data!
         try(FileInputStream inputStream = new FileInputStream(file)) {
@@ -422,12 +429,11 @@ public class PglHandler implements HttpHandler {
      * POST handler for {@code /dsio/gw?p=savedata.upload}
      */
     private void handleUploadSaveData(PglRequest request, Context ctx) throws IOException {
-        // Prepare response
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
+        Player player = playerManager.getPlayer(request.gameSyncId());
+        User user = ctx.attribute("user");
         
         // Check if the player exists, has no Pokémon tucked in already and uses the same game version
-        Player player = playerManager.getPlayer(request.gameSyncId());
-        
         if(player == null
                 || (!configuration.allowOverwritingPlayerDreamInfo() && player.getStatus() != PlayerStatus.AWAKE)
                 || (!configuration.allowPlayerGameVersionMismatch() && player.getGameVersion() != null 
@@ -443,6 +449,8 @@ public class PglHandler implements HttpHandler {
             writeStatusCode(outputStream, 1); // Unauthorized
             return;
         }
+        
+        logger.info("Player {} is uploading save data as user {}", player.getGameSyncId(), user.getFormattedId());
         
         // Try to store save data
         if(!playerManager.storePlayerGameSaveFile(player, ctx.bodyInputStream())) {
