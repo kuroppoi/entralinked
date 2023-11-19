@@ -9,6 +9,7 @@
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="${PATTERN_DETAILED}"/>
+      <ThresholdFilter level="INFO"/>
     </Console>
     <RollingFile name="LogFile" fileName="${LOGS_DIR}/latest.log" filePattern="${LOGS_DIR}/%d{yyyy-MM-dd}-%i.log.gz">
       <PatternLayout pattern="${PATTERN_DETAILED}"/>
@@ -31,9 +32,8 @@
       <AppenderRef ref="LogFile"/>
       <AppenderRef ref="GuiOutput"/>
       <AppenderRef ref="DebugLogFile"/>
-    </Logger>
-    <Root level="all">
       <AppenderRef ref="Console"/>
-    </Root>
+    </Logger>
+    <Root level="all"/>
   </Loggers>
 </Configuration>
