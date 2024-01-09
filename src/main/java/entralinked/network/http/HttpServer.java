@@ -23,6 +23,7 @@ import entralinked.LauncherAgent;
 import entralinked.utility.CertificateGenerator;
 import io.javalin.Javalin;
 import io.javalin.http.HttpStatus;
+import io.javalin.util.ConcurrencyUtil;
 import io.javalin.util.JavalinException;
 
 public class HttpServer {
@@ -32,7 +33,9 @@ public class HttpServer {
     private final Javalin javalin;
     private boolean started;
     
-    public HttpServer(Entralinked entralinked) {        
+    public HttpServer(Entralinked entralinked) {
+        ConcurrencyUtil.INSTANCE.setUseLoom(false);
+        
         // Create certificate keystore
         KeyStore keyStore = null;
         
