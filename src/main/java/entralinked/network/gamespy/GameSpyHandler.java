@@ -8,7 +8,6 @@ import java.util.function.Supplier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import entralinked.Configuration;
 import entralinked.Entralinked;
 import entralinked.model.user.GameProfile;
 import entralinked.model.user.ServiceSession;
@@ -38,7 +37,6 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
     
     private static final Logger logger = LogManager.getLogger();
     private final SecureRandom secureRandom = new SecureRandom();
-    private final Configuration configuration;
     private final UserManager userManager;
     private Channel channel;
     private String serverChallenge;
@@ -47,7 +45,6 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
     private GameProfile profile;
     
     public GameSpyHandler(Entralinked entralinked) {
-        this.configuration = entralinked.getConfiguration();
         this.userManager = entralinked.getUserManager();
     }
     
@@ -65,7 +62,7 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
     
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-        logger.debug("User {} disconnected from GameSpy server", user == null ? null : user.getFormattedId(!configuration.logSensitiveInfo()));
+        logger.debug("User {} disconnected from GameSpy server", user == null ? null : user.getRedactedId());
         
         // Clear data
         serverChallenge = null;
@@ -89,7 +86,7 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
         
         // Handle timeout
         if(cause instanceof ReadTimeoutException) {
-            logger.debug("User {} timed out", user == null ? null : user.getFormattedId(!configuration.logSensitiveInfo()));
+            logger.debug("User {} timed out", user == null ? null : user.getRedactedId());
             return;
         }
         
@@ -145,7 +142,7 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
             userManager.saveUser(user); // It's not too big of a deal if this fails for some reason
         }
         
-        logger.info("User {} logged in with profile {}", user.getFormattedId(!configuration.logSensitiveInfo()), profile.getId());
+        logger.info("User {} logged in with profile {}", user.getRedactedId(), profile.getId());
         
         // Prepare and send response
         sessionKey = secureRandom.nextInt(Integer.MAX_VALUE);
@@ -200,7 +197,7 @@ public class GameSpyHandler extends SimpleChannelInboundHandler<GameSpyRequest> 
     }
     
     public void handleLogout() {
-        logger.info("User {} logged out of profile {}", user.getFormattedId(!configuration.logSensitiveInfo()), profile.getId());
+        logger.info("User {} logged out of profile {}", user.getRedactedId(), profile.getId());
         sessionKey = -1; // Is there a point?
     }
     

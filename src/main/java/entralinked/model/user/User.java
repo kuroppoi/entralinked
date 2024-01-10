@@ -21,11 +21,14 @@ public class User {
     }
     
     public String getFormattedId() {
-        return getFormattedId(false);
+        return "%s000".formatted(id).replaceAll("(.{4})(?!$)", "$1-");
     }
     
-    public String getFormattedId(boolean redact) {
-        return redact ? "%s-XXXX-XXXX-XXXX".formatted(id.substring(0, 4)) : "%s000".formatted(id).replaceAll("(.{4})(?!$)", "$1-");
+    /**
+     * @return The user's id, redacted for logging.
+     */
+    public String getRedactedId() {
+        return "%s-XXXX-XXXX-XXXX".formatted(id.substring(0, 4));
     }
     
     public String getId() {

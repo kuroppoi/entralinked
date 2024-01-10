@@ -201,7 +201,7 @@ public class PglHandler implements HttpHandler {
             return;
         }
         
-        logger.info("Player {} is downloading save data as user {}", player.getGameSyncId(), user.getFormattedId(!configuration.logSensitiveInfo()));
+        logger.info("Player {} is downloading save data as user {}", player.getGameSyncId(), user.getRedactedId());
         
         // Write status code
         writeStatusCode(outputStream, 0);
@@ -369,7 +369,7 @@ public class PglHandler implements HttpHandler {
             return;
         }
         
-        logger.info("User {} is Memory Linking with player {}", user.getFormattedId(!configuration.logSensitiveInfo()), player.getGameSyncId());
+        logger.info("User {} is Memory Linking with player {}", user.getRedactedId(), player.getGameSyncId());
         
         // Send the save data!
         try(FileInputStream inputStream = new FileInputStream(file)) {
@@ -450,7 +450,7 @@ public class PglHandler implements HttpHandler {
             return;
         }
         
-        logger.info("Player {} is uploading save data as user {}", player.getGameSyncId(), user.getFormattedId(!configuration.logSensitiveInfo()));
+        logger.info("Player {} is uploading save data as user {}", player.getGameSyncId(), user.getRedactedId());
         
         // Try to store save data
         if(!playerManager.storePlayerGameSaveFile(player, ctx.bodyInputStream())) {
