@@ -8,7 +8,8 @@ public record Configuration(
         boolean clearPlayerDreamInfoOnWake,
         boolean allowOverwritingPlayerDreamInfo,
         boolean allowPlayerGameVersionMismatch,
-        boolean allowWfcRegistrationThroughLogin) {
+        boolean allowWfcRegistrationThroughLogin,
+        boolean logSensitiveInfo) {
     
-    public static final Configuration DEFAULT = new Configuration("local", true, false, false, true);
+    public static final Configuration DEFAULT = new Configuration("local", true, false, false, true, false);
 }

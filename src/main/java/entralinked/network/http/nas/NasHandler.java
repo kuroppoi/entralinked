@@ -91,12 +91,12 @@ public class NasHandler implements HttpHandler {
             
             // Should *never* return null in this location
             user = userManager.authenticateUser(userId, request.password());
-            logger.info("Created account for user {}", user.getFormattedId());
+            logger.info("Created account for user {}", user.getFormattedId(!configuration.logSensitiveInfo()));
         }
         
         // Prepare GameSpy server credentials
         ServiceCredentials credentials = userManager.createServiceSession(user, "gamespy", request.branchCode());
-        logger.info("Created GameSpy session for user {}", user.getFormattedId());
+        logger.info("Created GameSpy session for user {}", user.getFormattedId(!configuration.logSensitiveInfo()));
         result(ctx, new NasLoginResponse("gamespy.com", credentials.authToken(), credentials.challenge()));
     }
     
@@ -120,7 +120,7 @@ public class NasHandler implements HttpHandler {
             return;
         }
         
-        logger.info("Created account for user {}", user.getFormattedId());
+        logger.info("Created account for user {}", user.getFormattedId(!configuration.logSensitiveInfo()));
         result(ctx, NasReturnCode.REGISTRATION_SUCCESS);
     }
     
@@ -148,7 +148,7 @@ public class NasHandler implements HttpHandler {
         // Prepare user credentials
         ServiceCredentials credentials = userManager.createServiceSession(user, service, null);
         logger.info("Created {} session for user {}", 
-                type.equals("0000") ? "PGL" : type.equals("9000") ? "DLS1" : "this should never be logged", user.getFormattedId());
+                type.equals("0000") ? "PGL" : type.equals("9000") ? "DLS1" : "this should never be logged", user.getFormattedId(!configuration.logSensitiveInfo()));
         result(ctx, new NasServiceLocationResponse(true, service, credentials.authToken()));
     }
     

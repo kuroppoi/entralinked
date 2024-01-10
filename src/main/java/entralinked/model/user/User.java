@@ -21,7 +21,11 @@ public class User {
     }
     
     public String getFormattedId() {
-        return "%s000".formatted(id).replaceAll("(.{4})(?!$)", "$1-");
+        return getFormattedId(false);
+    }
+    
+    public String getFormattedId(boolean redact) {
+        return redact ? "%s-XXXX-XXXX-XXXX".formatted(id.substring(0, 4)) : "%s000".formatted(id).replaceAll("(.{4})(?!$)", "$1-");
     }
     
     public String getId() {
