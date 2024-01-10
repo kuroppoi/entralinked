@@ -31,8 +31,8 @@ public record GameSpyLoginRequest(
     
     @Override
     public String toString() {
-        return ("GameSpyLoginRequest[sequenceId=%s, userId=%s, gameName=%s, profileId=%s, namespaceId=%s, partnerId=%s, productId=%s, "
+        return ("GameSpyLoginRequest[sequenceId=%s, gameName=%s, profileId=%s, namespaceId=%s, partnerId=%s, productId=%s, "
                 + "sdkRevision=%s, firewall=%s, port=%s, quiet=%s]")
-                .formatted(sequenceId, userId, gameName, profileId, namespaceId, partnerId, productId, sdkRevision, firewall, port, quiet);
+                .formatted(sequenceId, gameName, profileId, namespaceId, partnerId, productId, sdkRevision, firewall, port, quiet);
     }
 }

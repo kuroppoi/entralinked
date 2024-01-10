@@ -26,8 +26,7 @@ public record DlsRequest(
     
     @Override
     public String toString() {
-        return ("DlsRequest[userId=%s, gameCode=%s, accessPointInfo=%s, action=%s, dlcGameCode=%s, dlcName=%s, dlcType=%s, "
-                + "dlcIndex=%s, offset=%s, num=%s]")
-                .formatted(userId, gameCode, accessPointInfo, action, dlcGameCode, dlcName, dlcType, dlcIndex, offset, num);
+        return ("DlsRequest[gameCode=%s, action=%s, dlcGameCode=%s, dlcName=%s, dlcType=%s, dlcIndex=%s, offset=%s, num=%s]")
+                .formatted(gameCode, action, dlcGameCode, dlcName, dlcType, dlcIndex, offset, num);
     }
 }

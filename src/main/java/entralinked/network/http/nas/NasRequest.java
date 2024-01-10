@@ -33,9 +33,7 @@ public record NasRequest(
     
     @Override
     public String toString() {
-        return ("NasRequest[userId=%s, gameCode=%s, makerCode=%s, unitCode=%s, sdkVersion=%s, language=%s, bssid=%s, "
-                + "accessPointInfo=%s, deviceTime=%s, action=%s, serviceType=%s]")
-                .formatted(userId, gameCode, makerCode, unitCode, sdkVersion, language, bssid, 
-                        accessPointInfo, deviceTime, action, serviceType);
+        return ("NasRequest[gameCode=%s, makerCode=%s, unitCode=%s, sdkVersion=%s, language=%s, action=%s, serviceType=%s]")
+                .formatted(gameCode, makerCode, unitCode, sdkVersion, language, action, serviceType);
     }
 }

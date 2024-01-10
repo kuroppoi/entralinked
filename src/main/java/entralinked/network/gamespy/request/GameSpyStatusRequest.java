@@ -17,7 +17,6 @@ public record GameSpyStatusRequest(
     
     @Override
     public String toString() {
-        // Exlude session key
-        return "GameSpyStatusRequest[statusString=%s, locationString=%s]".formatted(statusString, locationString);
+        return "GameSpyStatusRequest[]";
     }
 }

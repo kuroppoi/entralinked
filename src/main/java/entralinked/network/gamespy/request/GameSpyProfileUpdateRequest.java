@@ -24,8 +24,6 @@ public record GameSpyProfileUpdateRequest(
     
     @Override
     public String toString() {
-        // Exlude session key
-        return "GameSpyProfileUpdateRequest[partnerId=%s, firstName=%s, lastName=%s, aimName=%s, zipCode=%s]"
-                .formatted(partnerId, firstName, lastName, aimName, zipCode);
+        return "GameSpyProfileUpdateRequest[partnerId=%s]".formatted(partnerId);
     }
 }
