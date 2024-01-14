@@ -1,5 +1,6 @@
 package entralinked.network.http.pgl;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -355,6 +356,12 @@ public class PglHandler implements HttpHandler {
             return;
         }
         
+        // Version null check because this can happen in specific cases
+        if(player.getGameVersion() == null) {
+            writeStatusCode(outputStream, 5); // No game save data exists for this Game Sync ID
+            return;
+        }
+        
         // Check if the save file belongs to Black or White
         if(player.getGameVersion().isVersion2()) {
             writeStatusCode(outputStream, 10); // Not a Black or White save
@@ -485,13 +492,9 @@ public class PglHandler implements HttpHandler {
     /**
      * POST handler for {@code /dsio/gw?p=account.create.upload}
      */
-    private void handleCreateAccount(PglRequest request, Context ctx) throws IOException {        
-        // It sends the entire save file, but we just skip through it because we don't need anything from it here
-        ServletInputStream inputStream = ctx.req().getInputStream();
-        
-        while(!inputStream.isFinished()) {
-            inputStream.read();
-        }
+    private void handleCreateAccount(PglRequest request, Context ctx) throws IOException {
+        // Have to read all the bytes first for some reason
+        byte[] bytes = ctx.bodyAsBytes();
         
         // Prepare response
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
@@ -509,8 +512,16 @@ public class PglHandler implements HttpHandler {
         }
         
         // Try to register player
-        if(playerManager.registerPlayer(request.gameSyncId()) == null) {
+        Player player = playerManager.registerPlayer(request.gameSyncId(), request.gameVersion());
+        
+        if(player == null) {
             writeStatusCode(outputStream, 3); // Registration error
+            return;
+        }
+        
+        // Try to store save data
+        if(!playerManager.storePlayerGameSaveFile(player, new ByteArrayInputStream(bytes))) {
+            writeStatusCode(outputStream, 4); // Game save data IO error
             return;
         }
         
@@ -534,7 +545,8 @@ public class PglHandler implements HttpHandler {
         }
         
         // Try to register player
-        if(playerManager.registerPlayer(gameSyncId) == null) {
+        // Regrettably, this request does not contain game save & version data.
+        if(playerManager.registerPlayer(gameSyncId, null) == null) {
             writeStatusCode(outputStream, 3); // Registration error
             return;
         }
