@@ -17,7 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import entralinked.Configuration;
 import entralinked.Entralinked;
 import entralinked.model.avenue.AvenueVisitor;
-import entralinked.model.dlc.Dlc;
 import entralinked.model.dlc.DlcList;
 import entralinked.model.pkmn.PkmnInfo;
 import entralinked.model.pkmn.PkmnInfoReader;
@@ -226,8 +225,7 @@ public class PglHandler implements HttpHandler {
         // Create or remove custom C-Gear skin DLC override
         if("custom".equals(cgearSkin)) {
             cgearSkinIndex = 1;
-            user.setDlcOverride(cgearType, new Dlc(player.getCGearSkinFile().getAbsolutePath(),
-                    "custom", "IRAO", cgearType, cgearSkinIndex, 9730, 0, true));
+            user.setDlcOverride(cgearType, player.getCGearSkinFile());
         } else {
             cgearSkinIndex = dlcList.getDlcIndex("IRAO", cgearType, cgearSkin);
             user.removeDlcOverride(cgearType);
@@ -236,8 +234,7 @@ public class PglHandler implements HttpHandler {
         // Create or remove custom Pokédex skin DLC override
         if("custom".equals(dexSkin)) {
             dexSkinIndex = 1;
-            user.setDlcOverride("ZUKAN", new Dlc(player.getDexSkinFile().getAbsolutePath(),
-                    "custom", "IRAO", "ZUKAN", dexSkinIndex, 25090, 0, true));
+            user.setDlcOverride("ZUKAN", player.getDexSkinFile());
         } else {
             dexSkinIndex = dlcList.getDlcIndex("IRAO", "ZUKAN", dexSkin);
             user.removeDlcOverride("ZUKAN");
@@ -314,6 +311,7 @@ public class PglHandler implements HttpHandler {
                 byte[] nameBytes = visitor.name().getBytes(StandardCharsets.UTF_16LE);
                 outputStream.write(nameBytes, 0, Math.min(14, nameBytes.length));
                 outputStream.writeBytes(-1, 14 - nameBytes.length);
+                outputStream.writeShort(0xFF); // Null terminator
                 
                 // Full visitor type consists of a trainer class and what I call a 'personality' index
                 // that, along with the trainer class, determines which phrases the visitor uses.
@@ -322,7 +320,6 @@ public class PglHandler implements HttpHandler {
                 // For example, if the visitor type is '0', then shop type '0' would be a raffle.
                 // However, if the visitor type is '2', then shop type '0' results in a dojo instead.
                 int visitorType = visitor.type().getClientId() + visitor.personality() * 8;
-                outputStream.writeShort(-1); // Does nothing, seems to be read as part of the name.
                 outputStream.write(visitorType);
                 outputStream.write(visitor.shopType().ordinal() + (7 - visitorType * 2 % 7));
                 outputStream.writeShort(0); // Does nothing

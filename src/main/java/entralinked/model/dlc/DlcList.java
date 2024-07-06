@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 import entralinked.utility.Crc16;
 
+@Deprecated
 public class DlcList {
     
     private static final Logger logger = LogManager.getLogger();

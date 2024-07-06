@@ -1,7 +1,9 @@
 package entralinked.network.http.dls;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,15 +12,14 @@ import org.apache.logging.log4j.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import entralinked.Entralinked;
-import entralinked.model.dlc.Dlc;
-import entralinked.model.dlc.DlcList;
+import entralinked.GameVersion;
 import entralinked.model.user.ServiceSession;
 import entralinked.model.user.User;
 import entralinked.model.user.UserManager;
 import entralinked.network.http.HttpHandler;
 import entralinked.network.http.HttpRequestHandler;
 import entralinked.serialization.UrlEncodedFormFactory;
-import entralinked.utility.LEOutputStream;
+import entralinked.utility.MysteryGiftUtility;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
@@ -30,11 +31,10 @@ public class DlsHandler implements HttpHandler {
     
     private static final Logger logger = LogManager.getLogger();
     private final ObjectMapper mapper = new ObjectMapper(new UrlEncodedFormFactory());
-    private final DlcList dlcList;
+    private final File rootDirectory = new File("dlc");
     private final UserManager userManager;
     
     public DlsHandler(Entralinked entralinked) {
-        this.dlcList = entralinked.getDlcList();
         this.userManager = entralinked.getUserManager();
     }
     
@@ -64,6 +64,7 @@ public class DlsHandler implements HttpHandler {
         HttpRequestHandler<DlsRequest> handler = switch(request.action()) {
             case "list" -> this::handleRetrieveDlcList;
             case "contents" -> this::handleRetrieveDlcContent;
+            case "count" -> this::handleRetrieveDlcCount;
             default -> throw new IllegalArgumentException("Invalid POST request action: " + request.action());
         };
         
@@ -81,15 +82,43 @@ public class DlsHandler implements HttpHandler {
         User user = ctx.attribute("user");
         String gameCode = getDlcGameCode(request.dlcGameCode());
         String type = getRegionlessDlcType(request.dlcType());
+        String attr2 = request.attr2();
+        List<File> files = user.hasDlcOverride(type) ? Arrays.asList(user.getDlcOverride(type)) 
+                : Arrays.asList(getDlcDirectory(gameCode, type).listFiles());
         
-        // If an overriding DLC is present, send the data for that instead.
-        if(user.hasDlcOverride(type)) {
-            ctx.result(dlcList.getDlcListString(List.of(user.getDlcOverride(type))));
+        // Return empty string if no DLC could be found
+        if(files == null) {
+            ctx.result("");
             return;
         }
         
-        // TODO NOTE: I assume that in a conventional implementation, certain DLC attributes may be omitted from the request.
-        ctx.result(dlcList.getDlcListString(dlcList.getDlcList(gameCode, type, request.dlcIndex())));
+        // PGL content attr2 hack
+        if(attr2 != null) {
+            files = Arrays.asList(files.get(Integer.parseInt(attr2) - 1));
+        }
+        
+        StringBuilder builder = new StringBuilder();
+        int count = Math.min(files.size(), request.num());
+        
+        // Create DLC list string
+        for(int i = 0; i < count; i++) {
+            File file = files.get(i);
+            
+            if(type == null) {
+                // Generation 4 Mystery Gift
+                builder.append("%s\t\t\t\t\t%s\r\n".formatted(file.getName(), file.length()));
+            } else if(type.equals("MYSTERY")) {
+                // Generation 5 Mystery Gift
+                String gameFlag = GameVersion.lookup(request.gameCode()).isVersion2() ? "F00000" : "300000";
+                builder.append("%s\t\t%s\t%s\t\t%s\r\n".formatted(file.getName(), type, gameFlag, 720));
+            } else {
+                // PGL content
+                builder.append("%s\t\t%s\t%s\t\t%s\r\n".formatted(file.getName(), type, i + 1, file.length()));
+            }
+        }
+        
+        // Send result
+        ctx.result(builder.toString());
     }
     
     /**
@@ -99,32 +128,44 @@ public class DlsHandler implements HttpHandler {
         User user = ctx.attribute("user");
         String gameCode = getDlcGameCode(request.dlcGameCode());
         String type = getRegionlessDlcType(request.dlcType());
-        Dlc dlc = user.hasDlcOverride(type) ? user.getDlcOverride(type) : dlcList.getDlc(gameCode, type, request.dlcName());
+        File file = user.hasDlcOverride(type) ? user.getDlcOverride(type) : type != null 
+                ? new File(rootDirectory, "%s/%s/%s".formatted(gameCode, type, request.dlcName()))
+                : new File(rootDirectory, "%s/%s".formatted(gameCode, request.dlcName()));
         
         // Check if the requested DLC exists
-        if(dlc == null) {
+        if(!file.exists()) {
             ctx.status(HttpStatus.NOT_FOUND);
             return;
         }
         
-        // Write DLC data
-        try(FileInputStream inputStream = new FileInputStream(dlc.path())) {
-            LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
-            inputStream.transferTo(outputStream);
-            
-            // If checksum is not part of the file, manually append it
-            if(!dlc.checksumEmbedded()) {
-                outputStream.writeShort(dlc.checksum());
-            }
+        byte[] bytes = Files.readAllBytes(file.toPath());
+        
+        if(type == null) {
+            // Generation 4 Mystery Gift
+            bytes = MysteryGiftUtility.createUniversalGiftData4(bytes);
+        } else if(type.equals("MYSTERY")) {
+            // Generation 5 Mystery Gift
+            bytes = MysteryGiftUtility.createUniversalGiftData5(bytes);
         }
+        
+        // Send result
+        ctx.result(bytes);
+    }
+    
+    /**
+     * POST handler for {@code /download action=count}
+     */
+    private void handleRetrieveDlcCount(DlsRequest request, Context ctx) throws IOException {
+        ctx.result("1"); // TODO
     }
     
     /**
      * @return The game serial that should be used for downloading DLC based on the provided input.
      */
     private String getDlcGameCode(String gameCode) {
-        return switch(gameCode) {
-            case "IRAJ" -> "IRAO";
+        return switch(gameCode.substring(0, 3)) {
+            case "IRA" -> "IRAO"; // BW & B2W2
+            case "ADA", "CPU", "IPG" -> "ADAE"; // DPPt & HGSS
             default -> gameCode;
         };
     }
@@ -133,12 +174,21 @@ public class DlsHandler implements HttpHandler {
      * @return The DLC type without the region identifier, or the input if it is an unknown type.
      */
     private String getRegionlessDlcType(String dlcType) {
+        if(dlcType == null) {
+            return null;
+        }
+        
         return switch(dlcType) {
             case "CGEAR_E", "CGEAR_F", "CGEAR_I", "CGEAR_G", "CGEAR_S", "CGEAR_J", "CGEAR_K" -> "CGEAR";
             case "CGEAR2_E", "CGEAR2_F", "CGEAR2_I", "CGEAR2_G", "CGEAR2_S", "CGEAR2_J", "CGEAR2_K" -> "CGEAR2";
             case "ZUKAN_E", "ZUKAN_F", "ZUKAN_I", "ZUKAN_G", "ZUKAN_S", "ZUKAN_J", "ZUKAN_K" -> "ZUKAN";
             case "MUSICAL_E", "MUSICAL_F", "MUSICAL_I", "MUSICAL_G", "MUSICAL_S", "MUSICAL_J", "MUSICAL_K" -> "MUSICAL";
+            case "MYSTERY_E", "MYSTERY_F", "MYSTERY_I", "MYSTERY_G", "MYSTERY_S", "MYSTERY_J", "MYSTERY_K" -> "MYSTERY";
             default -> dlcType;
         };
+    }
+    
+    private File getDlcDirectory(String gameCode, String dlcType) {
+        return dlcType == null ? new File(rootDirectory, gameCode) : new File(rootDirectory, "%s/%s".formatted(gameCode, dlcType));
     }
 }
