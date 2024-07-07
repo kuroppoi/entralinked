@@ -3,7 +3,9 @@ package entralinked.network.http.dls;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -81,20 +83,24 @@ public class DlsHandler implements HttpHandler {
     private void handleRetrieveDlcList(DlsRequest request, Context ctx) throws IOException {
         User user = ctx.attribute("user");
         String gameCode = getDlcGameCode(request.dlcGameCode());
-        String type = getRegionlessDlcType(request.dlcType());
+        String type = getDlcType(request.attr1());
         String attr2 = request.attr2();
-        List<File> files = user.hasDlcOverride(type) ? Arrays.asList(user.getDlcOverride(type)) 
-                : Arrays.asList(getDlcDirectory(gameCode, type).listFiles());
+        List<File> files = null;
         
-        // Return empty string if no DLC could be found
-        if(files == null) {
-            ctx.result("");
-            return;
+        if(user.hasDlcOverride(type)) {
+            files = Arrays.asList(user.getDlcOverride(type));
+        } else {
+            // Get list of files in DLC directory
+            File directory = getDlcDirectory(gameCode, type);
+            files = directory.isDirectory() ? Arrays.asList(directory.listFiles()) : new ArrayList<>();
         }
         
-        // PGL content attr2 hack
         if(attr2 != null) {
+            // PGL content attr2 hack
             files = Arrays.asList(files.get(Integer.parseInt(attr2) - 1));
+        } else {
+            // Mystery Gift randomness
+            Collections.shuffle(files);
         }
         
         StringBuilder builder = new StringBuilder();
@@ -106,7 +112,7 @@ public class DlsHandler implements HttpHandler {
             
             if(type == null) {
                 // Generation 4 Mystery Gift
-                builder.append("%s\t\t\t\t\t%s\r\n".formatted(file.getName(), file.length()));
+                builder.append("%s\t\t\t\t\t%s\r\n".formatted(file.getName(), 936));
             } else if(type.equals("MYSTERY")) {
                 // Generation 5 Mystery Gift
                 String gameFlag = GameVersion.lookup(request.gameCode()).isVersion2() ? "F00000" : "300000";
@@ -127,7 +133,7 @@ public class DlsHandler implements HttpHandler {
     private void handleRetrieveDlcContent(DlsRequest request, Context ctx) throws IOException {
         User user = ctx.attribute("user");
         String gameCode = getDlcGameCode(request.dlcGameCode());
-        String type = getRegionlessDlcType(request.dlcType());
+        String type = getDlcType(request.attr1());
         File file = user.hasDlcOverride(type) ? user.getDlcOverride(type) : type != null 
                 ? new File(rootDirectory, "%s/%s/%s".formatted(gameCode, type, request.dlcName()))
                 : new File(rootDirectory, "%s/%s".formatted(gameCode, request.dlcName()));
@@ -142,7 +148,7 @@ public class DlsHandler implements HttpHandler {
         
         if(type == null) {
             // Generation 4 Mystery Gift
-            bytes = MysteryGiftUtility.createUniversalGiftData4(bytes);
+            bytes = MysteryGiftUtility.createUniversalGiftData4(bytes, file.getName());
         } else if(type.equals("MYSTERY")) {
             // Generation 5 Mystery Gift
             bytes = MysteryGiftUtility.createUniversalGiftData5(bytes);
@@ -173,19 +179,12 @@ public class DlsHandler implements HttpHandler {
     /**
      * @return The DLC type without the region identifier, or the input if it is an unknown type.
      */
-    private String getRegionlessDlcType(String dlcType) {
-        if(dlcType == null) {
-            return null;
+    private String getDlcType(String attr1) {
+        if(attr1 == null || !attr1.contains("_")) {
+            return attr1;
         }
         
-        return switch(dlcType) {
-            case "CGEAR_E", "CGEAR_F", "CGEAR_I", "CGEAR_G", "CGEAR_S", "CGEAR_J", "CGEAR_K" -> "CGEAR";
-            case "CGEAR2_E", "CGEAR2_F", "CGEAR2_I", "CGEAR2_G", "CGEAR2_S", "CGEAR2_J", "CGEAR2_K" -> "CGEAR2";
-            case "ZUKAN_E", "ZUKAN_F", "ZUKAN_I", "ZUKAN_G", "ZUKAN_S", "ZUKAN_J", "ZUKAN_K" -> "ZUKAN";
-            case "MUSICAL_E", "MUSICAL_F", "MUSICAL_I", "MUSICAL_G", "MUSICAL_S", "MUSICAL_J", "MUSICAL_K" -> "MUSICAL";
-            case "MYSTERY_E", "MYSTERY_F", "MYSTERY_I", "MYSTERY_G", "MYSTERY_S", "MYSTERY_J", "MYSTERY_K" -> "MYSTERY";
-            default -> dlcType;
-        };
+        return attr1.substring(0, attr1.lastIndexOf('_'));
     }
     
     private File getDlcDirectory(String gameCode, String dlcType) {

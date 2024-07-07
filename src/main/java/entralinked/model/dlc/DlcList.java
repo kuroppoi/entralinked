@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import entralinked.utility.Crc16;
+import entralinked.utility.MD5;
 
 @Deprecated
 public class DlcList {
@@ -28,31 +30,32 @@ public class DlcList {
     public DlcList() {
         logger.info("Loading DLC ...");
         
-        // Extract defaults if external DLC directory is not present
-        if(!dataDirectory.exists()) {
-            logger.info("Extracting default DLC files ...");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/dlc.paths")));
-            String line = null;
-            
-            try {
-                while((line = reader.readLine()) != null) {
-                    InputStream resource = getClass().getResourceAsStream(line);
-                    File outputFile = new File("./%s".formatted(line));
-                    
-                    // Create parent directories
-                    if(outputFile.getParentFile() != null) {
-                        outputFile.getParentFile().mkdirs();
-                    }
-                    
-                    // Copy resource to destination
-                    if(resource != null) {
-                        Files.copy(resource, outputFile.toPath());
-                    }
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/dlc.paths")))) {
+            reader.lines().forEach(line -> {
+                String[] segments = line.split("\t");
+                
+                if(segments.length != 2) {
+                    return;
                 }
-            } catch (IOException e) {
-                logger.error("Could not extract default DLC files", e);
-                return;
-            }
+                
+                String path = segments[0];
+                String hash = segments[1];
+                File outputFile = new File("./%s".formatted(path));
+                
+                if(outputFile.getParentFile() != null) {
+                    outputFile.getParentFile().mkdirs();
+                }
+                
+                try(InputStream inputStream = getClass().getResourceAsStream(path)){
+                    if(!outputFile.exists() || !hash.equals(MD5.digest(outputFile))) {
+                        Files.copy(inputStream, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    }
+                } catch(IOException e) {
+                    logger.error("Couldn't process resource '{}'", path, e);
+                }
+            });
+        } catch(IOException e) {
+            logger.error("Couldn't extract DLC data", e);
         }
         
         // Just to be sure...
@@ -72,7 +75,7 @@ public class DlcList {
             for(File subFile : file.listFiles()) {
                 // Check if file is directory
                 if(!subFile.isDirectory()) {
-                    logger.warn("Non-directory '{}' in DLC subfolder '{}'", file.getName(), subFile.getName());
+                    logger.warn("Non-directory '{}' in DLC subfolder '{}'", subFile.getName(), file.getName());
                     continue;
                 }
                 

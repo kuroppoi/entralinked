@@ -1,6 +1,9 @@
 package entralinked.utility;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -18,10 +21,17 @@ public class MD5 {
     private static MessageDigest digest;
     
     /**
-     * @return A hex-formatted MD5 hash of the specified input.
+     * @return A hex-formatted MD5 hash of the specified input string.
      */
     public static String digest(String string) {
         return StringUtil.toHexStringPadded(digest(string.getBytes(StandardCharsets.ISO_8859_1)));
+    }
+    
+    /**
+     * @return A hex-formatted MD5 hash of the specified input file.
+     */
+    public static String digest(File file) throws IOException {
+        return StringUtil.toHexStringPadded(digest(Files.readAllBytes(file.toPath())));
     }
     
     /**

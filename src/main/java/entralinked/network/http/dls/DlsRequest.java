@@ -19,14 +19,14 @@ public record DlsRequest(
         @JsonProperty(value = "action", required = true) String action,
         @JsonProperty("gamecd")   String dlcGameCode,
         @JsonProperty("contents") String dlcName, // action=contents
-        @JsonProperty("attr1")    String dlcType, // action=list
+        @JsonProperty("attr1")    String attr1, // action=list
         @JsonProperty("attr2")    String attr2, // action=list
         @JsonProperty("offset")   int offset, // Start offset in the list
         @JsonProperty("num")      int num) { // Number of entries
     
     @Override
     public String toString() {
-        return ("DlsRequest[gameCode=%s, action=%s, dlcGameCode=%s, dlcName=%s, dlcType=%s, attr2=%s, offset=%s, num=%s]")
-                .formatted(gameCode, action, dlcGameCode, dlcName, dlcType, attr2, offset, num);
+        return ("DlsRequest[gameCode=%s, action=%s, dlcGameCode=%s, dlcName=%s, attr1=%s, attr2=%s, offset=%s, num=%s]")
+                .formatted(gameCode, action, dlcGameCode, dlcName, attr1, attr2, offset, num);
     }
 }
