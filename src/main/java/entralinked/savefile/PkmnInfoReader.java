@@ -1,8 +1,11 @@
-package entralinked.model.pkmn;
+package entralinked.savefile;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import entralinked.model.pkmn.PkmnGender;
+import entralinked.model.pkmn.PkmnInfo;
+import entralinked.model.pkmn.PkmnNature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

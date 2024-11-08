@@ -9,6 +9,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import entralinked.model.player.*;
+import entralinked.savefile.Offsets;
+import entralinked.savefile.TrainerInfoReader;
+import entralinked.utility.PointedInputStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,13 +24,7 @@ import entralinked.model.avenue.AvenueVisitor;
 import entralinked.model.dlc.Dlc;
 import entralinked.model.dlc.DlcList;
 import entralinked.model.pkmn.PkmnInfo;
-import entralinked.model.pkmn.PkmnInfoReader;
-import entralinked.model.player.DreamDecor;
-import entralinked.model.player.DreamEncounter;
-import entralinked.model.player.DreamItem;
-import entralinked.model.player.Player;
-import entralinked.model.player.PlayerManager;
-import entralinked.model.player.PlayerStatus;
+import entralinked.savefile.PkmnInfoReader;
 import entralinked.model.user.ServiceSession;
 import entralinked.model.user.User;
 import entralinked.model.user.UserManager;
@@ -439,7 +437,7 @@ public class PglHandler implements HttpHandler {
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
         Player player = playerManager.getPlayer(request.gameSyncId());
         User user = ctx.attribute("user");
-        
+
         // Check if the player exists, has no Pokémon tucked in already and uses the same game version
         if(player == null
                 || (!configuration.allowOverwritingPlayerDreamInfo() && player.getStatus() != PlayerStatus.AWAKE)
@@ -466,17 +464,31 @@ public class PglHandler implements HttpHandler {
         }
         
         // Read save data
-        PkmnInfo dreamerInfo = null;
+        TrainerInfo trainerInfo;
+        PkmnInfo dreamerInfo;
         
-        try(FileInputStream inputStream = new FileInputStream(player.getSaveFile())) {
-            inputStream.skip(0x1D300); // Skip to dream world data
-            inputStream.skip(8); // Skip to Pokémon data
+        try(PointedInputStream inputStream = new PointedInputStream(new FileInputStream(player.getSaveFile()))) {
+
+            inputStream.skipTo(Offsets.TRAINER_INFO);
+            trainerInfo = TrainerInfoReader.readTrainerInfo(inputStream);
+
+            inputStream.skipTo(Offsets.DREAM_WORLD_INFO);
+            inputStream.skip(Offsets.POKEMON_INFO_SUB_OFFSET);
             dreamerInfo = PkmnInfoReader.readPokeInfo(inputStream);
+
+            inputStream.skipTo(Offsets.ADVENTURE_START_TIME_OFFSET);
+            inputStream.skip(Offsets.ADVENTURE_START_TIME_SUB_OFFSET);
+            trainerInfo.setAdventureStartTime(TrainerInfoReader.readAdventureStartTime(inputStream));
+
+            inputStream.skipTo(Offsets.MONEY_AND_BADGES);
+            trainerInfo.setMoney(TrainerInfoReader.readLong(inputStream));
+            trainerInfo.setGymBadges(TrainerInfoReader.readGymBadges(inputStream));
         }
         
         // Update and save player information
         player.setStatus(PlayerStatus.SLEEPING);
         player.setGameVersion(request.gameVersion());
+        player.setTrainerInfo(trainerInfo);
         player.setDreamerInfo(dreamerInfo);
         
         if(!playerManager.savePlayer(player)) {
