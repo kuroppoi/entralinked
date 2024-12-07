@@ -1,5 +1,7 @@
 package entralinked.utility;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +21,7 @@ public class PointedInputStream extends FilterInputStream {
     }
 
     @Override
-    public int read(byte b[], int off, int len) throws IOException {
+    public int read(@NotNull byte[] b, int off, int len) throws IOException {
         int bytes = super.read(b, off, len);
         pointer += bytes;
         return bytes;

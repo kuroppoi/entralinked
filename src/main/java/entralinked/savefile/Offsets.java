@@ -13,10 +13,10 @@ public class Offsets {
     public static final int PLAYTIME_OFFSET = 0x24;
 
     public static final int DREAM_WORLD_INFO = 0x1D300;
-    public static final int POKEMON_INFO_SUB_OFFSET = 0x1D300;
+    public static final int POKEMON_INFO_SUB_OFFSET = 0x8;
 
     public static final int ADVENTURE_START_TIME_OFFSET = 0x1D900;
-    public static final int ADVENTURE_START_TIME_SUB_OFFSET = 0x1D900;
+    public static final int ADVENTURE_START_TIME_SUB_OFFSET = 0x34;
 
     public static final int MONEY_AND_BADGES = 0x21200;
 }

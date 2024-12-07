@@ -7,6 +7,8 @@ import entralinked.model.player.TrainerInfo;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.PooledByteBufAllocator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +21,8 @@ public class TrainerInfoReader {
     private static final byte ZERO_BYTE = (byte) 0x00;
     private static final byte FF_BYTE = (byte) 0xFF;
 
+
+    private static final Logger logger = LogManager.getLogger();
     private static final ByteBufAllocator bufferAllocator = PooledByteBufAllocator.DEFAULT;
 
     public static TrainerInfo readTrainerInfo(InputStream inputStream) throws IOException {
@@ -32,6 +36,11 @@ public class TrainerInfoReader {
         int region = buffer.getUnsignedByte(Offsets.REGION_SUB_OFFSET);
         TrainerGender gender = TrainerGender.valueOf(buffer.getUnsignedByte(Offsets.GENDER_OFFSET));
         Playtime playtime = readPlaytime(buffer);
+
+        // Try release buffer
+        if(!buffer.release()) {
+            logger.warn("Buffer was not deallocated!");
+        }
 
         return new TrainerInfo(trainerName, trainerId, secretId, country, region, gender, playtime);
     }
@@ -65,7 +74,15 @@ public class TrainerInfoReader {
     public static long readLong(InputStream inputStream) throws IOException {
         ByteBuf buffer = bufferAllocator.buffer(4);
         buffer.writeBytes(inputStream, 4);
-        return buffer.getUnsignedIntLE(0);
+
+        long read = buffer.getUnsignedIntLE(0);
+
+        // Try release buffer
+        if(!buffer.release()) {
+            logger.warn("Buffer was not deallocated!");
+        }
+
+        return read;
     }
 
     public static List<GymBadge> readGymBadges(InputStream inputStream) throws IOException {
@@ -79,6 +96,12 @@ public class TrainerInfoReader {
                 gymBadges.add(badge);
             }
         }
+
+        // Try release buffer
+        if(!buffer.release()) {
+            logger.warn("Buffer was not deallocated!");
+        }
+
         return gymBadges;
     }
 }
