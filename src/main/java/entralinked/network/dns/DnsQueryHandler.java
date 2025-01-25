@@ -31,14 +31,13 @@ public class DnsQueryHandler extends SimpleChannelInboundHandler<DatagramDnsQuer
         logger.debug("Received {}", question);
         DnsRecordType type = question.type();
         
-        // We only need type A (32 bit IPv4) for the DS
         if(type != DnsRecordType.A) {
-            logger.warn("Unsupported record type in DNS question: {}", type);
-            return;
+            logger.warn("Potentially unsupported record type in DNS question: {}", type);
+            // return;
         }
         
         ByteBuf addressBuffer = Unpooled.wrappedBuffer(hostAddress.getAddress());
-        DefaultDnsRawRecord answer = new DefaultDnsRawRecord(question.name(), DnsRecordType.A, 0, addressBuffer);
+        DefaultDnsRawRecord answer = new DefaultDnsRawRecord(question.name(), type, 300, addressBuffer);
         DatagramDnsResponse response = new DatagramDnsResponse(query.recipient(), query.sender(), query.id());
         response.addRecord(DnsSection.ANSWER, answer);
         ctx.writeAndFlush(response);
