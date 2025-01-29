@@ -18,6 +18,7 @@ public class Player {
     private final List<AvenueVisitor> avenueVisitors = new ArrayList<>();
     private PlayerStatus status;
     private GameVersion gameVersion;
+    private TrainerInfo trainerInfo;
     private PkmnInfo dreamerInfo;
     private int levelsGained;
     private String cgearSkin;
@@ -48,10 +49,7 @@ public class Player {
     }
     
     public void setEncounters(Collection<DreamEncounter> encounters) {
-        if(encounters.size() <= 10) {
-            this.encounters.clear();
-            this.encounters.addAll(encounters);
-        }
+        setList(encounters, this.encounters, 10);
     }
     
     public List<DreamEncounter> getEncounters() {
@@ -59,10 +57,7 @@ public class Player {
     }
     
     public void setItems(Collection<DreamItem> items) {
-        if(encounters.size() <= 20) {
-            this.items.clear();
-            this.items.addAll(items);
-        }
+        setList(items, this.items, 20);
     }
     
     public List<DreamItem> getItems() {
@@ -70,10 +65,7 @@ public class Player {
     }
     
     public void setAvenueVisitors(Collection<AvenueVisitor> avenueVisitors) {
-        if(avenueVisitors.size() <= 12) {
-            this.avenueVisitors.clear();
-            this.avenueVisitors.addAll(avenueVisitors);
-        }
+        setList(avenueVisitors, this.avenueVisitors, 12);
     }
     
     public List<AvenueVisitor> getAvenueVisitors() {
@@ -86,6 +78,14 @@ public class Player {
     
     public PlayerStatus getStatus() {
         return status;
+    }
+
+    public void setTrainerInfo(TrainerInfo trainerInfo) {
+        this.trainerInfo = trainerInfo;
+    }
+
+    public TrainerInfo getTrainerInfo() {
+        return trainerInfo;
     }
     
     public void setGameVersion(GameVersion gameVersion) {
@@ -176,5 +176,12 @@ public class Player {
     
     public File getDexSkinFile() {
         return new File(dataDirectory, "zukan.bin");
+    }
+
+    private static <T> void setList(Collection<T> source, List<T> target, int maxSize) {
+        if(source.size() <= maxSize) {
+            target.clear();
+            target.addAll(source);
+        }
     }
 }
