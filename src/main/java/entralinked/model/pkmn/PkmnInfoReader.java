@@ -63,7 +63,7 @@ public class PkmnInfoReader {
         int trainerSecretId = buffer.getShortLE(14) & 0xFFFF;
         int level = buffer.getByte(140);
         int ability = buffer.getByte(21) & 0xFF;
-        int form = (buffer.getByte(64) >> 3) & 0xFF;
+        int form = (buffer.getByte(64) >> 3) & 0x1F;
         boolean genderless = ((buffer.getByte(64) >> 2) & 1) == 1;
         boolean female = ((buffer.getByte(64) >> 1) & 1) == 1;
         PkmnGender gender = genderless ? PkmnGender.GENDERLESS : female ? PkmnGender.FEMALE : PkmnGender.MALE;
