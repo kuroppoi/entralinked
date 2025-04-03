@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -361,6 +362,33 @@ public class TiledImageUtility {
                 outputStream.writeShort(tileMappingData[i]);
             }
         }
+    }
+    
+    /**
+     * Generates Pokédex skin background colors for the specified image.
+     */
+    public static int[] generateBackgroundColors(BufferedImage image) {
+        int[] backgroundColors = Arrays.copyOf(DEFAULT_DEX_BACKGROUND_COLORS, 64);
+        int backgroundColor = image.getRGB(0, 0);
+        int dexColor = image.getRGB(0, 134);
+        int buttonColor = image.getRGB(128, 134);
+        
+        // Background colors (58, 59, 60)
+        for(int i = 0; i < 3; i++) {
+            backgroundColors[i + 58] = ColorUtility.multiplyColor(backgroundColor, 0.7 + i * 0.15);
+        }
+        
+        // Pokédex colors (48, 49, 50, 51, 52)
+        for(int i = 0; i < 5; i++) {
+            backgroundColors[i + 48] = ColorUtility.multiplyColor(dexColor, 1.15 - i * 0.15);
+        }
+        
+        // Pokédex button colors (53, 54, 55, 56)
+        for(int i = 0; i < 4; i++) {
+            backgroundColors[i + 53] = ColorUtility.multiplyColor(buttonColor, 0.55 + i * 0.15);
+        }
+        
+        return backgroundColors;
     }
     
     /**

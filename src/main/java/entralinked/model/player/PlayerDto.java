@@ -23,16 +23,17 @@ public record PlayerDto(
         String musical,
         String customCGearSkin,
         String customDexSkin,
+        String customMusical,
         int levelsGained,
         @JsonDeserialize(contentAs = DreamEncounter.class) Collection<DreamEncounter> encounters,
         @JsonDeserialize(contentAs = DreamItem.class)      Collection<DreamItem> items,
         @JsonDeserialize(contentAs = AvenueVisitor.class)  Collection<AvenueVisitor> avenueVisitors) {
     
     public PlayerDto(Player player) {
-        this(player.getGameSyncId(), player.getGameVersion(), player.getStatus(), player.getDreamerInfo(), 
+        this(player.getGameSyncId(), player.getGameVersion(), player.getStatus(), player.getDreamerInfo(),
                 player.getCGearSkin(), player.getDexSkin(), player.getMusical(), player.getCustomCGearSkin(),
-                player.getCustomDexSkin(), player.getLevelsGained(), player.getEncounters(), player.getItems(),
-                player.getAvenueVisitors());
+                player.getCustomDexSkin(), player.getCustomMusical(), player.getLevelsGained(), player.getEncounters(),
+                player.getItems(), player.getAvenueVisitors());
     }
     
     /**
@@ -48,6 +49,7 @@ public record PlayerDto(
         player.setMusical(musical);
         player.setCustomCGearSkin(customCGearSkin);
         player.setCustomDexSkin(customDexSkin);
+        player.setCustomMusical(customMusical);
         player.setLevelsGained(levelsGained);
         player.setEncounters(encounters == null ? Collections.emptyList() : encounters);
         player.setItems(items == null ? Collections.emptyList() : items);

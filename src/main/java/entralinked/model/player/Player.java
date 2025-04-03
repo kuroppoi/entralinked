@@ -25,6 +25,7 @@ public class Player {
     private String musical;
     private String customCGearSkin;
     private String customDexSkin;
+    private String customMusical;
     private File dataDirectory;
     
     public Player(String gameSyncId) {
@@ -152,6 +153,14 @@ public class Player {
         return customDexSkin;
     }
     
+    public void setCustomMusical(String customMusical) {
+        this.customMusical = customMusical;
+    }
+    
+    public String getCustomMusical() {
+        return customMusical;
+    }
+    
     // IO stuff
     
     public void setDataDirectory(File dataDirectory) {
@@ -176,5 +185,9 @@ public class Player {
     
     public File getDexSkinFile() {
         return new File(dataDirectory, "zukan.bin");
+    }
+    
+    public File getMusicalFile() {
+        return new File(dataDirectory, "musical.bin");
     }
 }

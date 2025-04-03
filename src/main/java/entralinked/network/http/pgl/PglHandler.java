@@ -220,8 +220,10 @@ public class PglHandler implements HttpHandler {
         String cgearType = player.getGameVersion().isVersion2() ? "CGEAR2" : "CGEAR";
         String cgearSkin = player.getCGearSkin();
         String dexSkin = player.getDexSkin();
+        String musical = player.getMusical();
         int cgearSkinIndex = 0;
         int dexSkinIndex = 0;
+        int musicalIndex = 0;
         
         // Create or remove custom C-Gear skin DLC override
         if("custom".equals(cgearSkin)) {
@@ -241,6 +243,17 @@ public class PglHandler implements HttpHandler {
         } else {
             dexSkinIndex = dlcList.getDlcIndex("IRAO", "ZUKAN", dexSkin);
             user.removeDlcOverride("ZUKAN");
+        }
+        
+        // Create or remove custom musical DLC override
+        if("custom".equals(musical)) {
+            musicalIndex = 1;
+            File file = player.getMusicalFile();
+            user.setDlcOverride("MUSICAL", new Dlc(file.getAbsolutePath(),
+                    "custom", "IRAO", "MUSICAL", musicalIndex, (int)file.length(), 0, true));
+        } else {
+            musicalIndex = dlcList.getDlcIndex("IRAO", "MUSICAL", musical);
+            user.removeDlcOverride("MUSICAL");
         }
         
          // When waking up a Pokémon, these 4 bytes are written to 0x1D304 in the save file.
@@ -264,7 +277,7 @@ public class PglHandler implements HttpHandler {
         // Write misc stuff and DLC information
         outputStream.writeShort(player.getLevelsGained());
         outputStream.write(0); // Unknown
-        outputStream.write(dlcList.getDlcIndex("IRAO", "MUSICAL", player.getMusical()));
+        outputStream.write(musicalIndex);
         outputStream.write(cgearSkinIndex);
         outputStream.write(dexSkinIndex);
         outputStream.write(decorList.isEmpty() ? 0 : 1); // Seems to be a flag for indicating whether or not decor data is present
@@ -329,7 +342,7 @@ public class PglHandler implements HttpHandler {
                 outputStream.writeInt(1); // [20] Ignores if 0
                 outputStream.write(visitor.countryCode());
                 outputStream.write(visitor.stateProvinceCode());
-                outputStream.write(0); // [26] Ignores if 1
+                outputStream.write(visitor.gameVersion().getLanguageCode()); // 99% sure this is the lang code because 1 seems to be ignored ONLY if country code isn't Japan (plus it's right above the rom code)
                 outputStream.write(visitor.gameVersion().getRomCode()); // Affects shop stock
                 outputStream.write(visitor.type().isFemale() ? 1 : 0);
                 outputStream.write(0); // [29] Does.. something

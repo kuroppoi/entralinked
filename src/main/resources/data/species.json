@@ -1,0 +1,3772 @@
+{
+  "1": {
+    "id": 1,
+    "name": "Bulbasaur",
+    "downloadable": true
+  },
+  "2": {
+    "id": 2,
+    "name": "Ivysaur",
+    "downloadable": true
+  },
+  "3": {
+    "id": 3,
+    "name": "Venusaur",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "4": {
+    "id": 4,
+    "name": "Charmander",
+    "downloadable": true
+  },
+  "5": {
+    "id": 5,
+    "name": "Charmeleon",
+    "downloadable": true
+  },
+  "6": {
+    "id": 6,
+    "name": "Charizard",
+    "downloadable": true
+  },
+  "7": {
+    "id": 7,
+    "name": "Squirtle",
+    "downloadable": true
+  },
+  "8": {
+    "id": 8,
+    "name": "Wartortle",
+    "downloadable": true
+  },
+  "9": {
+    "id": 9,
+    "name": "Blastoise",
+    "downloadable": true
+  },
+  "10": {
+    "id": 10,
+    "name": "Caterpie",
+    "downloadable": true
+  },
+  "11": {
+    "id": 11,
+    "name": "Metapod",
+    "downloadable": true
+  },
+  "12": {
+    "id": 12,
+    "name": "Butterfree",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "13": {
+    "id": 13,
+    "name": "Weedle",
+    "downloadable": true
+  },
+  "14": {
+    "id": 14,
+    "name": "Kakuna",
+    "downloadable": true
+  },
+  "15": {
+    "id": 15,
+    "name": "Beedrill",
+    "downloadable": true
+  },
+  "16": {
+    "id": 16,
+    "name": "Pidgey",
+    "downloadable": true
+  },
+  "17": {
+    "id": 17,
+    "name": "Pidgeotto",
+    "downloadable": true
+  },
+  "18": {
+    "id": 18,
+    "name": "Pidgeot",
+    "downloadable": true
+  },
+  "19": {
+    "id": 19,
+    "name": "Rattata",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "20": {
+    "id": 20,
+    "name": "Raticate",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "21": {
+    "id": 21,
+    "name": "Spearow",
+    "downloadable": true
+  },
+  "22": {
+    "id": 22,
+    "name": "Fearow",
+    "downloadable": true
+  },
+  "23": {
+    "id": 23,
+    "name": "Ekans",
+    "downloadable": true
+  },
+  "24": {
+    "id": 24,
+    "name": "Arbok",
+    "downloadable": true
+  },
+  "25": {
+    "id": 25,
+    "name": "Pikachu",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "26": {
+    "id": 26,
+    "name": "Raichu",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "27": {
+    "id": 27,
+    "name": "Sandshrew",
+    "downloadable": true
+  },
+  "28": {
+    "id": 28,
+    "name": "Sandslash",
+    "downloadable": true
+  },
+  "29": {
+    "id": 29,
+    "name": "Nidoran♀",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "30": {
+    "id": 30,
+    "name": "Nidorina",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "31": {
+    "id": 31,
+    "name": "Nidoqueen",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "32": {
+    "id": 32,
+    "name": "Nidoran♂",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "33": {
+    "id": 33,
+    "name": "Nidorino",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "34": {
+    "id": 34,
+    "name": "Nidoking",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "35": {
+    "id": 35,
+    "name": "Clefairy",
+    "downloadable": true
+  },
+  "36": {
+    "id": 36,
+    "name": "Clefable",
+    "downloadable": true
+  },
+  "37": {
+    "id": 37,
+    "name": "Vulpix",
+    "downloadable": true
+  },
+  "38": {
+    "id": 38,
+    "name": "Ninetales",
+    "downloadable": true
+  },
+  "39": {
+    "id": 39,
+    "name": "Jigglypuff",
+    "downloadable": true
+  },
+  "40": {
+    "id": 40,
+    "name": "Wigglytuff",
+    "downloadable": true
+  },
+  "41": {
+    "id": 41,
+    "name": "Zubat",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "42": {
+    "id": 42,
+    "name": "Golbat",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "43": {
+    "id": 43,
+    "name": "Oddish",
+    "downloadable": true
+  },
+  "44": {
+    "id": 44,
+    "name": "Gloom",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "45": {
+    "id": 45,
+    "name": "Vileplume",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "46": {
+    "id": 46,
+    "name": "Paras",
+    "downloadable": true
+  },
+  "47": {
+    "id": 47,
+    "name": "Parasect",
+    "downloadable": true
+  },
+  "48": {
+    "id": 48,
+    "name": "Venonat",
+    "downloadable": true
+  },
+  "49": {
+    "id": 49,
+    "name": "Venomoth",
+    "downloadable": true
+  },
+  "50": {
+    "id": 50,
+    "name": "Diglett",
+    "downloadable": true
+  },
+  "51": {
+    "id": 51,
+    "name": "Dugtrio",
+    "downloadable": true
+  },
+  "52": {
+    "id": 52,
+    "name": "Meowth",
+    "downloadable": true
+  },
+  "53": {
+    "id": 53,
+    "name": "Persian",
+    "downloadable": true
+  },
+  "54": {
+    "id": 54,
+    "name": "Psyduck",
+    "downloadable": true
+  },
+  "55": {
+    "id": 55,
+    "name": "Golduck",
+    "downloadable": true
+  },
+  "56": {
+    "id": 56,
+    "name": "Mankey",
+    "downloadable": true
+  },
+  "57": {
+    "id": 57,
+    "name": "Primeape",
+    "downloadable": true
+  },
+  "58": {
+    "id": 58,
+    "name": "Growlithe",
+    "downloadable": true
+  },
+  "59": {
+    "id": 59,
+    "name": "Arcanine",
+    "downloadable": true
+  },
+  "60": {
+    "id": 60,
+    "name": "Poliwag",
+    "downloadable": true
+  },
+  "61": {
+    "id": 61,
+    "name": "Poliwhirl",
+    "downloadable": true
+  },
+  "62": {
+    "id": 62,
+    "name": "Poliwrath",
+    "downloadable": true
+  },
+  "63": {
+    "id": 63,
+    "name": "Abra",
+    "downloadable": true
+  },
+  "64": {
+    "id": 64,
+    "name": "Kadabra",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "65": {
+    "id": 65,
+    "name": "Alakazam",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "66": {
+    "id": 66,
+    "name": "Machop",
+    "downloadable": true
+  },
+  "67": {
+    "id": 67,
+    "name": "Machoke",
+    "downloadable": true
+  },
+  "68": {
+    "id": 68,
+    "name": "Machamp",
+    "downloadable": true
+  },
+  "69": {
+    "id": 69,
+    "name": "Bellsprout",
+    "downloadable": true
+  },
+  "70": {
+    "id": 70,
+    "name": "Weepinbell",
+    "downloadable": true
+  },
+  "71": {
+    "id": 71,
+    "name": "Victreebel",
+    "downloadable": true
+  },
+  "72": {
+    "id": 72,
+    "name": "Tentacool",
+    "downloadable": true
+  },
+  "73": {
+    "id": 73,
+    "name": "Tentacruel",
+    "downloadable": true
+  },
+  "74": {
+    "id": 74,
+    "name": "Geodude",
+    "downloadable": true
+  },
+  "75": {
+    "id": 75,
+    "name": "Graveler",
+    "downloadable": true
+  },
+  "76": {
+    "id": 76,
+    "name": "Golem",
+    "downloadable": true
+  },
+  "77": {
+    "id": 77,
+    "name": "Ponyta",
+    "downloadable": true
+  },
+  "78": {
+    "id": 78,
+    "name": "Rapidash",
+    "downloadable": true
+  },
+  "79": {
+    "id": 79,
+    "name": "Slowpoke",
+    "downloadable": true
+  },
+  "80": {
+    "id": 80,
+    "name": "Slowbro",
+    "downloadable": true
+  },
+  "81": {
+    "id": 81,
+    "name": "Magnemite",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "82": {
+    "id": 82,
+    "name": "Magneton",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "83": {
+    "id": 83,
+    "name": "Farfetch'd",
+    "downloadable": true
+  },
+  "84": {
+    "id": 84,
+    "name": "Doduo",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "85": {
+    "id": 85,
+    "name": "Dodrio",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "86": {
+    "id": 86,
+    "name": "Seel",
+    "downloadable": true
+  },
+  "87": {
+    "id": 87,
+    "name": "Dewgong",
+    "downloadable": true
+  },
+  "88": {
+    "id": 88,
+    "name": "Grimer",
+    "downloadable": true
+  },
+  "89": {
+    "id": 89,
+    "name": "Muk",
+    "downloadable": true
+  },
+  "90": {
+    "id": 90,
+    "name": "Shellder",
+    "downloadable": true
+  },
+  "91": {
+    "id": 91,
+    "name": "Cloyster",
+    "downloadable": true
+  },
+  "92": {
+    "id": 92,
+    "name": "Gastly",
+    "downloadable": true
+  },
+  "93": {
+    "id": 93,
+    "name": "Haunter",
+    "downloadable": true
+  },
+  "94": {
+    "id": 94,
+    "name": "Gengar",
+    "downloadable": true
+  },
+  "95": {
+    "id": 95,
+    "name": "Onix",
+    "downloadable": true
+  },
+  "96": {
+    "id": 96,
+    "name": "Drowzee",
+    "downloadable": true
+  },
+  "97": {
+    "id": 97,
+    "name": "Hypno",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "98": {
+    "id": 98,
+    "name": "Krabby",
+    "downloadable": true
+  },
+  "99": {
+    "id": 99,
+    "name": "Kingler",
+    "downloadable": true
+  },
+  "100": {
+    "id": 100,
+    "name": "Voltorb",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "101": {
+    "id": 101,
+    "name": "Electrode",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "102": {
+    "id": 102,
+    "name": "Exeggcute",
+    "downloadable": true
+  },
+  "103": {
+    "id": 103,
+    "name": "Exeggutor",
+    "downloadable": true
+  },
+  "104": {
+    "id": 104,
+    "name": "Cubone",
+    "downloadable": true
+  },
+  "105": {
+    "id": 105,
+    "name": "Marowak",
+    "downloadable": true
+  },
+  "106": {
+    "id": 106,
+    "name": "Hitmonlee",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "107": {
+    "id": 107,
+    "name": "Hitmonchan",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "108": {
+    "id": 108,
+    "name": "Lickitung",
+    "downloadable": true
+  },
+  "109": {
+    "id": 109,
+    "name": "Koffing",
+    "downloadable": true
+  },
+  "110": {
+    "id": 110,
+    "name": "Weezing",
+    "downloadable": true
+  },
+  "111": {
+    "id": 111,
+    "name": "Rhyhorn",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "112": {
+    "id": 112,
+    "name": "Rhydon",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "113": {
+    "id": 113,
+    "name": "Chansey",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "114": {
+    "id": 114,
+    "name": "Tangela",
+    "downloadable": true
+  },
+  "115": {
+    "id": 115,
+    "name": "Kangaskhan",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "116": {
+    "id": 116,
+    "name": "Horsea",
+    "downloadable": true
+  },
+  "117": {
+    "id": 117,
+    "name": "Seadra",
+    "downloadable": true
+  },
+  "118": {
+    "id": 118,
+    "name": "Goldeen",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "119": {
+    "id": 119,
+    "name": "Seaking",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "120": {
+    "id": 120,
+    "name": "Staryu",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "121": {
+    "id": 121,
+    "name": "Starmie",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "122": {
+    "id": 122,
+    "name": "Mr. Mime",
+    "downloadable": true
+  },
+  "123": {
+    "id": 123,
+    "name": "Scyther",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "124": {
+    "id": 124,
+    "name": "Jynx",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "125": {
+    "id": 125,
+    "name": "Electabuzz",
+    "downloadable": true
+  },
+  "126": {
+    "id": 126,
+    "name": "Magmar",
+    "downloadable": true
+  },
+  "127": {
+    "id": 127,
+    "name": "Pinsir",
+    "downloadable": true
+  },
+  "128": {
+    "id": 128,
+    "name": "Tauros",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "129": {
+    "id": 129,
+    "name": "Magikarp",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "130": {
+    "id": 130,
+    "name": "Gyarados",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "131": {
+    "id": 131,
+    "name": "Lapras",
+    "downloadable": true
+  },
+  "132": {
+    "id": 132,
+    "name": "Ditto",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "133": {
+    "id": 133,
+    "name": "Eevee",
+    "downloadable": true
+  },
+  "134": {
+    "id": 134,
+    "name": "Vaporeon",
+    "downloadable": true
+  },
+  "135": {
+    "id": 135,
+    "name": "Jolteon",
+    "downloadable": true
+  },
+  "136": {
+    "id": 136,
+    "name": "Flareon",
+    "downloadable": true
+  },
+  "137": {
+    "id": 137,
+    "name": "Porygon",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "138": {
+    "id": 138,
+    "name": "Omanyte",
+    "downloadable": true
+  },
+  "139": {
+    "id": 139,
+    "name": "Omastar",
+    "downloadable": true
+  },
+  "140": {
+    "id": 140,
+    "name": "Kabuto",
+    "downloadable": true
+  },
+  "141": {
+    "id": 141,
+    "name": "Kabutops",
+    "downloadable": true
+  },
+  "142": {
+    "id": 142,
+    "name": "Aerodactyl",
+    "downloadable": true
+  },
+  "143": {
+    "id": 143,
+    "name": "Snorlax",
+    "downloadable": true
+  },
+  "144": {
+    "id": 144,
+    "name": "Articuno",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "145": {
+    "id": 145,
+    "name": "Zapdos",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "146": {
+    "id": 146,
+    "name": "Moltres",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "147": {
+    "id": 147,
+    "name": "Dratini",
+    "downloadable": true
+  },
+  "148": {
+    "id": 148,
+    "name": "Dragonair",
+    "downloadable": true
+  },
+  "149": {
+    "id": 149,
+    "name": "Dragonite",
+    "downloadable": true
+  },
+  "150": {
+    "id": 150,
+    "name": "Mewtwo",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "151": {
+    "id": 151,
+    "name": "Mew",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "152": {
+    "id": 152,
+    "name": "Chikorita",
+    "downloadable": true
+  },
+  "153": {
+    "id": 153,
+    "name": "Bayleef",
+    "downloadable": true
+  },
+  "154": {
+    "id": 154,
+    "name": "Meganium",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "155": {
+    "id": 155,
+    "name": "Cyndaquil",
+    "downloadable": true
+  },
+  "156": {
+    "id": 156,
+    "name": "Quilava",
+    "downloadable": true
+  },
+  "157": {
+    "id": 157,
+    "name": "Typhlosion",
+    "downloadable": true
+  },
+  "158": {
+    "id": 158,
+    "name": "Totodile",
+    "downloadable": true
+  },
+  "159": {
+    "id": 159,
+    "name": "Croconaw",
+    "downloadable": true
+  },
+  "160": {
+    "id": 160,
+    "name": "Feraligatr",
+    "downloadable": true
+  },
+  "161": {
+    "id": 161,
+    "name": "Sentret",
+    "downloadable": true
+  },
+  "162": {
+    "id": 162,
+    "name": "Furret",
+    "downloadable": true
+  },
+  "163": {
+    "id": 163,
+    "name": "Hoothoot",
+    "downloadable": true
+  },
+  "164": {
+    "id": 164,
+    "name": "Noctowl",
+    "downloadable": true
+  },
+  "165": {
+    "id": 165,
+    "name": "Ledyba",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "166": {
+    "id": 166,
+    "name": "Ledian",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "167": {
+    "id": 167,
+    "name": "Spinarak",
+    "downloadable": true
+  },
+  "168": {
+    "id": 168,
+    "name": "Ariados",
+    "downloadable": true
+  },
+  "169": {
+    "id": 169,
+    "name": "Crobat",
+    "downloadable": true
+  },
+  "170": {
+    "id": 170,
+    "name": "Chinchou",
+    "downloadable": true
+  },
+  "171": {
+    "id": 171,
+    "name": "Lanturn",
+    "downloadable": true
+  },
+  "172": {
+    "id": 172,
+    "name": "Pichu",
+    "downloadable": true
+  },
+  "173": {
+    "id": 173,
+    "name": "Cleffa",
+    "downloadable": true
+  },
+  "174": {
+    "id": 174,
+    "name": "Igglybuff",
+    "downloadable": true
+  },
+  "175": {
+    "id": 175,
+    "name": "Togepi",
+    "downloadable": true
+  },
+  "176": {
+    "id": 176,
+    "name": "Togetic",
+    "downloadable": true
+  },
+  "177": {
+    "id": 177,
+    "name": "Natu",
+    "downloadable": true
+  },
+  "178": {
+    "id": 178,
+    "name": "Xatu",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "179": {
+    "id": 179,
+    "name": "Mareep",
+    "downloadable": true
+  },
+  "180": {
+    "id": 180,
+    "name": "Flaaffy",
+    "downloadable": true
+  },
+  "181": {
+    "id": 181,
+    "name": "Ampharos",
+    "downloadable": true
+  },
+  "182": {
+    "id": 182,
+    "name": "Bellossom",
+    "downloadable": true
+  },
+  "183": {
+    "id": 183,
+    "name": "Marill",
+    "downloadable": true
+  },
+  "184": {
+    "id": 184,
+    "name": "Azumarill",
+    "downloadable": true
+  },
+  "185": {
+    "id": 185,
+    "name": "Sudowoodo",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "186": {
+    "id": 186,
+    "name": "Politoed",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "187": {
+    "id": 187,
+    "name": "Hoppip",
+    "downloadable": true
+  },
+  "188": {
+    "id": 188,
+    "name": "Skiploom",
+    "downloadable": true
+  },
+  "189": {
+    "id": 189,
+    "name": "Jumpluff",
+    "downloadable": true
+  },
+  "190": {
+    "id": 190,
+    "name": "Aipom",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "191": {
+    "id": 191,
+    "name": "Sunkern",
+    "downloadable": true
+  },
+  "192": {
+    "id": 192,
+    "name": "Sunflora",
+    "downloadable": true
+  },
+  "193": {
+    "id": 193,
+    "name": "Yanma",
+    "downloadable": true
+  },
+  "194": {
+    "id": 194,
+    "name": "Wooper",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "195": {
+    "id": 195,
+    "name": "Quagsire",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "196": {
+    "id": 196,
+    "name": "Espeon",
+    "downloadable": true
+  },
+  "197": {
+    "id": 197,
+    "name": "Umbreon",
+    "downloadable": true
+  },
+  "198": {
+    "id": 198,
+    "name": "Murkrow",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "199": {
+    "id": 199,
+    "name": "Slowking",
+    "downloadable": true
+  },
+  "200": {
+    "id": 200,
+    "name": "Misdreavus",
+    "downloadable": true
+  },
+  "201": {
+    "id": 201,
+    "name": "Unown",
+    "downloadable": true,
+    "gender": "GENDERLESS",
+    "forms": [
+      {
+        "id": 0,
+        "name": "A"
+      },
+      {
+        "id": 1,
+        "name": "B"
+      },
+      {
+        "id": 2,
+        "name": "C"
+      },
+      {
+        "id": 3,
+        "name": "D"
+      },
+      {
+        "id": 4,
+        "name": "E"
+      },
+      {
+        "id": 5,
+        "name": "F"
+      },
+      {
+        "id": 6,
+        "name": "G"
+      },
+      {
+        "id": 7,
+        "name": "H"
+      },
+      {
+        "id": 8,
+        "name": "I"
+      },
+      {
+        "id": 9,
+        "name": "J"
+      },
+      {
+        "id": 10,
+        "name": "K"
+      },
+      {
+        "id": 11,
+        "name": "L"
+      },
+      {
+        "id": 12,
+        "name": "M"
+      },
+      {
+        "id": 13,
+        "name": "N"
+      },
+      {
+        "id": 14,
+        "name": "O"
+      },
+      {
+        "id": 15,
+        "name": "P"
+      },
+      {
+        "id": 16,
+        "name": "Q"
+      },
+      {
+        "id": 17,
+        "name": "R"
+      },
+      {
+        "id": 18,
+        "name": "S"
+      },
+      {
+        "id": 19,
+        "name": "T"
+      },
+      {
+        "id": 20,
+        "name": "U"
+      },
+      {
+        "id": 21,
+        "name": "V"
+      },
+      {
+        "id": 22,
+        "name": "W"
+      },
+      {
+        "id": 23,
+        "name": "X"
+      },
+      {
+        "id": 24,
+        "name": "Y"
+      },
+      {
+        "id": 25,
+        "name": "Z"
+      },
+      {
+        "id": 26,
+        "name": "!"
+      },
+      {
+        "id": 27,
+        "name": "?"
+      }
+    ]
+  },
+  "202": {
+    "id": 202,
+    "name": "Wobbuffet",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "203": {
+    "id": 203,
+    "name": "Girafarig",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "204": {
+    "id": 204,
+    "name": "Pineco",
+    "downloadable": true
+  },
+  "205": {
+    "id": 205,
+    "name": "Forretress",
+    "downloadable": true
+  },
+  "206": {
+    "id": 206,
+    "name": "Dunsparce",
+    "downloadable": true
+  },
+  "207": {
+    "id": 207,
+    "name": "Gligar",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "208": {
+    "id": 208,
+    "name": "Steelix",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "209": {
+    "id": 209,
+    "name": "Snubbull",
+    "downloadable": true
+  },
+  "210": {
+    "id": 210,
+    "name": "Granbull",
+    "downloadable": true
+  },
+  "211": {
+    "id": 211,
+    "name": "Qwilfish",
+    "downloadable": true
+  },
+  "212": {
+    "id": 212,
+    "name": "Scizor",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "213": {
+    "id": 213,
+    "name": "Shuckle",
+    "downloadable": true
+  },
+  "214": {
+    "id": 214,
+    "name": "Heracross",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "215": {
+    "id": 215,
+    "name": "Sneasel",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "216": {
+    "id": 216,
+    "name": "Teddiursa",
+    "downloadable": true
+  },
+  "217": {
+    "id": 217,
+    "name": "Ursaring",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "218": {
+    "id": 218,
+    "name": "Slugma",
+    "downloadable": true
+  },
+  "219": {
+    "id": 219,
+    "name": "Magcargo",
+    "downloadable": true
+  },
+  "220": {
+    "id": 220,
+    "name": "Swinub",
+    "downloadable": true
+  },
+  "221": {
+    "id": 221,
+    "name": "Piloswine",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "222": {
+    "id": 222,
+    "name": "Corsola",
+    "downloadable": true
+  },
+  "223": {
+    "id": 223,
+    "name": "Remoraid",
+    "downloadable": true
+  },
+  "224": {
+    "id": 224,
+    "name": "Octillery",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "225": {
+    "id": 225,
+    "name": "Delibird",
+    "downloadable": true
+  },
+  "226": {
+    "id": 226,
+    "name": "Mantine",
+    "downloadable": true
+  },
+  "227": {
+    "id": 227,
+    "name": "Skarmory",
+    "downloadable": true
+  },
+  "228": {
+    "id": 228,
+    "name": "Houndour",
+    "downloadable": true
+  },
+  "229": {
+    "id": 229,
+    "name": "Houndoom",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "230": {
+    "id": 230,
+    "name": "Kingdra",
+    "downloadable": true
+  },
+  "231": {
+    "id": 231,
+    "name": "Phanpy",
+    "downloadable": true
+  },
+  "232": {
+    "id": 232,
+    "name": "Donphan",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "233": {
+    "id": 233,
+    "name": "Porygon2",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "234": {
+    "id": 234,
+    "name": "Stantler",
+    "downloadable": true
+  },
+  "235": {
+    "id": 235,
+    "name": "Smeargle",
+    "downloadable": true
+  },
+  "236": {
+    "id": 236,
+    "name": "Tyrogue",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "237": {
+    "id": 237,
+    "name": "Hitmontop",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "238": {
+    "id": 238,
+    "name": "Smoochum",
+    "downloadable": true
+  },
+  "239": {
+    "id": 239,
+    "name": "Elekid",
+    "downloadable": true
+  },
+  "240": {
+    "id": 240,
+    "name": "Magby",
+    "downloadable": true
+  },
+  "241": {
+    "id": 241,
+    "name": "Miltank",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "242": {
+    "id": 242,
+    "name": "Blissey",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "243": {
+    "id": 243,
+    "name": "Raikou",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "244": {
+    "id": 244,
+    "name": "Entei",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "245": {
+    "id": 245,
+    "name": "Suicune",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "246": {
+    "id": 246,
+    "name": "Larvitar",
+    "downloadable": true
+  },
+  "247": {
+    "id": 247,
+    "name": "Pupitar",
+    "downloadable": true
+  },
+  "248": {
+    "id": 248,
+    "name": "Tyranitar",
+    "downloadable": true
+  },
+  "249": {
+    "id": 249,
+    "name": "Lugia",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "250": {
+    "id": 250,
+    "name": "Ho-Oh",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "251": {
+    "id": 251,
+    "name": "Celebi",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "252": {
+    "id": 252,
+    "name": "Treecko",
+    "downloadable": true
+  },
+  "253": {
+    "id": 253,
+    "name": "Grovyle",
+    "downloadable": true
+  },
+  "254": {
+    "id": 254,
+    "name": "Sceptile",
+    "downloadable": true
+  },
+  "255": {
+    "id": 255,
+    "name": "Torchic",
+    "downloadable": true
+  },
+  "256": {
+    "id": 256,
+    "name": "Combusken",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "257": {
+    "id": 257,
+    "name": "Blaziken",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "258": {
+    "id": 258,
+    "name": "Mudkip",
+    "downloadable": true
+  },
+  "259": {
+    "id": 259,
+    "name": "Marshtomp",
+    "downloadable": true
+  },
+  "260": {
+    "id": 260,
+    "name": "Swampert",
+    "downloadable": true
+  },
+  "261": {
+    "id": 261,
+    "name": "Poochyena",
+    "downloadable": true
+  },
+  "262": {
+    "id": 262,
+    "name": "Mightyena",
+    "downloadable": true
+  },
+  "263": {
+    "id": 263,
+    "name": "Zigzagoon",
+    "downloadable": true
+  },
+  "264": {
+    "id": 264,
+    "name": "Linoone",
+    "downloadable": true
+  },
+  "265": {
+    "id": 265,
+    "name": "Wurmple",
+    "downloadable": true
+  },
+  "266": {
+    "id": 266,
+    "name": "Silcoon",
+    "downloadable": true
+  },
+  "267": {
+    "id": 267,
+    "name": "Beautifly",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "268": {
+    "id": 268,
+    "name": "Cascoon",
+    "downloadable": true
+  },
+  "269": {
+    "id": 269,
+    "name": "Dustox",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "270": {
+    "id": 270,
+    "name": "Lotad",
+    "downloadable": true
+  },
+  "271": {
+    "id": 271,
+    "name": "Lombre",
+    "downloadable": true
+  },
+  "272": {
+    "id": 272,
+    "name": "Ludicolo",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "273": {
+    "id": 273,
+    "name": "Seedot",
+    "downloadable": true
+  },
+  "274": {
+    "id": 274,
+    "name": "Nuzleaf",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "275": {
+    "id": 275,
+    "name": "Shiftry",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "276": {
+    "id": 276,
+    "name": "Taillow",
+    "downloadable": true
+  },
+  "277": {
+    "id": 277,
+    "name": "Swellow",
+    "downloadable": true
+  },
+  "278": {
+    "id": 278,
+    "name": "Wingull",
+    "downloadable": true
+  },
+  "279": {
+    "id": 279,
+    "name": "Pelipper",
+    "downloadable": true
+  },
+  "280": {
+    "id": 280,
+    "name": "Ralts",
+    "downloadable": true
+  },
+  "281": {
+    "id": 281,
+    "name": "Kirlia",
+    "downloadable": true
+  },
+  "282": {
+    "id": 282,
+    "name": "Gardevoir",
+    "downloadable": true
+  },
+  "283": {
+    "id": 283,
+    "name": "Surskit",
+    "downloadable": true
+  },
+  "284": {
+    "id": 284,
+    "name": "Masquerain",
+    "downloadable": true
+  },
+  "285": {
+    "id": 285,
+    "name": "Shroomish",
+    "downloadable": true
+  },
+  "286": {
+    "id": 286,
+    "name": "Breloom",
+    "downloadable": true
+  },
+  "287": {
+    "id": 287,
+    "name": "Slakoth",
+    "downloadable": true
+  },
+  "288": {
+    "id": 288,
+    "name": "Vigoroth",
+    "downloadable": true
+  },
+  "289": {
+    "id": 289,
+    "name": "Slaking",
+    "downloadable": true
+  },
+  "290": {
+    "id": 290,
+    "name": "Nincada",
+    "downloadable": true
+  },
+  "291": {
+    "id": 291,
+    "name": "Ninjask",
+    "downloadable": true
+  },
+  "292": {
+    "id": 292,
+    "name": "Shedinja",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "293": {
+    "id": 293,
+    "name": "Whismur",
+    "downloadable": true
+  },
+  "294": {
+    "id": 294,
+    "name": "Loudred",
+    "downloadable": true
+  },
+  "295": {
+    "id": 295,
+    "name": "Exploud",
+    "downloadable": true
+  },
+  "296": {
+    "id": 296,
+    "name": "Makuhita",
+    "downloadable": true
+  },
+  "297": {
+    "id": 297,
+    "name": "Hariyama",
+    "downloadable": true
+  },
+  "298": {
+    "id": 298,
+    "name": "Azurill",
+    "downloadable": true
+  },
+  "299": {
+    "id": 299,
+    "name": "Nosepass",
+    "downloadable": true
+  },
+  "300": {
+    "id": 300,
+    "name": "Skitty",
+    "downloadable": true
+  },
+  "301": {
+    "id": 301,
+    "name": "Delcatty",
+    "downloadable": true
+  },
+  "302": {
+    "id": 302,
+    "name": "Sableye",
+    "downloadable": true
+  },
+  "303": {
+    "id": 303,
+    "name": "Mawile",
+    "downloadable": true
+  },
+  "304": {
+    "id": 304,
+    "name": "Aron",
+    "downloadable": true
+  },
+  "305": {
+    "id": 305,
+    "name": "Lairon",
+    "downloadable": true
+  },
+  "306": {
+    "id": 306,
+    "name": "Aggron",
+    "downloadable": true
+  },
+  "307": {
+    "id": 307,
+    "name": "Meditite",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "308": {
+    "id": 308,
+    "name": "Medicham",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "309": {
+    "id": 309,
+    "name": "Electrike",
+    "downloadable": true
+  },
+  "310": {
+    "id": 310,
+    "name": "Manectric",
+    "downloadable": true
+  },
+  "311": {
+    "id": 311,
+    "name": "Plusle",
+    "downloadable": true
+  },
+  "312": {
+    "id": 312,
+    "name": "Minun",
+    "downloadable": true
+  },
+  "313": {
+    "id": 313,
+    "name": "Volbeat",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "314": {
+    "id": 314,
+    "name": "Illumise",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "315": {
+    "id": 315,
+    "name": "Roselia",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "316": {
+    "id": 316,
+    "name": "Gulpin",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "317": {
+    "id": 317,
+    "name": "Swalot",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "318": {
+    "id": 318,
+    "name": "Carvanha",
+    "downloadable": true
+  },
+  "319": {
+    "id": 319,
+    "name": "Sharpedo",
+    "downloadable": true
+  },
+  "320": {
+    "id": 320,
+    "name": "Wailmer",
+    "downloadable": true
+  },
+  "321": {
+    "id": 321,
+    "name": "Wailord",
+    "downloadable": true
+  },
+  "322": {
+    "id": 322,
+    "name": "Numel",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "323": {
+    "id": 323,
+    "name": "Camerupt",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "324": {
+    "id": 324,
+    "name": "Torkoal",
+    "downloadable": true
+  },
+  "325": {
+    "id": 325,
+    "name": "Spoink",
+    "downloadable": true
+  },
+  "326": {
+    "id": 326,
+    "name": "Grumpig",
+    "downloadable": true
+  },
+  "327": {
+    "id": 327,
+    "name": "Spinda",
+    "downloadable": true
+  },
+  "328": {
+    "id": 328,
+    "name": "Trapinch",
+    "downloadable": true
+  },
+  "329": {
+    "id": 329,
+    "name": "Vibrava",
+    "downloadable": true
+  },
+  "330": {
+    "id": 330,
+    "name": "Flygon",
+    "downloadable": true
+  },
+  "331": {
+    "id": 331,
+    "name": "Cacnea",
+    "downloadable": true
+  },
+  "332": {
+    "id": 332,
+    "name": "Cacturne",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "333": {
+    "id": 333,
+    "name": "Swablu",
+    "downloadable": true
+  },
+  "334": {
+    "id": 334,
+    "name": "Altaria",
+    "downloadable": true
+  },
+  "335": {
+    "id": 335,
+    "name": "Zangoose",
+    "downloadable": true
+  },
+  "336": {
+    "id": 336,
+    "name": "Seviper",
+    "downloadable": true
+  },
+  "337": {
+    "id": 337,
+    "name": "Lunatone",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "338": {
+    "id": 338,
+    "name": "Solrock",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "339": {
+    "id": 339,
+    "name": "Barboach",
+    "downloadable": true
+  },
+  "340": {
+    "id": 340,
+    "name": "Whiscash",
+    "downloadable": true
+  },
+  "341": {
+    "id": 341,
+    "name": "Corphish",
+    "downloadable": true
+  },
+  "342": {
+    "id": 342,
+    "name": "Crawdaunt",
+    "downloadable": true
+  },
+  "343": {
+    "id": 343,
+    "name": "Baltoy",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "344": {
+    "id": 344,
+    "name": "Claydol",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "345": {
+    "id": 345,
+    "name": "Lileep",
+    "downloadable": true
+  },
+  "346": {
+    "id": 346,
+    "name": "Cradily",
+    "downloadable": true
+  },
+  "347": {
+    "id": 347,
+    "name": "Anorith",
+    "downloadable": true
+  },
+  "348": {
+    "id": 348,
+    "name": "Armaldo",
+    "downloadable": true
+  },
+  "349": {
+    "id": 349,
+    "name": "Feebas",
+    "downloadable": true
+  },
+  "350": {
+    "id": 350,
+    "name": "Milotic",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "351": {
+    "id": 351,
+    "name": "Castform",
+    "downloadable": true
+  },
+  "352": {
+    "id": 352,
+    "name": "Kecleon",
+    "downloadable": true
+  },
+  "353": {
+    "id": 353,
+    "name": "Shuppet",
+    "downloadable": true
+  },
+  "354": {
+    "id": 354,
+    "name": "Banette",
+    "downloadable": true
+  },
+  "355": {
+    "id": 355,
+    "name": "Duskull",
+    "downloadable": true
+  },
+  "356": {
+    "id": 356,
+    "name": "Dusclops",
+    "downloadable": true
+  },
+  "357": {
+    "id": 357,
+    "name": "Tropius",
+    "downloadable": true
+  },
+  "358": {
+    "id": 358,
+    "name": "Chimecho",
+    "downloadable": true
+  },
+  "359": {
+    "id": 359,
+    "name": "Absol",
+    "downloadable": true
+  },
+  "360": {
+    "id": 360,
+    "name": "Wynaut",
+    "downloadable": true
+  },
+  "361": {
+    "id": 361,
+    "name": "Snorunt",
+    "downloadable": true
+  },
+  "362": {
+    "id": 362,
+    "name": "Glalie",
+    "downloadable": true
+  },
+  "363": {
+    "id": 363,
+    "name": "Spheal",
+    "downloadable": true
+  },
+  "364": {
+    "id": 364,
+    "name": "Sealeo",
+    "downloadable": true
+  },
+  "365": {
+    "id": 365,
+    "name": "Walrein",
+    "downloadable": true
+  },
+  "366": {
+    "id": 366,
+    "name": "Clamperl",
+    "downloadable": true
+  },
+  "367": {
+    "id": 367,
+    "name": "Huntail",
+    "downloadable": true
+  },
+  "368": {
+    "id": 368,
+    "name": "Gorebyss",
+    "downloadable": true
+  },
+  "369": {
+    "id": 369,
+    "name": "Relicanth",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "370": {
+    "id": 370,
+    "name": "Luvdisc",
+    "downloadable": true
+  },
+  "371": {
+    "id": 371,
+    "name": "Bagon",
+    "downloadable": true
+  },
+  "372": {
+    "id": 372,
+    "name": "Shelgon",
+    "downloadable": true
+  },
+  "373": {
+    "id": 373,
+    "name": "Salamence",
+    "downloadable": true
+  },
+  "374": {
+    "id": 374,
+    "name": "Beldum",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "375": {
+    "id": 375,
+    "name": "Metang",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "376": {
+    "id": 376,
+    "name": "Metagross",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "377": {
+    "id": 377,
+    "name": "Regirock",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "378": {
+    "id": 378,
+    "name": "Regice",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "379": {
+    "id": 379,
+    "name": "Registeel",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "380": {
+    "id": 380,
+    "name": "Latias",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "381": {
+    "id": 381,
+    "name": "Latios",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "382": {
+    "id": 382,
+    "name": "Kyogre",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "383": {
+    "id": 383,
+    "name": "Groudon",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "384": {
+    "id": 384,
+    "name": "Rayquaza",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "385": {
+    "id": 385,
+    "name": "Jirachi",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "386": {
+    "id": 386,
+    "name": "Deoxys",
+    "downloadable": true,
+    "gender": "GENDERLESS",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Normal"
+      },
+      {
+        "id": 1,
+        "name": "Attack"
+      },
+      {
+        "id": 2,
+        "name": "Defense"
+      },
+      {
+        "id": 3,
+        "name": "Speed"
+      }
+    ]
+  },
+  "387": {
+    "id": 387,
+    "name": "Turtwig",
+    "downloadable": true
+  },
+  "388": {
+    "id": 388,
+    "name": "Grotle",
+    "downloadable": true
+  },
+  "389": {
+    "id": 389,
+    "name": "Torterra",
+    "downloadable": true
+  },
+  "390": {
+    "id": 390,
+    "name": "Chimchar",
+    "downloadable": true
+  },
+  "391": {
+    "id": 391,
+    "name": "Monferno",
+    "downloadable": true
+  },
+  "392": {
+    "id": 392,
+    "name": "Infernape",
+    "downloadable": true
+  },
+  "393": {
+    "id": 393,
+    "name": "Piplup",
+    "downloadable": true
+  },
+  "394": {
+    "id": 394,
+    "name": "Prinplup",
+    "downloadable": true
+  },
+  "395": {
+    "id": 395,
+    "name": "Empoleon",
+    "downloadable": true
+  },
+  "396": {
+    "id": 396,
+    "name": "Starly",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "397": {
+    "id": 397,
+    "name": "Staravia",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "398": {
+    "id": 398,
+    "name": "Staraptor",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "399": {
+    "id": 399,
+    "name": "Bidoof",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "400": {
+    "id": 400,
+    "name": "Bibarel",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "401": {
+    "id": 401,
+    "name": "Kricketot",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "402": {
+    "id": 402,
+    "name": "Kricketune",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "403": {
+    "id": 403,
+    "name": "Shinx",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "404": {
+    "id": 404,
+    "name": "Luxio",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "405": {
+    "id": 405,
+    "name": "Luxray",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "406": {
+    "id": 406,
+    "name": "Budew",
+    "downloadable": true
+  },
+  "407": {
+    "id": 407,
+    "name": "Roserade",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "408": {
+    "id": 408,
+    "name": "Cranidos",
+    "downloadable": true
+  },
+  "409": {
+    "id": 409,
+    "name": "Rampardos",
+    "downloadable": true
+  },
+  "410": {
+    "id": 410,
+    "name": "Shieldon",
+    "downloadable": true
+  },
+  "411": {
+    "id": 411,
+    "name": "Bastiodon",
+    "downloadable": true
+  },
+  "412": {
+    "id": 412,
+    "name": "Burmy",
+    "downloadable": true,
+    "forms": [
+      {
+        "id": 0,
+        "name": "Plant Cloak"
+      },
+      {
+        "id": 1,
+        "name": "Sandy Cloak"
+      },
+      {
+        "id": 2,
+        "name": "Trash Cloak"
+      }
+    ]
+  },
+  "413": {
+    "id": 413,
+    "name": "Wormadam",
+    "downloadable": true,
+    "gender": "FEMALE",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Plant Cloak"
+      },
+      {
+        "id": 1,
+        "name": "Sandy Cloak"
+      },
+      {
+        "id": 2,
+        "name": "Trash Cloak"
+      }
+    ]
+  },
+  "414": {
+    "id": 414,
+    "name": "Mothim",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "415": {
+    "id": 415,
+    "name": "Combee",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "416": {
+    "id": 416,
+    "name": "Vespiquen",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "417": {
+    "id": 417,
+    "name": "Pachirisu",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "418": {
+    "id": 418,
+    "name": "Buizel",
+    "downloadable": true
+  },
+  "419": {
+    "id": 419,
+    "name": "Floatzel",
+    "downloadable": true
+  },
+  "420": {
+    "id": 420,
+    "name": "Cherubi",
+    "downloadable": true
+  },
+  "421": {
+    "id": 421,
+    "name": "Cherrim",
+    "downloadable": true
+  },
+  "422": {
+    "id": 422,
+    "name": "Shellos",
+    "downloadable": true,
+    "forms": [
+      {
+        "id": 0,
+        "name": "West Sea"
+      },
+      {
+        "id": 1,
+        "name": "East Sea"
+      }
+    ]
+  },
+  "423": {
+    "id": 423,
+    "name": "Gastrodon",
+    "downloadable": true,
+    "forms": [
+      {
+        "id": 0,
+        "name": "West Sea"
+      },
+      {
+        "id": 1,
+        "name": "East Sea"
+      }
+    ]
+  },
+  "424": {
+    "id": 424,
+    "name": "Ambipom",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "425": {
+    "id": 425,
+    "name": "Drifloon",
+    "downloadable": true
+  },
+  "426": {
+    "id": 426,
+    "name": "Drifblim",
+    "downloadable": true
+  },
+  "427": {
+    "id": 427,
+    "name": "Buneary",
+    "downloadable": true
+  },
+  "428": {
+    "id": 428,
+    "name": "Lopunny",
+    "downloadable": true
+  },
+  "429": {
+    "id": 429,
+    "name": "Mismagius",
+    "downloadable": true
+  },
+  "430": {
+    "id": 430,
+    "name": "Honchkrow",
+    "downloadable": true
+  },
+  "431": {
+    "id": 431,
+    "name": "Glameow",
+    "downloadable": true
+  },
+  "432": {
+    "id": 432,
+    "name": "Purugly",
+    "downloadable": true
+  },
+  "433": {
+    "id": 433,
+    "name": "Chingling",
+    "downloadable": true
+  },
+  "434": {
+    "id": 434,
+    "name": "Stunky",
+    "downloadable": true
+  },
+  "435": {
+    "id": 435,
+    "name": "Skuntank",
+    "downloadable": true
+  },
+  "436": {
+    "id": 436,
+    "name": "Bronzor",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "437": {
+    "id": 437,
+    "name": "Bronzong",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "438": {
+    "id": 438,
+    "name": "Bonsly",
+    "downloadable": true
+  },
+  "439": {
+    "id": 439,
+    "name": "Mime Jr.",
+    "downloadable": true
+  },
+  "440": {
+    "id": 440,
+    "name": "Happiny",
+    "downloadable": true
+  },
+  "441": {
+    "id": 441,
+    "name": "Chatot",
+    "downloadable": true
+  },
+  "442": {
+    "id": 442,
+    "name": "Spiritomb",
+    "downloadable": true
+  },
+  "443": {
+    "id": 443,
+    "name": "Gible",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "444": {
+    "id": 444,
+    "name": "Gabite",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "445": {
+    "id": 445,
+    "name": "Garchomp",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "446": {
+    "id": 446,
+    "name": "Munchlax",
+    "downloadable": true
+  },
+  "447": {
+    "id": 447,
+    "name": "Riolu",
+    "downloadable": true
+  },
+  "448": {
+    "id": 448,
+    "name": "Lucario",
+    "downloadable": true
+  },
+  "449": {
+    "id": 449,
+    "name": "Hippopotas",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "450": {
+    "id": 450,
+    "name": "Hippowdon",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "451": {
+    "id": 451,
+    "name": "Skorupi",
+    "downloadable": true
+  },
+  "452": {
+    "id": 452,
+    "name": "Drapion",
+    "downloadable": true
+  },
+  "453": {
+    "id": 453,
+    "name": "Croagunk",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "454": {
+    "id": 454,
+    "name": "Toxicroak",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "455": {
+    "id": 455,
+    "name": "Carnivine",
+    "downloadable": true
+  },
+  "456": {
+    "id": 456,
+    "name": "Finneon",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "457": {
+    "id": 457,
+    "name": "Lumineon",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "458": {
+    "id": 458,
+    "name": "Mantyke",
+    "downloadable": true
+  },
+  "459": {
+    "id": 459,
+    "name": "Snover",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "460": {
+    "id": 460,
+    "name": "Abomasnow",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "461": {
+    "id": 461,
+    "name": "Weavile",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "462": {
+    "id": 462,
+    "name": "Magnezone",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "463": {
+    "id": 463,
+    "name": "Lickilicky",
+    "downloadable": true
+  },
+  "464": {
+    "id": 464,
+    "name": "Rhyperior",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "465": {
+    "id": 465,
+    "name": "Tangrowth",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "466": {
+    "id": 466,
+    "name": "Electivire",
+    "downloadable": true
+  },
+  "467": {
+    "id": 467,
+    "name": "Magmortar",
+    "downloadable": true
+  },
+  "468": {
+    "id": 468,
+    "name": "Togekiss",
+    "downloadable": true
+  },
+  "469": {
+    "id": 469,
+    "name": "Yanmega",
+    "downloadable": true
+  },
+  "470": {
+    "id": 470,
+    "name": "Leafeon",
+    "downloadable": true
+  },
+  "471": {
+    "id": 471,
+    "name": "Glaceon",
+    "downloadable": true
+  },
+  "472": {
+    "id": 472,
+    "name": "Gliscor",
+    "downloadable": true
+  },
+  "473": {
+    "id": 473,
+    "name": "Mamoswine",
+    "downloadable": true,
+    "hasFemaleSprite": true
+  },
+  "474": {
+    "id": 474,
+    "name": "Porygon-Z",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "475": {
+    "id": 475,
+    "name": "Gallade",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "476": {
+    "id": 476,
+    "name": "Probopass",
+    "downloadable": true
+  },
+  "477": {
+    "id": 477,
+    "name": "Dusknoir",
+    "downloadable": true
+  },
+  "478": {
+    "id": 478,
+    "name": "Froslass",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "479": {
+    "id": 479,
+    "name": "Rotom",
+    "downloadable": true,
+    "gender": "GENDERLESS",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Normal"
+      },
+      {
+        "id": 1,
+        "name": "Heat"
+      },
+      {
+        "id": 2,
+        "name": "Wash"
+      },
+      {
+        "id": 3,
+        "name": "Frost"
+      },
+      {
+        "id": 4,
+        "name": "Fan"
+      },
+      {
+        "id": 5,
+        "name": "Mow"
+      }
+    ]
+  },
+  "480": {
+    "id": 480,
+    "name": "Uxie",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "481": {
+    "id": 481,
+    "name": "Mesprit",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "482": {
+    "id": 482,
+    "name": "Azelf",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "483": {
+    "id": 483,
+    "name": "Dialga",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "484": {
+    "id": 484,
+    "name": "Palkia",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "485": {
+    "id": 485,
+    "name": "Heatran",
+    "downloadable": true
+  },
+  "486": {
+    "id": 486,
+    "name": "Regigigas",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "487": {
+    "id": 487,
+    "name": "Giratina",
+    "downloadable": true,
+    "gender": "GENDERLESS",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Altered"
+      },
+      {
+        "id": 1,
+        "name": "Origin"
+      }
+    ]
+  },
+  "488": {
+    "id": 488,
+    "name": "Cresselia",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "489": {
+    "id": 489,
+    "name": "Phione",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "490": {
+    "id": 490,
+    "name": "Manaphy",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "491": {
+    "id": 491,
+    "name": "Darkrai",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "492": {
+    "id": 492,
+    "name": "Shaymin",
+    "downloadable": true,
+    "gender": "GENDERLESS",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Land"
+      },
+      {
+        "id": 1,
+        "name": "Sky"
+      }
+    ]
+  },
+  "493": {
+    "id": 493,
+    "name": "Arceus",
+    "downloadable": true,
+    "gender": "GENDERLESS",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Normal"
+      },
+      {
+        "id": 1,
+        "name": "Fighting"
+      },
+      {
+        "id": 2,
+        "name": "Flying"
+      },
+      {
+        "id": 3,
+        "name": "Poison"
+      },
+      {
+        "id": 4,
+        "name": "Ground"
+      },
+      {
+        "id": 5,
+        "name": "Rock"
+      },
+      {
+        "id": 6,
+        "name": "Bug"
+      },
+      {
+        "id": 7,
+        "name": "Ghost"
+      },
+      {
+        "id": 8,
+        "name": "Steel"
+      },
+      {
+        "id": 9,
+        "name": "Fire"
+      },
+      {
+        "id": 10,
+        "name": "Water"
+      },
+      {
+        "id": 11,
+        "name": "Grass"
+      },
+      {
+        "id": 12,
+        "name": "Electric"
+      },
+      {
+        "id": 13,
+        "name": "Psychic"
+      },
+      {
+        "id": 14,
+        "name": "Ice"
+      },
+      {
+        "id": 15,
+        "name": "Dragon"
+      },
+      {
+        "id": 16,
+        "name": "Dark"
+      }
+    ]
+  },
+  "494": {
+    "id": 494,
+    "name": "Victini",
+    "gender": "GENDERLESS"
+  },
+  "495": {
+    "id": 495,
+    "name": "Snivy"
+  },
+  "496": {
+    "id": 496,
+    "name": "Servine"
+  },
+  "497": {
+    "id": 497,
+    "name": "Serperior"
+  },
+  "498": {
+    "id": 498,
+    "name": "Tepig"
+  },
+  "499": {
+    "id": 499,
+    "name": "Pignite"
+  },
+  "500": {
+    "id": 500,
+    "name": "Emboar"
+  },
+  "501": {
+    "id": 501,
+    "name": "Oshawott"
+  },
+  "502": {
+    "id": 502,
+    "name": "Dewott"
+  },
+  "503": {
+    "id": 503,
+    "name": "Samurott"
+  },
+  "504": {
+    "id": 504,
+    "name": "Patrat"
+  },
+  "505": {
+    "id": 505,
+    "name": "Watchog",
+    "downloadable": true
+  },
+  "506": {
+    "id": 506,
+    "name": "Lillipup"
+  },
+  "507": {
+    "id": 507,
+    "name": "Herdier",
+    "downloadable": true
+  },
+  "508": {
+    "id": 508,
+    "name": "Stoutland"
+  },
+  "509": {
+    "id": 509,
+    "name": "Purrloin"
+  },
+  "510": {
+    "id": 510,
+    "name": "Liepard",
+    "downloadable": true
+  },
+  "511": {
+    "id": 511,
+    "name": "Pansage",
+    "downloadable": true
+  },
+  "512": {
+    "id": 512,
+    "name": "Simisage"
+  },
+  "513": {
+    "id": 513,
+    "name": "Pansear",
+    "downloadable": true
+  },
+  "514": {
+    "id": 514,
+    "name": "Simisear"
+  },
+  "515": {
+    "id": 515,
+    "name": "Panpour",
+    "downloadable": true
+  },
+  "516": {
+    "id": 516,
+    "name": "Simipour"
+  },
+  "517": {
+    "id": 517,
+    "name": "Munna"
+  },
+  "518": {
+    "id": 518,
+    "name": "Musharna"
+  },
+  "519": {
+    "id": 519,
+    "name": "Pidove",
+    "downloadable": true
+  },
+  "520": {
+    "id": 520,
+    "name": "Tranquill"
+  },
+  "521": {
+    "id": 521,
+    "name": "Unfezant",
+    "hasFemaleSprite": true
+  },
+  "522": {
+    "id": 522,
+    "name": "Blitzle"
+  },
+  "523": {
+    "id": 523,
+    "name": "Zebstrika",
+    "downloadable": true
+  },
+  "524": {
+    "id": 524,
+    "name": "Roggenrola"
+  },
+  "525": {
+    "id": 525,
+    "name": "Boldore",
+    "downloadable": true
+  },
+  "526": {
+    "id": 526,
+    "name": "Gigalith"
+  },
+  "527": {
+    "id": 527,
+    "name": "Woobat",
+    "downloadable": true
+  },
+  "528": {
+    "id": 528,
+    "name": "Swoobat"
+  },
+  "529": {
+    "id": 529,
+    "name": "Drilbur",
+    "downloadable": true
+  },
+  "530": {
+    "id": 530,
+    "name": "Excadrill"
+  },
+  "531": {
+    "id": 531,
+    "name": "Audino",
+    "downloadable": true
+  },
+  "532": {
+    "id": 532,
+    "name": "Timburr"
+  },
+  "533": {
+    "id": 533,
+    "name": "Gurdurr",
+    "downloadable": true
+  },
+  "534": {
+    "id": 534,
+    "name": "Conkeldurr"
+  },
+  "535": {
+    "id": 535,
+    "name": "Tympole",
+    "downloadable": true
+  },
+  "536": {
+    "id": 536,
+    "name": "Palpitoad"
+  },
+  "537": {
+    "id": 537,
+    "name": "Seismitoad"
+  },
+  "538": {
+    "id": 538,
+    "name": "Throh",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "539": {
+    "id": 539,
+    "name": "Sawk",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "540": {
+    "id": 540,
+    "name": "Sewaddle"
+  },
+  "541": {
+    "id": 541,
+    "name": "Swadloon"
+  },
+  "542": {
+    "id": 542,
+    "name": "Leavanny",
+    "downloadable": true
+  },
+  "543": {
+    "id": 543,
+    "name": "Venipede"
+  },
+  "544": {
+    "id": 544,
+    "name": "Whirlipede"
+  },
+  "545": {
+    "id": 545,
+    "name": "Scolipede",
+    "downloadable": true
+  },
+  "546": {
+    "id": 546,
+    "name": "Cottonee",
+    "downloadable": true
+  },
+  "547": {
+    "id": 547,
+    "name": "Whimsicott"
+  },
+  "548": {
+    "id": 548,
+    "name": "Petilil",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "549": {
+    "id": 549,
+    "name": "Lilligant",
+    "gender": "FEMALE"
+  },
+  "550": {
+    "id": 550,
+    "name": "Basculin",
+    "downloadable": true,
+    "forms": [
+      {
+        "id": 0,
+        "name": "Red-striped"
+      },
+      {
+        "id": 1,
+        "name": "Blue-striped"
+      }
+    ]
+  },
+  "551": {
+    "id": 551,
+    "name": "Sandile"
+  },
+  "552": {
+    "id": 552,
+    "name": "Krokorok"
+  },
+  "553": {
+    "id": 553,
+    "name": "Krookodile",
+    "downloadable": true
+  },
+  "554": {
+    "id": 554,
+    "name": "Darumaka"
+  },
+  "555": {
+    "id": 555,
+    "name": "Darmanitan"
+  },
+  "556": {
+    "id": 556,
+    "name": "Maractus",
+    "downloadable": true
+  },
+  "557": {
+    "id": 557,
+    "name": "Dwebble"
+  },
+  "558": {
+    "id": 558,
+    "name": "Crustle",
+    "downloadable": true
+  },
+  "559": {
+    "id": 559,
+    "name": "Scraggy",
+    "downloadable": true
+  },
+  "560": {
+    "id": 560,
+    "name": "Scrafty"
+  },
+  "561": {
+    "id": 561,
+    "name": "Sigilyph",
+    "downloadable": true
+  },
+  "562": {
+    "id": 562,
+    "name": "Yamask"
+  },
+  "563": {
+    "id": 563,
+    "name": "Cofagrigus"
+  },
+  "564": {
+    "id": 564,
+    "name": "Tirtouga",
+    "downloadable": true
+  },
+  "565": {
+    "id": 565,
+    "name": "Carracosta"
+  },
+  "566": {
+    "id": 566,
+    "name": "Archen"
+  },
+  "567": {
+    "id": 567,
+    "name": "Archeops"
+  },
+  "568": {
+    "id": 568,
+    "name": "Trubbish"
+  },
+  "569": {
+    "id": 569,
+    "name": "Garbodor",
+    "downloadable": true
+  },
+  "570": {
+    "id": 570,
+    "name": "Zorua"
+  },
+  "571": {
+    "id": 571,
+    "name": "Zoroark"
+  },
+  "572": {
+    "id": 572,
+    "name": "Minccino",
+    "downloadable": true
+  },
+  "573": {
+    "id": 573,
+    "name": "Cinccino"
+  },
+  "574": {
+    "id": 574,
+    "name": "Gothita"
+  },
+  "575": {
+    "id": 575,
+    "name": "Gothorita",
+    "downloadable": true
+  },
+  "576": {
+    "id": 576,
+    "name": "Gothitelle"
+  },
+  "577": {
+    "id": 577,
+    "name": "Solosis"
+  },
+  "578": {
+    "id": 578,
+    "name": "Duosion",
+    "downloadable": true
+  },
+  "579": {
+    "id": 579,
+    "name": "Reuniclus"
+  },
+  "580": {
+    "id": 580,
+    "name": "Ducklett",
+    "downloadable": true
+  },
+  "581": {
+    "id": 581,
+    "name": "Swanna"
+  },
+  "582": {
+    "id": 582,
+    "name": "Vanillite"
+  },
+  "583": {
+    "id": 583,
+    "name": "Vanillish",
+    "downloadable": true
+  },
+  "584": {
+    "id": 584,
+    "name": "Vanilluxe"
+  },
+  "585": {
+    "id": 585,
+    "name": "Deerling",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Spring"
+      },
+      {
+        "id": 1,
+        "name": "Summer"
+      },
+      {
+        "id": 2,
+        "name": "Autumn"
+      },
+      {
+        "id": 3,
+        "name": "Winter"
+      }
+    ]
+  },
+  "586": {
+    "id": 586,
+    "name": "Sawsbuck",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Spring"
+      },
+      {
+        "id": 1,
+        "name": "Summer"
+      },
+      {
+        "id": 2,
+        "name": "Autumn"
+      },
+      {
+        "id": 3,
+        "name": "Winter"
+      }
+    ]
+  },
+  "587": {
+    "id": 587,
+    "name": "Emolga",
+    "downloadable": true
+  },
+  "588": {
+    "id": 588,
+    "name": "Karrablast",
+    "downloadable": true
+  },
+  "589": {
+    "id": 589,
+    "name": "Escavalier"
+  },
+  "590": {
+    "id": 590,
+    "name": "Foongus"
+  },
+  "591": {
+    "id": 591,
+    "name": "Amoonguss"
+  },
+  "592": {
+    "id": 592,
+    "name": "Frillish",
+    "hasFemaleSprite": true
+  },
+  "593": {
+    "id": 593,
+    "name": "Jellicent",
+    "hasFemaleSprite": true
+  },
+  "594": {
+    "id": 594,
+    "name": "Alomomola",
+    "downloadable": true
+  },
+  "595": {
+    "id": 595,
+    "name": "Joltik"
+  },
+  "596": {
+    "id": 596,
+    "name": "Galvantula",
+    "downloadable": true
+  },
+  "597": {
+    "id": 597,
+    "name": "Ferroseed"
+  },
+  "598": {
+    "id": 598,
+    "name": "Ferrothorn"
+  },
+  "599": {
+    "id": 599,
+    "name": "Klink",
+    "gender": "GENDERLESS"
+  },
+  "600": {
+    "id": 600,
+    "name": "Klang",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "601": {
+    "id": 601,
+    "name": "Klinklang",
+    "gender": "GENDERLESS"
+  },
+  "602": {
+    "id": 602,
+    "name": "Tynamo"
+  },
+  "603": {
+    "id": 603,
+    "name": "Eelektrik"
+  },
+  "604": {
+    "id": 604,
+    "name": "Eelektross"
+  },
+  "605": {
+    "id": 605,
+    "name": "Elgyem",
+    "downloadable": true
+  },
+  "606": {
+    "id": 606,
+    "name": "Beheeyem"
+  },
+  "607": {
+    "id": 607,
+    "name": "Litwick",
+    "downloadable": true
+  },
+  "608": {
+    "id": 608,
+    "name": "Lampent"
+  },
+  "609": {
+    "id": 609,
+    "name": "Chandelure"
+  },
+  "610": {
+    "id": 610,
+    "name": "Axew",
+    "downloadable": true
+  },
+  "611": {
+    "id": 611,
+    "name": "Fraxure"
+  },
+  "612": {
+    "id": 612,
+    "name": "Haxorus"
+  },
+  "613": {
+    "id": 613,
+    "name": "Cubchoo",
+    "downloadable": true
+  },
+  "614": {
+    "id": 614,
+    "name": "Beartic"
+  },
+  "615": {
+    "id": 615,
+    "name": "Cryogonal",
+    "gender": "GENDERLESS"
+  },
+  "616": {
+    "id": 616,
+    "name": "Shelmet",
+    "downloadable": true
+  },
+  "617": {
+    "id": 617,
+    "name": "Accelgor"
+  },
+  "618": {
+    "id": 618,
+    "name": "Stunfisk",
+    "downloadable": true
+  },
+  "619": {
+    "id": 619,
+    "name": "Mienfoo",
+    "downloadable": true
+  },
+  "620": {
+    "id": 620,
+    "name": "Mienshao"
+  },
+  "621": {
+    "id": 621,
+    "name": "Druddigon",
+    "downloadable": true
+  },
+  "622": {
+    "id": 622,
+    "name": "Golett",
+    "downloadable": true,
+    "gender": "GENDERLESS"
+  },
+  "623": {
+    "id": 623,
+    "name": "Golurk",
+    "gender": "GENDERLESS"
+  },
+  "624": {
+    "id": 624,
+    "name": "Pawniard",
+    "downloadable": true
+  },
+  "625": {
+    "id": 625,
+    "name": "Bisharp"
+  },
+  "626": {
+    "id": 626,
+    "name": "Bouffalant",
+    "downloadable": true
+  },
+  "627": {
+    "id": 627,
+    "name": "Rufflet",
+    "gender": "MALE"
+  },
+  "628": {
+    "id": 628,
+    "name": "Braviary",
+    "downloadable": true,
+    "gender": "MALE"
+  },
+  "629": {
+    "id": 629,
+    "name": "Vullaby",
+    "gender": "FEMALE"
+  },
+  "630": {
+    "id": 630,
+    "name": "Mandibuzz",
+    "downloadable": true,
+    "gender": "FEMALE"
+  },
+  "631": {
+    "id": 631,
+    "name": "Heatmor",
+    "downloadable": true
+  },
+  "632": {
+    "id": 632,
+    "name": "Durant",
+    "downloadable": true
+  },
+  "633": {
+    "id": 633,
+    "name": "Deino"
+  },
+  "634": {
+    "id": 634,
+    "name": "Zweilous"
+  },
+  "635": {
+    "id": 635,
+    "name": "Hydreigon"
+  },
+  "636": {
+    "id": 636,
+    "name": "Larvesta"
+  },
+  "637": {
+    "id": 637,
+    "name": "Volcarona"
+  },
+  "638": {
+    "id": 638,
+    "name": "Cobalion",
+    "gender": "GENDERLESS"
+  },
+  "639": {
+    "id": 639,
+    "name": "Terrakion",
+    "gender": "GENDERLESS"
+  },
+  "640": {
+    "id": 640,
+    "name": "Virizion",
+    "gender": "GENDERLESS"
+  },
+  "641": {
+    "id": 641,
+    "name": "Tornadus",
+    "gender": "MALE",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Incarnate"
+      },
+      {
+        "id": 1,
+        "name": "Therian"
+      }
+    ]
+  },
+  "642": {
+    "id": 642,
+    "name": "Thundurus",
+    "gender": "MALE",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Incarnate"
+      },
+      {
+        "id": 1,
+        "name": "Therian"
+      }
+    ]
+  },
+  "643": {
+    "id": 643,
+    "name": "Reshiram",
+    "gender": "GENDERLESS"
+  },
+  "644": {
+    "id": 644,
+    "name": "Zekrom",
+    "gender": "GENDERLESS"
+  },
+  "645": {
+    "id": 645,
+    "name": "Landorus",
+    "gender": "MALE",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Incarnate"
+      },
+      {
+        "id": 1,
+        "name": "Therian"
+      }
+    ]
+  },
+  "646": {
+    "id": 646,
+    "name": "Kyurem",
+    "gender": "GENDERLESS",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Normal"
+      },
+      {
+        "id": 1,
+        "name": "White"
+      },
+      {
+        "id": 2,
+        "name": "Black"
+      }
+    ]
+  },
+  "647": {
+    "id": 647,
+    "name": "Keldeo",
+    "gender": "GENDERLESS",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Ordinary"
+      },
+      {
+        "id": 1,
+        "name": "Resolute"
+      }
+    ]
+  },
+  "648": {
+    "id": 648,
+    "name": "Meloetta",
+    "gender": "GENDERLESS",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Aria"
+      },
+      {
+        "id": 1,
+        "name": "Pirouette"
+      }
+    ]
+  },
+  "649": {
+    "id": 649,
+    "name": "Genesect",
+    "gender": "GENDERLESS",
+    "forms": [
+      {
+        "id": 0,
+        "name": "Normal"
+      },
+      {
+        "id": 1,
+        "name": "Douse"
+      },
+      {
+        "id": 2,
+        "name": "Shock"
+      },
+      {
+        "id": 3,
+        "name": "Burn"
+      },
+      {
+        "id": 4,
+        "name": "Chill"
+      }
+    ]
+  }
+}

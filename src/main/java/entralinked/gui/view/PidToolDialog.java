@@ -1,4 +1,4 @@
-package entralinked.gui;
+package entralinked.gui.view;
 
 import java.awt.GridBagLayout;
 import java.util.regex.Pattern;
@@ -60,7 +60,8 @@ public class PidToolDialog {
             
             // Make sure user exists
             if(user == null) {
-                JOptionPane.showMessageDialog(dialog, "This Wi-Fi Connection ID does not exist.", "Attention", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(dialog, "This Wi-Fi Connection ID does not exist.\n"
+                        + "If you haven't attempted to connect yet, please do that first.", "Attention", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             

@@ -1,4 +1,4 @@
-package entralinked.gui;
+package entralinked.gui.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,14 +13,15 @@ import java.net.URL;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.text.AttributeSet;
@@ -34,8 +35,10 @@ import javax.swing.text.StyleContext;
 import org.apache.logging.log4j.Level;
 
 import com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme;
+import com.formdev.flatlaf.util.ColorFunctions;
 
 import entralinked.Entralinked;
+import entralinked.gui.panels.DashboardPanel;
 import entralinked.utility.ConsumerAppender;
 import entralinked.utility.SwingUtility;
 
@@ -49,29 +52,21 @@ public class MainView {
     public static final Color TEXT_COLOR_ERROR = Color.RED.darker();
     private final StyleContext styleContext = StyleContext.getDefaultStyleContext();
     private final AttributeSet fontAttribute = styleContext.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.FontFamily, "Consolas");
-    private final JButton dashboardButton;
     private final JLabel statusLabel;
     
     public MainView(Entralinked entralinked) {
         // Set look and feel
         FlatOneDarkIJTheme.setup();
         UIManager.getDefaults().put("Component.focusedBorderColor", UIManager.get("Component.borderColor"));
-        
-        // Create dashboard button
-        dashboardButton = new JButton("Open User Dashboard");
-        dashboardButton.setEnabled(false);
-        dashboardButton.setFocusable(false);
-        dashboardButton.addActionListener(event -> {
-            openUrl("http://127.0.0.1/dashboard/profile.html");
-        });
+        UIManager.put("Table.alternateRowColor", ColorFunctions.lighten(UIManager.getColor("Table.background"), 0.05F));
         
         // Create status label
-        statusLabel = new JLabel("Entralinked is starting...", JLabel.CENTER);
+        statusLabel = new JLabel("Servers are starting, please wait a bit...", JLabel.CENTER);
         
         // Create footer panel
         JPanel footerPanel = new JPanel(new BorderLayout());
         footerPanel.add(statusLabel, BorderLayout.CENTER);
-        footerPanel.add(dashboardButton, BorderLayout.LINE_END);
+        footerPanel.setBorder(BorderFactory.createEmptyBorder(2, 0, 5, 0));
         
         // Create console output
         JTextPane consoleOutputPane = new JTextPane() {
@@ -85,7 +80,7 @@ public class MainView {
                 return getUI().getPreferredSize(this);
             };
         };
-        consoleOutputPane.setFont(new Font("Consola", Font.PLAIN, 12));
+        consoleOutputPane.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         consoleOutputPane.setEditable(false);
         ((DefaultCaret)consoleOutputPane.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         
@@ -109,7 +104,12 @@ public class MainView {
         // Create main panel
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(scrollPane, BorderLayout.CENTER);
-        panel.add(footerPanel, BorderLayout.PAGE_END);
+        panel.add(footerPanel, BorderLayout.PAGE_END); 
+        
+        // Create tabbed pane
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.addTab("Console", panel);
+        tabbedPane.addTab("Dashboard", new DashboardPanel(entralinked));
         
         // Create window
         JFrame frame = new JFrame("Entralinked");
@@ -118,7 +118,13 @@ public class MainView {
         JMenuBar menuBar = new JMenuBar();
         JMenu helpMenu = new JMenu("Help");
         helpMenu.add(SwingUtility.createAction("Update PID (Error 60000)", () -> new PidToolDialog(entralinked, frame)));
-        helpMenu.add(SwingUtility.createAction("GitHub", () -> openUrl("https://github.com/kuroppoi/entralinked")));
+        helpMenu.add(SwingUtility.createAction("GitHub", () -> {
+            try {
+                Desktop.getDesktop().browse(new URL("https://github.com/kuroppoi/entralinked").toURI());
+            } catch(IOException | URISyntaxException e) {
+                SwingUtility.showExceptionInfo(frame, "Failed to open URL.", e);
+            }
+        }));
         menuBar.add(helpMenu);
         
         // Set window properties
@@ -126,8 +132,7 @@ public class MainView {
             @Override
             public void windowClosing(WindowEvent event) {
                 // Update status
-                dashboardButton.setEnabled(false);
-                statusLabel.setText("Entralinked is shutting down ...");
+                statusLabel.setText("Servers are shutting down, please wait a bit...");
                 
                 // Run asynchronously so it doesn't just awkwardly freeze
                 // Still scuffed but better than nothing I guess
@@ -142,31 +147,16 @@ public class MainView {
                 new ImageIcon(getClass().getResource("/icon-32x.png")).getImage(),
                 new ImageIcon(getClass().getResource("/icon-16x.png")).getImage()));
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(512, 288));
         frame.setJMenuBar(menuBar);
-        frame.add(panel);
+        frame.add(tabbedPane);
+        frame.getContentPane().setPreferredSize(new Dimension(733, 463));
         frame.pack();
+        frame.setMinimumSize(frame.getSize());
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
     
-    public void setDashboardButtonEnabled(boolean enabled) {
-        dashboardButton.setEnabled(enabled);
-    }
-    
     public void setStatusLabelText(String text) {
         statusLabel.setText(text);
-    }
-    
-    private void openUrl(String url) {
-        Desktop desktop = Desktop.getDesktop();
-        
-        if(desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-            try {
-                desktop.browse(new URL(url).toURI());
-            } catch(IOException | URISyntaxException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

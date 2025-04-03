@@ -19,7 +19,6 @@ import javax.imageio.ImageIO;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.bouncycastle.util.Arrays;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -35,7 +34,6 @@ import entralinked.model.player.Player;
 import entralinked.model.player.PlayerManager;
 import entralinked.model.player.PlayerStatus;
 import entralinked.network.http.HttpHandler;
-import entralinked.utility.ColorUtility;
 import entralinked.utility.Crc16;
 import entralinked.utility.GsidUtility;
 import entralinked.utility.LEOutputStream;
@@ -49,6 +47,8 @@ import io.javalin.json.JavalinJackson;
 
 /**
  * HTTP handler for requests made to the user dashboard.
+ * 
+ * @deprecated
  */
 public class DashboardHandler implements HttpHandler {
     
@@ -310,29 +310,8 @@ public class DashboardHandler implements HttpHandler {
                     previewImage = TiledImageUtility.readCGearSkin(new ByteArrayInputStream(skinBytes), offsetIndices);
                     break;
                 case "ZUKAN":
-                    // Generate some background colors based roughly on what's in the image
-                    int[] backgroundColors = Arrays.copyOf(TiledImageUtility.DEFAULT_DEX_BACKGROUND_COLORS, 64);
-                    int backgroundColor = image.getRGB(0, 0);
-                    int dexColor = image.getRGB(0, 134);
-                    int buttonColor = image.getRGB(128, 134);
-                    
-                    // Background colors (58, 59, 60)
-                    for(int i = 0; i < 3; i++) {
-                        backgroundColors[i + 58] = ColorUtility.multiplyColor(backgroundColor, 0.7 + i * 0.15);
-                    }
-                    
-                    // Pokédex colors (48, 49, 50, 51, 52)
-                    for(int i = 0; i < 5; i++) {
-                        backgroundColors[i + 48] = ColorUtility.multiplyColor(dexColor, 1.15 - i * 0.15);
-                    }
-                    
-                    // Pokédex button colors (53, 54, 55, 56)
-                    for(int i = 0; i < 4; i++) {
-                        backgroundColors[i + 53] = ColorUtility.multiplyColor(buttonColor, 0.55 + i * 0.15);
-                    }
-                    
                     // Process skin data
-                    TiledImageUtility.writeDexSkin(byteOutputStream, image, backgroundColors);
+                    TiledImageUtility.writeDexSkin(byteOutputStream, image, TiledImageUtility.generateBackgroundColors(image));
                     skinBytes = byteOutputStream.toByteArray();
                     previewImage = TiledImageUtility.readDexSkin(new ByteArrayInputStream(skinBytes), true);
                     break;

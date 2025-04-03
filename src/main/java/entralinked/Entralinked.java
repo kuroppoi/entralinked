@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import entralinked.gui.MainView;
+import entralinked.gui.view.MainView;
 import entralinked.model.dlc.DlcList;
 import entralinked.model.player.PlayerManager;
 import entralinked.model.user.UserManager;
@@ -119,7 +119,6 @@ public class Entralinked {
             
             if(mainView != null) {
                 SwingUtilities.invokeLater(() -> {
-                    mainView.setDashboardButtonEnabled(true);
                     mainView.setStatusLabelText("Configure your DS to use the following DNS server: %s".formatted(hostIpAddress));
                 });
             }

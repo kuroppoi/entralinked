@@ -1,0 +1,2375 @@
+{
+  "Pleasant Forest": {
+    "encounters": [
+      {
+        "species": 19,
+        "moves": [
+          231,
+          382
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 29,
+        "moves": [
+          162,
+          389
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 32,
+        "moves": [
+          68,
+          162
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 37,
+        "moves": [
+          257,
+          399
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 43,
+        "moves": [
+          202,
+          298
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 54,
+        "moves": [
+          227,
+          362
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 58,
+        "moves": [
+          34,
+          203
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 60,
+        "moves": [
+          54,
+          214
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 69,
+        "moves": [
+          235,
+          402
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 77,
+        "moves": [
+          37,
+          257
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 83,
+        "moves": [
+          348,
+          355
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 84,
+        "moves": [
+          175,
+          355
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 102,
+        "moves": [
+          202,
+          235
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 108,
+        "moves": [
+          214,
+          431
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 114,
+        "moves": [
+          73,
+          402
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 115,
+        "moves": [
+          68,
+          409
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 123,
+        "moves": [
+          226,
+          366
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 128,
+        "moves": [
+          231,
+          431
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 161,
+        "moves": [
+          203,
+          343
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 174,
+        "moves": [
+          270,
+          313
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 177,
+        "moves": [
+          202,
+          297
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 179,
+        "moves": [
+          115,
+          351
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 183,
+        "moves": [
+          8,
+          453
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 185,
+        "moves": [
+          205,
+          272
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 187,
+        "moves": [
+          270,
+          331
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 191,
+        "moves": [
+          230,
+          414
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 203,
+        "moves": [
+          243,
+          285
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 234,
+        "moves": [
+          50,
+          285
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 239,
+        "moves": [
+          238,
+          393
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 241,
+        "moves": [
+          174,
+          231
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 261,
+        "moves": [
+          305,
+          399
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 263,
+        "moves": [
+          271,
+          387
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 270,
+        "moves": [
+          73,
+          352
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 276,
+        "moves": [
+          119,
+          366
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 283,
+        "moves": [
+          56,
+          202
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 300,
+        "moves": [
+          321,
+          445
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 309,
+        "moves": [
+          324,
+          423
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 351,
+        "moves": [
+          352,
+          466
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 399,
+        "moves": [
+          290,
+          401
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 403,
+        "moves": [
+          393,
+          400
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 417,
+        "moves": [
+          343,
+          351
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 427,
+        "moves": [
+          252,
+          409
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 431,
+        "moves": [
+          290,
+          372
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 535,
+        "moves": [
+          352,
+          414
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 545,
+        "moves": [
+          276,
+          390
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 546,
+        "moves": [
+          227,
+          388
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 548,
+        "moves": [
+          204,
+          230
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 588,
+        "moves": [
+          224,
+          450
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 616,
+        "moves": [
+          226,
+          227
+        ],
+        "versionMask": 1023
+      }
+    ],
+    "items": [
+      3,
+      4,
+      6,
+      8,
+      14,
+      26,
+      33,
+      38,
+      86,
+      87,
+      149,
+      151,
+      155,
+      158,
+      159,
+      243,
+      244,
+      259,
+      265,
+      279,
+      575
+    ]
+  },
+  "Windswept Sky": {
+    "encounters": [
+      {
+        "species": 12,
+        "moves": [
+          314,
+          355
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 16,
+        "moves": [
+          211,
+          290
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 21,
+        "moves": [
+          185,
+          211
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 41,
+        "moves": [
+          95,
+          162
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 142,
+        "moves": [
+          372,
+          446
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 163,
+        "moves": [
+          101,
+          278
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 165,
+        "moves": [
+          9,
+          450
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 187,
+        "moves": [
+          227,
+          340
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 193,
+        "moves": [
+          202,
+          364
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 198,
+        "moves": [
+          109,
+          355
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 207,
+        "moves": [
+          364,
+          366
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 225,
+        "moves": [
+          264,
+          420
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 227,
+        "moves": [
+          65,
+          355
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 276,
+        "moves": [
+          203,
+          413
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 278,
+        "moves": [
+          239,
+          351
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 333,
+        "moves": [
+          297,
+          355
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 357,
+        "moves": [
+          73,
+          318
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 397,
+        "moves": [
+          297,
+          366
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 425,
+        "moves": [
+          95,
+          285
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 441,
+        "moves": [
+          272,
+          417
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 519,
+        "moves": [
+          95,
+          234
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 561,
+        "moves": [
+          257,
+          500
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 580,
+        "moves": [
+          362,
+          382
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 587,
+        "moves": [
+          204,
+          403
+        ],
+        "versionMask": 1023
+      }
+    ],
+    "items": [
+      2,
+      15,
+      25,
+      90,
+      91,
+      153,
+      156,
+      162,
+      163,
+      169,
+      171,
+      172,
+      173,
+      174,
+      222,
+      265,
+      277,
+      575
+    ]
+  },
+  "Sparkling Sea": {
+    "encounters": [
+      {
+        "species": 72,
+        "moves": [
+          202,
+          367
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 79,
+        "moves": [
+          335,
+          362
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 86,
+        "moves": [
+          214,
+          333
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 90,
+        "moves": [
+          112,
+          196
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 98,
+        "moves": [
+          133,
+          290
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 116,
+        "moves": [
+          190,
+          362
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 118,
+        "moves": [
+          60,
+          352
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 119,
+        "moves": [
+          203,
+          214
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 120,
+        "moves": [
+          196,
+          278
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 129,
+        "moves": [
+          175,
+          340
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 131,
+        "moves": [
+          32,
+          196
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 138,
+        "moves": [
+          196,
+          330
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 140,
+        "moves": [
+          175,
+          446
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 147,
+        "moves": [
+          225,
+          352
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 170,
+        "moves": [
+          133,
+          351
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 194,
+        "moves": [
+          34,
+          401
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 211,
+        "moves": [
+          290,
+          453
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 222,
+        "moves": [
+          109,
+          446
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 223,
+        "moves": [
+          350,
+          362
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 226,
+        "moves": [
+          243,
+          314
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 318,
+        "moves": [
+          37,
+          399
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 320,
+        "moves": [
+          214,
+          340
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 339,
+        "moves": [
+          209,
+          214
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 341,
+        "moves": [
+          232,
+          283
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 345,
+        "moves": [
+          202,
+          243
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 347,
+        "moves": [
+          440,
+          446
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 349,
+        "moves": [
+          243,
+          445
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 366,
+        "moves": [
+          392,
+          445
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 369,
+        "moves": [
+          214,
+          414
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 370,
+        "moves": [
+          196,
+          300
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 418,
+        "moves": [
+          150,
+          352
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 422,
+        "moves": [
+          281,
+          290
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 456,
+        "moves": [
+          186,
+          352
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 550,
+        "moves": [
+          97,
+          428
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 564,
+        "moves": [
+          175,
+          334
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 594,
+        "moves": [
+          220,
+          243
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 618,
+        "moves": [
+          174,
+          281
+        ],
+        "versionMask": 1023
+      }
+    ],
+    "items": [
+      7,
+      26,
+      27,
+      28,
+      88,
+      89,
+      93,
+      150,
+      152,
+      160,
+      161,
+      238,
+      245,
+      296,
+      575
+    ]
+  },
+  "Spooky Manor": {
+    "encounters": [
+      {
+        "species": 52,
+        "moves": [
+          95,
+          290
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 63,
+        "moves": [
+          285,
+          356
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 92,
+        "moves": [
+          50,
+          482
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 96,
+        "moves": [
+          409,
+          427
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 122,
+        "moves": [
+          285,
+          298
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 167,
+        "moves": [
+          450,
+          527
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 200,
+        "moves": [
+          194,
+          517
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 202,
+        "moves": [
+          204,
+          227
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 209,
+        "moves": [
+          38,
+          370
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 228,
+        "moves": [
+          364,
+          399
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 235,
+        "moves": [
+          214,
+          445
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 238,
+        "moves": [
+          285,
+          445
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 280,
+        "moves": [
+          194,
+          270
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 302,
+        "moves": [
+          180,
+          389
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 303,
+        "moves": [
+          8,
+          424
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 307,
+        "moves": [
+          203,
+          409
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 313,
+        "moves": [
+          271,
+          366
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 314,
+        "moves": [
+          313,
+          366
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 325,
+        "moves": [
+          278,
+          285
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 353,
+        "moves": [
+          194,
+          220
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 355,
+        "moves": [
+          220,
+          271
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 358,
+        "moves": [
+          95,
+          304
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 434,
+        "moves": [
+          389,
+          492
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 436,
+        "moves": [
+          285,
+          356
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 442,
+        "moves": [
+          196,
+          220
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 479,
+        "moves": [
+          324,
+          351
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 578,
+        "moves": [
+          271,
+          286
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 596,
+        "moves": [
+          50,
+          228
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 605,
+        "moves": [
+          112,
+          417
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 622,
+        "moves": [
+          7,
+          9
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 624,
+        "moves": [
+          389,
+          427
+        ],
+        "versionMask": 1023
+      }
+    ],
+    "items": [
+      38,
+      39,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      52,
+      54,
+      157,
+      164,
+      165,
+      166,
+      224,
+      247,
+      248,
+      325,
+      542,
+      575
+    ]
+  },
+  "Rugged Mountain": {
+    "encounters": [
+      {
+        "species": 56,
+        "moves": [
+          9,
+          179
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 66,
+        "moves": [
+          270,
+          418
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 81,
+        "moves": [
+          278,
+          356
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 109,
+        "moves": [
+          399,
+          482
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 111,
+        "moves": [
+          38,
+          68
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 216,
+        "moves": [
+          242,
+          264
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 218,
+        "moves": [
+          257,
+          517
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 231,
+        "moves": [
+          402,
+          484
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 236,
+        "moves": [
+          183,
+          364
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 240,
+        "moves": [
+          9,
+          257
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 246,
+        "moves": [
+          399,
+          446
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 296,
+        "moves": [
+          8,
+          270
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 322,
+        "moves": [
+          34,
+          257
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 324,
+        "moves": [
+          90,
+          446
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 327,
+        "moves": [
+          252,
+          276
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 328,
+        "moves": [
+          202,
+          324
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 331,
+        "moves": [
+          9,
+          298
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 359,
+        "moves": [
+          224,
+          276
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 371,
+        "moves": [
+          200,
+          349
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 374,
+        "moves": [
+          428,
+          442
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 412,
+        "moves": [
+          173,
+          450
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 447,
+        "moves": [
+          264,
+          418
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 449,
+        "moves": [
+          254,
+          276
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 451,
+        "moves": [
+          97,
+          401
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 453,
+        "moves": [
+          409,
+          441
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 553,
+        "moves": [
+          68,
+          212
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 556,
+        "moves": [
+          73,
+          191
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 558,
+        "moves": [
+          68,
+          400
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 631,
+        "moves": [
+          202,
+          257
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 632,
+        "moves": [
+          203,
+          422
+        ],
+        "versionMask": 1023
+      }
+    ],
+    "items": [
+      9,
+      10,
+      50,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      107,
+      108,
+      109,
+      110,
+      167,
+      168,
+      175,
+      176,
+      229,
+      233,
+      237,
+      241,
+      249,
+      250,
+      288,
+      539,
+      575,
+      583
+    ]
+  },
+  "Icy Cave": {
+    "encounters": [
+      {
+        "species": 27,
+        "moves": [
+          68,
+          162
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 50,
+        "moves": [
+          251,
+          446
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 74,
+        "moves": [
+          431,
+          446
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 95,
+        "moves": [
+          431,
+          446
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 100,
+        "moves": [
+          324,
+          363
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 104,
+        "moves": [
+          67,
+          195
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 173,
+        "moves": [
+          214,
+          312
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 206,
+        "moves": [
+          277,
+          446
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 213,
+        "moves": [
+          270,
+          504
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 215,
+        "moves": [
+          8,
+          67
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 220,
+        "moves": [
+          246,
+          333
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 229,
+        "moves": [
+          246,
+          446
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 293,
+        "moves": [
+          283,
+          428
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 304,
+        "moves": [
+          283,
+          457
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 337,
+        "moves": [
+          236,
+          414
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 338,
+        "moves": [
+          234,
+          428
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 343,
+        "moves": [
+          356,
+          428
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 361,
+        "moves": [
+          311,
+          352
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 363,
+        "moves": [
+          90,
+          401
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 408,
+        "moves": [
+          7,
+          442
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 410,
+        "moves": [
+          68,
+          90
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 443,
+        "moves": [
+          200,
+          203
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 459,
+        "moves": [
+          202,
+          419
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 525,
+        "moves": [
+          174,
+          484
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 529,
+        "moves": [
+          319,
+          431
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 583,
+        "moves": [
+          286,
+          420
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 600,
+        "moves": [
+          356,
+          393
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 610,
+        "moves": [
+          68,
+          400
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 621,
+        "moves": [
+          389,
+          424
+        ],
+        "versionMask": 1023
+      }
+    ],
+    "items": [
+      13,
+      28,
+      50,
+      72,
+      73,
+      74,
+      75,
+      93,
+      106,
+      154,
+      181,
+      182,
+      183,
+      246,
+      269,
+      278,
+      282,
+      283,
+      284,
+      285,
+      548,
+      549,
+      550,
+      551,
+      552,
+      553,
+      554,
+      555,
+      556,
+      557,
+      558,
+      559,
+      560,
+      561,
+      562,
+      563,
+      564,
+      575
+    ]
+  },
+  "Dream Park": {
+    "encounters": [
+      {
+        "species": 15,
+        "moves": [
+          210,
+          314
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 23,
+        "moves": [
+          251,
+          399
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 46,
+        "moves": [
+          235,
+          440
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 48,
+        "moves": [
+          226,
+          285
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 88,
+        "moves": [
+          114,
+          425
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 113,
+        "moves": [
+          68,
+          270
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 127,
+        "moves": [
+          370,
+          382
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 133,
+        "moves": [
+          129,
+          204
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 143,
+        "moves": [
+          7,
+          278
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 175,
+        "moves": [
+          253,
+          381
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 190,
+        "moves": [
+          7,
+          252
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 204,
+        "moves": [
+          356,
+          390
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 214,
+        "moves": [
+          175,
+          264
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 265,
+        "moves": [
+          173,
+          450
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 273,
+        "moves": [
+          331,
+          492
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 285,
+        "moves": [
+          264,
+          331
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 287,
+        "moves": [
+          389,
+          400
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 290,
+        "moves": [
+          203,
+          400
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 311,
+        "moves": [
+          324,
+          435
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 312,
+        "moves": [
+          324,
+          435
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 315,
+        "moves": [
+          79,
+          129
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 316,
+        "moves": [
+          151,
+          202
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 335,
+        "moves": [
+          67,
+          458
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 336,
+        "moves": [
+          34,
+          401
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 352,
+        "moves": [
+          285,
+          513
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 401,
+        "moves": [
+          253,
+          283
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 415,
+        "moves": [
+          314,
+          366
+        ],
+        "versionMask": 3327
+      },
+      {
+        "species": 420,
+        "moves": [
+          331,
+          505
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 455,
+        "moves": [
+          380,
+          476
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 531,
+        "moves": [
+          227,
+          281
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 533,
+        "moves": [
+          183,
+          409
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 538,
+        "moves": [
+          8,
+          276
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 539,
+        "moves": [
+          9,
+          530
+        ],
+        "versionMask": 1023
+      },
+      {
+        "species": 559,
+        "moves": [
+          252,
+          409
+        ],
+        "versionMask": 1023
+      }
+    ],
+    "items": [
+      50,
+      76,
+      77,
+      79,
+      94,
+      177,
+      178,
+      179,
+      180,
+      231,
+      234,
+      256,
+      295,
+      541,
+      565,
+      566,
+      567,
+      568,
+      569,
+      570,
+      571,
+      575
+    ]
+  },
+  "Global Link Promotions": {
+    "encounters": [
+      {
+        "species": 1,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3201
+      },
+      {
+        "species": 4,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3201
+      },
+      {
+        "species": 7,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3201
+      },
+      {
+        "species": 25,
+        "moves": [
+          29
+        ],
+        "gender": "MALE",
+        "versionMask": 863
+      },
+      {
+        "species": 134,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3327
+      },
+      {
+        "species": 135,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3327
+      },
+      {
+        "species": 136,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3327
+      },
+      {
+        "species": 137,
+        "moves": [],
+        "versionMask": 3327
+      },
+      {
+        "species": 149,
+        "moves": [
+          9
+        ],
+        "gender": "MALE",
+        "versionMask": 3969
+      },
+      {
+        "species": 149,
+        "moves": [
+          245
+        ],
+        "gender": "MALE",
+        "versionMask": 3934
+      },
+      {
+        "species": 189,
+        "moves": [
+          206
+        ],
+        "gender": "MALE",
+        "versionMask": 3200
+      },
+      {
+        "species": 196,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3327
+      },
+      {
+        "species": 197,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3327
+      },
+      {
+        "species": 212,
+        "moves": [
+          211
+        ],
+        "gender": "MALE",
+        "versionMask": 3934
+      },
+      {
+        "species": 242,
+        "moves": [],
+        "versionMask": 3201
+      },
+      {
+        "species": 248,
+        "moves": [
+          69
+        ],
+        "gender": "MALE",
+        "versionMask": 3934
+      },
+      {
+        "species": 252,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3073
+      },
+      {
+        "species": 255,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3073
+      },
+      {
+        "species": 258,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3073
+      },
+      {
+        "species": 334,
+        "moves": [
+          206
+        ],
+        "gender": "MALE",
+        "versionMask": 3073
+      },
+      {
+        "species": 354,
+        "moves": [
+          538
+        ],
+        "gender": "FEMALE",
+        "versionMask": 3327
+      },
+      {
+        "species": 376,
+        "moves": [
+          38
+        ],
+        "versionMask": 3934
+      },
+      {
+        "species": 384,
+        "moves": [],
+        "versionMask": 3200
+      },
+      {
+        "species": 387,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3201
+      },
+      {
+        "species": 387,
+        "moves": [
+          254
+        ],
+        "gender": "MALE",
+        "versionMask": 862
+      },
+      {
+        "species": 390,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3201
+      },
+      {
+        "species": 390,
+        "moves": [
+          252
+        ],
+        "gender": "MALE",
+        "versionMask": 862
+      },
+      {
+        "species": 393,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3201
+      },
+      {
+        "species": 393,
+        "moves": [
+          297
+        ],
+        "gender": "MALE",
+        "versionMask": 862
+      },
+      {
+        "species": 445,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3934
+      },
+      {
+        "species": 448,
+        "moves": [
+          418
+        ],
+        "gender": "MALE",
+        "versionMask": 3327
+      },
+      {
+        "species": 453,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3201
+      },
+      {
+        "species": 453,
+        "moves": [
+          398
+        ],
+        "gender": "MALE",
+        "versionMask": 3166
+      },
+      {
+        "species": 468,
+        "moves": [
+          217
+        ],
+        "gender": "MALE",
+        "versionMask": 3327
+      },
+      {
+        "species": 470,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3327
+      },
+      {
+        "species": 471,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3327
+      },
+      {
+        "species": 473,
+        "moves": [],
+        "gender": "MALE",
+        "versionMask": 3327
+      },
+      {
+        "species": 493,
+        "moves": [],
+        "versionMask": 3167
+      },
+      {
+        "species": 511,
+        "moves": [
+          437
+        ],
+        "gender": "MALE",
+        "versionMask": 769
+      },
+      {
+        "species": 513,
+        "moves": [
+          257
+        ],
+        "gender": "MALE",
+        "versionMask": 769
+      },
+      {
+        "species": 515,
+        "moves": [
+          56
+        ],
+        "gender": "MALE",
+        "versionMask": 769
+      },
+      {
+        "species": 575,
+        "moves": [
+          243
+        ],
+        "gender": "MALE",
+        "versionMask": 1023
+      },
+      {
+        "species": 575,
+        "moves": [
+          286
+        ],
+        "gender": "MALE",
+        "versionMask": 769
+      }
+    ],
+    "items": []
+  }
+}

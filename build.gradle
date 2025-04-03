@@ -30,6 +30,8 @@ dependencies {
     implementation 'com.formdev:flatlaf:3.1.1'
     implementation 'com.formdev:flatlaf-extras:3.1.1'
     implementation 'com.formdev:flatlaf-intellij-themes:3.1.1'
+    implementation 'com.miglayout:miglayout-swing:4.2' // Finally, a good fucking layout manager.
+    implementation 'org.swinglabs.swingx:swingx-autocomplete:1.6.5-1'
 }
 
 sourceSets {

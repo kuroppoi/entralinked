@@ -9,6 +9,7 @@ import entralinked.model.avenue.AvenueVisitor;
 import entralinked.model.player.DreamEncounter;
 import entralinked.model.player.DreamItem;
 
+@Deprecated
 public record DashboardProfileUpdateRequest(
         @JsonProperty(required = true) @JsonDeserialize(contentAs = DreamEncounter.class) List<DreamEncounter> encounters,
         @JsonProperty(required = true) @JsonDeserialize(contentAs = DreamItem.class)      List<DreamItem> items,

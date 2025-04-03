@@ -8,6 +8,7 @@ import entralinked.model.player.DreamEncounter;
 import entralinked.model.player.DreamItem;
 import entralinked.model.player.Player;
 
+@Deprecated
 public record DashboardProfileMessage(
         String gameVersion, 
         String dreamerSprite,
