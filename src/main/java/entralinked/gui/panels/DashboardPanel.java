@@ -184,6 +184,7 @@ public class DashboardPanel extends JPanel {
         }
         
         this.player = player;
+        tabbedPane.setSelectedIndex(0);
         layout.show(this, MAIN_CARD);
     }
     
