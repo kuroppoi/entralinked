@@ -1,5 +1,6 @@
 package entralinked.gui.panels;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -62,7 +63,6 @@ public class MiscPanel extends JPanel {
     private static final FileFilter CGEAR_FILE_FILTER = new FileNameExtensionFilter("C-Gear Skin Files (*.bin, *.cgb, *.psk)", "bin", "cgb", "psk");
     private static final FileFilter ZUKAN_FILE_FILTER = new FileNameExtensionFilter("Pokédex Skin Files (*.bin, *.pds)", "bin", "pds");
     private static final byte[] NARC_HEADER = { 0x4E, 0x41, 0x52, 0x43, (byte)0xFE, (byte)0xFF, 0x00, 0x01 };
-    private static final BufferedImage EMPTY_IMAGE = new BufferedImage(TiledImageUtility.SCREEN_WIDTH, TiledImageUtility.SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
     private static final Map<String, Image> skinCache = new HashMap<>();
     private final Entralinked entralinked;
     private final JComboBox<DlcOption> cgearComboBox;
@@ -81,15 +81,22 @@ public class MiscPanel extends JPanel {
         setLayout(new MigLayout("align 50% 50%"));
         
         // Create preview labels
-        JLabel cgearPreviewLabel = new JLabel("", JLabel.CENTER);
-        cgearPreviewLabel.setBorder(BorderFactory.createTitledBorder("C-Gear Skin Preview"));
-        JLabel dexPreviewLabel = new JLabel("", JLabel.CENTER);
-        dexPreviewLabel.setBorder(BorderFactory.createTitledBorder("Pokédex Skin Preview"));
+        JLabel cgearPreviewLabel = new JLabel("No preview available.", JLabel.CENTER);
+        cgearPreviewLabel.setPreferredSize(new Dimension(TiledImageUtility.SCREEN_WIDTH, TiledImageUtility.SCREEN_HEIGHT));
+        JLabel dexPreviewLabel = new JLabel("No preview available.", JLabel.CENTER);
+        dexPreviewLabel.setPreferredSize(new Dimension(TiledImageUtility.SCREEN_WIDTH, TiledImageUtility.SCREEN_HEIGHT));
         
-        // Create preview image panel
+        // Create preview image panels
+        // Labels are added to a subpanel first otherwise the preferred size will include the border which causes issues
+        JPanel cgearPreviewPanel = new JPanel(new MigLayout("insets 0"));
+        cgearPreviewPanel.setBorder(BorderFactory.createTitledBorder("C-Gear Skin Preview"));
+        cgearPreviewPanel.add(cgearPreviewLabel);
+        JPanel dexPreviewPanel = new JPanel(new MigLayout("insets 0"));
+        dexPreviewPanel.setBorder(BorderFactory.createTitledBorder("Pokédex Skin Preview"));
+        dexPreviewPanel.add(dexPreviewLabel);
         JPanel previewPanel = new JPanel();
-        previewPanel.add(cgearPreviewLabel);
-        previewPanel.add(dexPreviewLabel);
+        previewPanel.add(cgearPreviewPanel);
+        previewPanel.add(dexPreviewPanel);
         add(previewPanel, "spanx, align 50%, wrap");
         
         // Create combo boxes
@@ -97,15 +104,11 @@ public class MiscPanel extends JPanel {
         cgearComboBox = new JComboBox<>();
         cgearComboBox.setMinimumSize(cgearComboBox.getPreferredSize());
         cgearComboBox.setRenderer(renderer);
-        cgearComboBox.addActionListener(event -> {
-            cgearPreviewLabel.setIcon(new ImageIcon(getSkinImage((DlcOption)cgearComboBox.getSelectedItem())));
-        });
+        cgearComboBox.addActionListener(event -> updateSkinPreview(cgearComboBox, cgearPreviewLabel));
         zukanComboBox = new JComboBox<>();
         zukanComboBox.setMinimumSize(zukanComboBox.getPreferredSize());
         zukanComboBox.setRenderer(renderer);
-        zukanComboBox.addActionListener(event -> {
-            dexPreviewLabel.setIcon(new ImageIcon(getSkinImage((DlcOption)zukanComboBox.getSelectedItem())));
-        });
+        zukanComboBox.addActionListener(event -> updateSkinPreview(zukanComboBox, dexPreviewLabel));
         musicalComboBox = new JComboBox<>();
         musicalComboBox.setMinimumSize(musicalComboBox.getPreferredSize());
         musicalComboBox.setRenderer(renderer);
@@ -248,8 +251,14 @@ public class MiscPanel extends JPanel {
         model.setSelectedItem(newValue);
     }
     
-    private static Image getSkinImage(DlcOption option) {
-        return option == null ? EMPTY_IMAGE : skinCache.computeIfAbsent(option.path(), path -> {
+    private void updateSkinPreview(JComboBox<DlcOption> comboBox, JLabel previewLabel) {
+        Image preview = getSkinImage((DlcOption)comboBox.getSelectedItem());
+        previewLabel.setText(preview == null ? "No preview available." : "");
+        previewLabel.setIcon(preview == null ? null : new ImageIcon(preview));
+    }
+    
+    private Image getSkinImage(DlcOption option) {
+        return option == null ? null : skinCache.computeIfAbsent(option.path(), path -> {
             try(FileInputStream inputStream = new FileInputStream(path)) {
                 return switch(option.type()) {
                 case "CGEAR" -> TiledImageUtility.readCGearSkin(inputStream, true);
@@ -258,7 +267,8 @@ public class MiscPanel extends JPanel {
                 default -> throw new IllegalArgumentException("Invalid type: " + option.type());
                 };
             } catch(Exception e) {
-                return EMPTY_IMAGE; // TODO show feedback
+                SwingUtility.showExceptionInfo(getRootPane(), "Failed to load skin preview.", e);
+                return null;
             }
         });
     }
@@ -302,7 +312,7 @@ public class MiscPanel extends JPanel {
             
             return true;
         } catch(Exception e) {
-            e.printStackTrace(); // TODO show feedback
+            SwingUtility.showExceptionInfo(getRootPane(), "Failed to import skin.", e);
         }
         
         return false;
@@ -332,7 +342,7 @@ public class MiscPanel extends JPanel {
         } catch(IllegalArgumentException e) {
             JOptionPane.showMessageDialog(getRootPane(), e.getMessage(), "Attention", JOptionPane.WARNING_MESSAGE);
         } catch(Exception e) {
-            e.printStackTrace(); // TODO show feedback
+            SwingUtility.showExceptionInfo(getRootPane(), "Failed to import skin image.", e);
         }
         
         return false;
@@ -372,7 +382,7 @@ public class MiscPanel extends JPanel {
             
             return true;
         } catch(Exception e) {
-            e.printStackTrace(); // TODO show feedback
+            SwingUtility.showExceptionInfo(getRootPane(), "Failed to import NARC file.", e);
         }
         
         return false;

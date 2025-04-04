@@ -26,7 +26,7 @@ public enum AvenueVisitorType {
     SCIENTIST_FEMALE("Scientist♀", 4, true),
     
     // 5
-    HIKER("Hiker♂", 5),
+    HIKER("Hiker", 5),
     PARASOL_LADY("Parasol Lady", 5, true),
     
     // 6
