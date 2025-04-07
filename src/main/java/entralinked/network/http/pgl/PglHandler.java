@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import entralinked.Configuration;
 import entralinked.Entralinked;
+import entralinked.GameVersion;
 import entralinked.model.avenue.AvenueVisitor;
 import entralinked.model.dlc.Dlc;
 import entralinked.model.dlc.DlcList;
@@ -202,63 +203,24 @@ public class PglHandler implements HttpHandler {
             return;
         }
         
-        logger.info("Player {} is downloading save data as user {}", player.getGameSyncId(), user.getRedactedId());
+        logger.info("Player {} is downloading save data", player.getGameSyncId());
         
         // Write status code
         writeStatusCode(outputStream, 0);
         
-        // Allow it to wake up anyway, maybe the poor sap is stuck..
-        // Just don't send any other data.
+        // Allow waking up but don't send any data
         if(player.getStatus() == PlayerStatus.AWAKE) {
             return;
         }
         
+        GameVersion version = player.getGameVersion();
         List<DreamEncounter> encounters = player.getEncounters();
         List<DreamItem> items = player.getItems();
         
-        // Prepare DLC information
-        String cgearType = player.getGameVersion().isVersion2() ? "CGEAR2" : "CGEAR";
-        String cgearSkin = player.getCGearSkin();
-        String dexSkin = player.getDexSkin();
-        String musical = player.getMusical();
-        int cgearSkinIndex = 0;
-        int dexSkinIndex = 0;
-        int musicalIndex = 0;
-        
-        // Create or remove custom C-Gear skin DLC override
-        if("custom".equals(cgearSkin)) {
-            cgearSkinIndex = 1;
-            user.setDlcOverride(cgearType, new Dlc(player.getCGearSkinFile().getAbsolutePath(),
-                    "custom", "IRAO", cgearType, cgearSkinIndex, 9730, 0, true));
-        } else {
-            cgearSkinIndex = dlcList.getDlcIndex("IRAO", cgearType, cgearSkin);
-            user.removeDlcOverride(cgearType);
-        }
-        
-        // Create or remove custom Pokédex skin DLC override
-        if("custom".equals(dexSkin)) {
-            dexSkinIndex = 1;
-            user.setDlcOverride("ZUKAN", new Dlc(player.getDexSkinFile().getAbsolutePath(),
-                    "custom", "IRAO", "ZUKAN", dexSkinIndex, 25090, 0, true));
-        } else {
-            dexSkinIndex = dlcList.getDlcIndex("IRAO", "ZUKAN", dexSkin);
-            user.removeDlcOverride("ZUKAN");
-        }
-        
-        // Create or remove custom musical DLC override
-        if("custom".equals(musical)) {
-            musicalIndex = 1;
-            File file = player.getMusicalFile();
-            user.setDlcOverride("MUSICAL", new Dlc(file.getAbsolutePath(),
-                    "custom", "IRAO", "MUSICAL", musicalIndex, (int)file.length(), 0, true));
-        } else {
-            musicalIndex = dlcList.getDlcIndex("IRAO", "MUSICAL", musical);
-            user.removeDlcOverride("MUSICAL");
-        }
-        
-         // When waking up a Pokémon, these 4 bytes are written to 0x1D304 in the save file.
-         // If the bytes in the game's save file match the new bytes, they will be set to 0x00000000
-         // and no content will be downloaded.
+        // When waking up a Pokémon, these 4 bytes are written to 0x1D304 in the save file.
+        // If the bytes in the game's save file match the new bytes, they will be set to 0x00000000
+        // and no content will be downloaded.
+        // Looking at some old save files, this was very likely just a total tuck-in/wake-up counter.
         outputStream.writeInt((int)(Math.random() * Integer.MAX_VALUE));
         
         // Write encounter data (max 10)
@@ -277,9 +239,9 @@ public class PglHandler implements HttpHandler {
         // Write misc stuff and DLC information
         outputStream.writeShort(player.getLevelsGained());
         outputStream.write(0); // Unknown
-        outputStream.write(musicalIndex);
-        outputStream.write(cgearSkinIndex);
-        outputStream.write(dexSkinIndex);
+        outputStream.write(getDlcIndex(user, player.getMusical(), "MUSICAL", player.getMusicalFile()));
+        outputStream.write(getDlcIndex(user, player.getCGearSkin(), version.isVersion2() ? "CGEAR2" : "CGEAR", player.getCGearSkinFile()));
+        outputStream.write(getDlcIndex(user, player.getDexSkin(), "ZUKAN", player.getDexSkinFile()));
         outputStream.write(decorList.isEmpty() ? 0 : 1); // Seems to be a flag for indicating whether or not decor data is present
         outputStream.write(0); // Must be zero?
         
@@ -319,14 +281,14 @@ public class PglHandler implements HttpHandler {
         
         // Join Avenue visitor data -- copied in parts to 0x2422C in the save file.
         // Black Version 2 and White Version 2 only.
-        if(player.getGameVersion().isVersion2()) {
+        if(version.isVersion2()) {
             List<AvenueVisitor> avenueVisitors = player.getAvenueVisitors();
             
             for(AvenueVisitor visitor : avenueVisitors) {
                 // Write visitor name + padding. Names cannot be duplicate.
                 byte[] nameBytes = visitor.name().getBytes(StandardCharsets.UTF_16LE);
                 outputStream.write(nameBytes, 0, Math.min(14, nameBytes.length));
-                outputStream.writeBytes(-1, 14 - nameBytes.length);
+                outputStream.writeBytes(-1, 16 - nameBytes.length);
                 
                 // Full visitor type consists of a trainer class and what I call a 'personality' index
                 // that, along with the trainer class, determines which phrases the visitor uses.
@@ -335,7 +297,6 @@ public class PglHandler implements HttpHandler {
                 // For example, if the visitor type is '0', then shop type '0' would be a raffle.
                 // However, if the visitor type is '2', then shop type '0' results in a dojo instead.
                 int visitorType = visitor.type().getClientId() + visitor.personality() * 8;
-                outputStream.writeShort(-1); // Does nothing, seems to be read as part of the name.
                 outputStream.write(visitorType);
                 outputStream.write(visitor.shopType().ordinal() + (7 - visitorType * 2 % 7));
                 outputStream.writeShort(0); // Does nothing
@@ -574,5 +535,18 @@ public class PglHandler implements HttpHandler {
     private void writeStatusCode(LEOutputStream outputStream, int status) throws IOException {
         outputStream.writeInt(status);
         outputStream.writeBytes(0, 124);
+    }
+    
+    /**
+     * Gets the index of the player's chosen DLC for the specified type and prepares DLC overriding if necessary.
+     */
+    private int getDlcIndex(User user, String name, String type, File customFile) {
+        if("custom".equals(name)) {
+            user.setDlcOverride(type, new Dlc(customFile.getAbsolutePath(), name, "IRAO", type, 1, (int)customFile.length(), 0, true));
+            return 1;
+        } else {
+            user.removeDlcOverride(type);
+            return dlcList.getDlcIndex("IRAO", type, name);
+        }
     }
 }
