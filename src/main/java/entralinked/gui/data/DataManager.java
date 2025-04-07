@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -162,9 +163,17 @@ public class DataManager {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
     
-    public static List<Integer> getMoveOptions(GameVersion gameVersion, PkmnSpecies species, PkmnGender gender) {
+    public static List<PkmnForm> getFormOptions(GameVersion gameVersion, PkmnSpecies species, PkmnGender gender) {
         return getEncounters(gameVersion).stream()
-                .filter(x -> x.species() == species.id() && (!x.isGenderLocked() || species.gender() == gender))
+                .filter(x -> x.species() == species.id() && (!x.isGenderLocked() || x.gender() == gender))
+                .flatMap(x -> species.hasForms() ? Stream.of(species.forms()).filter(form -> x.hasForm(form.id())) : Stream.empty())
+                .distinct()
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+    
+    public static List<Integer> getMoveOptions(GameVersion gameVersion, PkmnSpecies species, PkmnGender gender, int form) {
+        return getEncounters(gameVersion).stream()
+                .filter(x -> x.species() == species.id() && (!x.isGenderLocked() || x.gender() == gender) && x.hasForm(form))
                 .map(Encounter::moves)
                 .flatMap(List::stream)
                 .distinct()

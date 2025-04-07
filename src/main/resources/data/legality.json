@@ -1159,6 +1159,7 @@
           324,
           351
         ],
+        "formMask": 1,
         "versionMask": 3327
       },
       {
@@ -1393,6 +1394,7 @@
           173,
           450
         ],
+        "formMask": 2,
         "versionMask": 4095
       },
       {
@@ -2074,6 +2076,56 @@
       575
     ]
   },
+  "Pokémon Café Forest": {
+    "encounters": [
+      {
+        "species": 61,
+        "moves": [
+          114,
+          352
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 133,
+        "moves": [
+          129,
+          204
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 235,
+        "moves": [
+          214,
+          445
+        ],
+        "versionMask": 4095
+      },
+      {
+        "species": 412,
+        "moves": [
+          173,
+          450
+        ],
+        "formMask": 1,
+        "versionMask": 4095
+      }
+    ],
+    "items": [
+      30,
+      31,
+      32,
+      33,
+      50,
+      82,
+      83,
+      84,
+      134,
+      157,
+      221
+    ]
+  },
   "Global Link Promotions": {
     "encounters": [
       {
@@ -2327,6 +2379,7 @@
       {
         "species": 493,
         "moves": [],
+        "formMask": 1,
         "versionMask": 3167
       },
       {

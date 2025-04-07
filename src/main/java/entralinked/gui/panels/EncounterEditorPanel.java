@@ -62,14 +62,28 @@ public class EncounterEditorPanel extends TableEditorPanel {
             table.enableOption(row, MOVE_COLUMN);
             table.enableOption(row, FORM_COLUMN);
             table.enableOption(row, ANIMATION_COLUMN);
-            PkmnSpecies species = (PkmnSpecies)newValue;
-            updateGenderOptions(row, species);
-            updateFormOptions(row, species);
-            updateMoveOptions(row, species);
+            updateGenderOptions(row);
+            updateFormOptions(row);
+            updateMoveOptions(row);
             optionLock = false;
         } else if(column == GENDER_COLUMN) {
             if(!isLegalMode()) {
-                return; // Gender only affects move options if legal mode is enabled
+                return; // Gender only affects form options if legal mode is enabled
+            }
+            
+            if(newValue == null) {
+                table.disableOption(row, FORM_COLUMN);
+                return;
+            }
+            
+            updateFormOptions(row);
+            
+            if(oldValue == null) {
+                table.enableOption(row, FORM_COLUMN);
+            }
+        } else if(column == FORM_COLUMN) {
+            if(!isLegalMode()) {
+                return; // Form only affects move options if legal mode is enabled
             }
             
             if(newValue == null) {
@@ -77,7 +91,7 @@ public class EncounterEditorPanel extends TableEditorPanel {
                 return;
             }
             
-            updateMoveOptions(row, getSpecies(row));
+            updateMoveOptions(row);
             
             if(oldValue == null) {
                 table.enableOption(row, MOVE_COLUMN);
@@ -93,9 +107,9 @@ public class EncounterEditorPanel extends TableEditorPanel {
             
             if(species != null) {
                 optionLock = true;
-                updateGenderOptions(i, species);
-                updateFormOptions(i, species);
-                updateMoveOptions(i, species);
+                updateGenderOptions(i);
+                updateFormOptions(i);
+                updateMoveOptions(i);
                 optionLock = false;
             }
         }
@@ -137,18 +151,21 @@ public class EncounterEditorPanel extends TableEditorPanel {
                 (a, b) -> a.name().compareTo(b.name()), true);
     }
     
-    private void updateMoveOptions(int row, PkmnSpecies species) {
-        setOptions(row, MOVE_COLUMN,
-                isLegalMode() ? DataManager.getMoveOptions(gameVersion, species, getGender(row)) : DataManager.getMoveIds(), 
-                (a, b) -> DataManager.getMoveName(a).compareTo(DataManager.getMoveName(b)), true);
-    }
-    
-    private void updateGenderOptions(int row, PkmnSpecies species) {
+    private void updateGenderOptions(int row) {
+        PkmnSpecies species = getSpecies(row);
         setOptions(row, GENDER_COLUMN, isLegalMode() ? DataManager.getGenderOptions(gameVersion, species) : species.getGenders());
     }
     
-    private void updateFormOptions(int row, PkmnSpecies species) {
-        setOptions(row, FORM_COLUMN, species.hasForms() ? Arrays.asList(species.forms()) : Collections.emptyList());
+    private void updateFormOptions(int row) {
+        PkmnSpecies species = getSpecies(row);
+        setOptions(row, FORM_COLUMN, species.hasForms() ? (isLegalMode() ? DataManager.getFormOptions(gameVersion, species, getGender(row)) 
+                : Arrays.asList(species.forms())) : Collections.emptyList());
+    }
+    
+    private void updateMoveOptions(int row) {
+        setOptions(row, MOVE_COLUMN,
+                isLegalMode() ? DataManager.getMoveOptions(gameVersion, getSpecies(row), getGender(row), getForm(row)) : DataManager.getMoveIds(), 
+                (a, b) -> DataManager.getMoveName(a).compareTo(DataManager.getMoveName(b)), true);
     }
     
     public void loadProfile(Player player) {
