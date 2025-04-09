@@ -9,6 +9,8 @@ import javax.swing.JComponent;
 @SuppressWarnings("serial")
 public class ShadowedSprite extends JComponent {
     
+    public static final int OFFSET_X = 4;
+    public static final int OFFSET_Y = 2;
     private BufferedImage image;
     private BufferedImage shadowImage;
     private int scale;
@@ -28,9 +30,9 @@ public class ShadowedSprite extends JComponent {
         Dimension size = getSize();
         int width = image.getWidth() * scale;
         int height = image.getHeight() * scale;
-        int x = size.width / 2 - width / 2;
-        int y = size.height / 2 - height / 2;
-        graphics.drawImage(shadowImage, x + 4, y + 2, width, height, null);
+        int x = size.width / 2 - width / 2 - OFFSET_X / 2;
+        int y = size.height / 2 - height / 2 - OFFSET_Y / 2;
+        graphics.drawImage(shadowImage, x + OFFSET_X, y + OFFSET_Y, width, height, null);
         graphics.drawImage(image, x, y, width, height, null);
     }
     
@@ -43,7 +45,6 @@ public class ShadowedSprite extends JComponent {
         int height = image.getHeight();
         shadowImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         
-        // TODO shadow can be cut off if pixels touch the border
         for(int i = 0; i < image.getWidth(); i++) {
             for(int j = 0; j < image.getHeight(); j++) {
                 shadowImage.setRGB(i, j, image.getRGB(i, j) & 0x7F000000);
@@ -78,7 +79,7 @@ public class ShadowedSprite extends JComponent {
         this.image = image;
         this.scale = scale;
         imageChanged();
-        updateSize(width, height);
+        updateSize(width + OFFSET_X, height + OFFSET_Y);
         repaint();
     }
 }
