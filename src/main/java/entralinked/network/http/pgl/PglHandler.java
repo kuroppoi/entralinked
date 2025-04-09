@@ -412,7 +412,6 @@ public class PglHandler implements HttpHandler {
     private void handleUploadSaveData(PglRequest request, Context ctx) throws IOException {
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
         Player player = playerManager.getPlayer(request.gameSyncId());
-        User user = ctx.attribute("user");
         
         // Check if the player exists, has no Pokémon tucked in already and uses the same game version
         if(player == null
@@ -431,7 +430,7 @@ public class PglHandler implements HttpHandler {
             return;
         }
         
-        logger.info("Player {} is uploading save data as user {}", player.getGameSyncId(), user.getRedactedId());
+        logger.info("Player {} is uploading save data", player.getGameSyncId());
         
         // Try to store save data
         if(!playerManager.storePlayerGameSaveFile(player, ctx.bodyInputStream())) {
