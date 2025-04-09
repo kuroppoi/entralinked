@@ -113,9 +113,7 @@ public class SwingUtility {
     }
     
     public static JLabel createTitleLabel(String text) {
-        JLabel label = new JLabel(text);
-        label.putClientProperty(FlatClientProperties.STYLE, "font:bold +8");
-        return label;
+        return createStyledLabel(text, "font:bold +8");
     }
     
     public static JLabel createDescriptionLabel() {
@@ -123,8 +121,12 @@ public class SwingUtility {
     }
     
     public static JLabel createDescriptionLabel(String text) {
+        return createStyledLabel(text, "[dark]foreground:darken(@foreground,20%)");
+    }
+    
+    public static JLabel createStyledLabel(String text, String style) {
         JLabel label = new JLabel(text);
-        label.putClientProperty(FlatClientProperties.STYLE, "[dark]foreground:darken(@foreground,20%)");
+        label.putClientProperty(FlatClientProperties.STYLE, style);
         return label;
     }
     
