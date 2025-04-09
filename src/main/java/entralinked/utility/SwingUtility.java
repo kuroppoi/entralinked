@@ -108,6 +108,26 @@ public class SwingUtility {
         return def;
     }
     
+    public static JLabel createTitleLabel() {
+        return createTitleLabel("");
+    }
+    
+    public static JLabel createTitleLabel(String text) {
+        JLabel label = new JLabel(text);
+        label.putClientProperty(FlatClientProperties.STYLE, "font:bold +8");
+        return label;
+    }
+    
+    public static JLabel createDescriptionLabel() {
+        return createDescriptionLabel("");
+    }
+    
+    public static JLabel createDescriptionLabel(String text) {
+        JLabel label = new JLabel(text);
+        label.putClientProperty(FlatClientProperties.STYLE, "[dark]foreground:darken(@foreground,20%)");
+        return label;
+    }
+    
     public static JLabel createButtonLabel(String text, Runnable actionHandler) {
         JLabel label = new JLabel("<html><u>%s</u></html>".formatted(text));
         label.putClientProperty(FlatClientProperties.STYLE, "font: -1");

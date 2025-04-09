@@ -13,14 +13,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.text.AbstractDocument;
 
-import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatTabbedPane;
 import com.formdev.flatlaf.extras.components.FlatTabbedPane.TabAreaAlignment;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 
 import entralinked.Entralinked;
 import entralinked.GameVersion;
+import entralinked.gui.GsidDocumentFilter;
 import entralinked.gui.data.DataManager;
 import entralinked.model.player.Player;
 import entralinked.model.player.PlayerStatus;
@@ -41,6 +42,7 @@ public class DashboardPanel extends JPanel {
     private EncounterEditorPanel encounterPanel;
     private ItemEditorPanel itemPanel;
     private VisitorEditorPanel visitorPanel;
+    private CustomizationPanel customizePanel;
     private MiscPanel miscPanel;
     private Player player;
     private boolean initialized;
@@ -48,16 +50,10 @@ public class DashboardPanel extends JPanel {
     public DashboardPanel(Entralinked entralinked) {
         this.entralinked = entralinked;
         
-        // Create login labels
-        JLabel loginTitle = new JLabel("Log in");
-        loginTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold +8");
-        JLabel loginDescription = new JLabel("<html>Tuck in a Pokémon and enter your Game Sync ID to continue.<br/>"
-                + "Your Game Sync ID can be found in 'Game Sync Settings' in the game's main menu.</html>");
-        loginDescription.putClientProperty(FlatClientProperties.STYLE, "[dark]foreground:darken(@foreground,20%)");
-        
         // Create GSID field
         FlatTextField gsidTextField = new FlatTextField();
         gsidTextField.setPlaceholderText("XXXXXXXXXX");
+        ((AbstractDocument)gsidTextField.getDocument()).setDocumentFilter(new GsidDocumentFilter());
         
         // Create login button
         JButton loginButton = new JButton("Log in");
@@ -74,8 +70,14 @@ public class DashboardPanel extends JPanel {
         
         // Create login panel
         JPanel loginPanel = new JPanel(new MigLayout("wrap, align 50% 50%"));
-        loginPanel.add(loginTitle);
-        loginPanel.add(loginDescription);
+        String loginDescription = """
+                <html>
+                Tuck in a Pokémon and enter your Game Sync ID to continue.<br/>
+                Your Game Sync ID can be found in 'Game Sync Settings' in the game's main menu.
+                </html>
+                """;
+        loginPanel.add(SwingUtility.createTitleLabel("Log in"));
+        loginPanel.add(SwingUtility.createDescriptionLabel(loginDescription));
         loginPanel.add(new JLabel("Game Sync ID"), "gapy 8");
         loginPanel.add(gsidTextField, "growx");
         loginPanel.add(loginButton, "growx");
@@ -90,6 +92,7 @@ public class DashboardPanel extends JPanel {
                 encounterPanel.saveProfile(player);
                 itemPanel.saveProfile(player);
                 visitorPanel.saveProfile(player);
+                customizePanel.saveProfile(player);
                 miscPanel.saveProfile(player);
                 player.setStatus(PlayerStatus.WAKE_READY);
                 
@@ -177,6 +180,7 @@ public class DashboardPanel extends JPanel {
             encounterPanel.loadProfile(player);
             itemPanel.loadProfile(player);
             visitorPanel.loadProfile(player);
+            customizePanel.loadProfile(player);
             miscPanel.loadProfile(player);
         } catch(Exception e) {
             SwingUtility.showExceptionInfo(getRootPane(), "Failed to load player data.", e);
@@ -195,7 +199,8 @@ public class DashboardPanel extends JPanel {
             encounterPanel = new EncounterEditorPanel();
             itemPanel = new ItemEditorPanel();
             visitorPanel = new VisitorEditorPanel();
-            miscPanel = new MiscPanel(entralinked);
+            customizePanel = new CustomizationPanel(entralinked);
+            miscPanel = new MiscPanel();
         } catch(Exception e) {
             SwingUtility.showExceptionInfo(getRootPane(), "Failed to initialize dashboard.", e);
             return false;
@@ -205,6 +210,7 @@ public class DashboardPanel extends JPanel {
         tabbedPane.add("Entree Forest", encounterPanel);
         tabbedPane.add("Dream Remnants", itemPanel);
         tabbedPane.add("Join Avenue", visitorPanel);
+        tabbedPane.add("Customization", customizePanel);
         tabbedPane.add("Miscellaneous", miscPanel);
         initialized = true;
         return true;

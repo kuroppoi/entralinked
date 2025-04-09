@@ -7,8 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import com.formdev.flatlaf.FlatClientProperties;
-
 import entralinked.gui.component.PropertyDisplay;
 import entralinked.gui.component.ShadowedSprite;
 import entralinked.gui.data.DataManager;
@@ -48,19 +46,12 @@ public class SummaryPanel extends JPanel {
     public SummaryPanel() {
         setLayout(new MigLayout("align 50% 50%, gapy 0, insets 0"));
         
-        // Create info labels
-        JLabel titleLabel = new JLabel("Summary");
-        titleLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +8");
-        flavorTextLabel = new JLabel();
-        flavorTextLabel.putClientProperty(FlatClientProperties.STYLE, "[dark]foreground:darken(@foreground,20%)");
-        JLabel subLabel = new JLabel("Tucked-in Pokémon info:");
-        subLabel.putClientProperty(FlatClientProperties.STYLE, "[dark]foreground:darken(@foreground,20%)");
-        
         // Create header panel
+        flavorTextLabel = SwingUtility.createDescriptionLabel();
         JPanel headerPanel = new JPanel(new MigLayout("fillx, insets 0"));
-        headerPanel.add(titleLabel, "wrap");
+        headerPanel.add(SwingUtility.createTitleLabel("Summary"), "wrap");
         headerPanel.add(flavorTextLabel, "wrap");
-        headerPanel.add(subLabel, "wrap");
+        headerPanel.add(SwingUtility.createDescriptionLabel("Tucked-in Pokémon info:"), "wrap");
         add(headerPanel, "spanx");
 
         // Create icon label

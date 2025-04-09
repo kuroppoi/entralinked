@@ -20,8 +20,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import com.formdev.flatlaf.FlatClientProperties;
-
 import entralinked.gui.component.ConfigTable;
 import entralinked.gui.component.ShadowedSprite;
 import entralinked.utility.SwingUtility;
@@ -56,10 +54,8 @@ public abstract class TableEditorPanel extends JPanel {
         System.arraycopy(columnNames, 0, columns, 1, columnNames.length);
         
         // Create labels
-        titleLabel = new JLabel();
-        titleLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +8");
-        descriptionLabel = new JLabel();
-        descriptionLabel.putClientProperty(FlatClientProperties.STYLE, "[dark]foreground:darken(@foreground,20%)");
+        titleLabel = SwingUtility.createTitleLabel();
+        descriptionLabel = SwingUtility.createDescriptionLabel();
         selectionIcon = new ShadowedSprite();
         
         // Create buttons & toggles

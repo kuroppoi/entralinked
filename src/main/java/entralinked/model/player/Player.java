@@ -16,6 +16,7 @@ public class Player {
     private final List<DreamEncounter> encounters = new ArrayList<>();
     private final List<DreamItem> items = new ArrayList<>();
     private final List<AvenueVisitor> avenueVisitors = new ArrayList<>();
+    private final List<DreamDecor> decor = new ArrayList<>();
     private PlayerStatus status;
     private GameVersion gameVersion;
     private PkmnInfo dreamerInfo;
@@ -38,6 +39,8 @@ public class Player {
         encounters.clear();
         items.clear();
         avenueVisitors.clear();
+        decor.clear();
+        decor.addAll(DreamDecor.DEFAULT_DECOR);
         levelsGained = 0;
         cgearSkin = null;
         dexSkin = null;
@@ -79,6 +82,17 @@ public class Player {
     
     public List<AvenueVisitor> getAvenueVisitors() {
         return Collections.unmodifiableList(avenueVisitors);
+    }
+    
+    public void setDecor(Collection<DreamDecor> decor) {
+        if(decor.size() <= 5) {
+            this.decor.clear();
+            this.decor.addAll(decor);
+        }
+    }
+    
+    public List<DreamDecor> getDecor() {
+        return Collections.unmodifiableList(decor);
     }
     
     public void setStatus(PlayerStatus status) {

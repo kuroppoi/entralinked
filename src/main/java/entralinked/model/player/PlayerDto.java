@@ -27,13 +27,14 @@ public record PlayerDto(
         int levelsGained,
         @JsonDeserialize(contentAs = DreamEncounter.class) Collection<DreamEncounter> encounters,
         @JsonDeserialize(contentAs = DreamItem.class)      Collection<DreamItem> items,
-        @JsonDeserialize(contentAs = AvenueVisitor.class)  Collection<AvenueVisitor> avenueVisitors) {
+        @JsonDeserialize(contentAs = AvenueVisitor.class)  Collection<AvenueVisitor> avenueVisitors,
+        @JsonDeserialize(contentAs = DreamDecor.class)     Collection<DreamDecor> decor) {
     
     public PlayerDto(Player player) {
         this(player.getGameSyncId(), player.getGameVersion(), player.getStatus(), player.getDreamerInfo(),
                 player.getCGearSkin(), player.getDexSkin(), player.getMusical(), player.getCustomCGearSkin(),
                 player.getCustomDexSkin(), player.getCustomMusical(), player.getLevelsGained(), player.getEncounters(),
-                player.getItems(), player.getAvenueVisitors());
+                player.getItems(), player.getAvenueVisitors(), player.getDecor());
     }
     
     /**
@@ -54,6 +55,7 @@ public record PlayerDto(
         player.setEncounters(encounters == null ? Collections.emptyList() : encounters);
         player.setItems(items == null ? Collections.emptyList() : items);
         player.setAvenueVisitors(avenueVisitors == null ? Collections.emptyList() : avenueVisitors);
+        player.setDecor(decor == null ? DreamDecor.DEFAULT_DECOR : decor);
         return player;
     }
 }

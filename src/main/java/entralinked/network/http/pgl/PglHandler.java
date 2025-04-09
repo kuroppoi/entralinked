@@ -53,12 +53,6 @@ public class PglHandler implements HttpHandler {
     private static final String password = "2Phfv9MY"; // Best security in the world
     private final ObjectMapper mapper = new ObjectMapper(new UrlEncodedFormFactory()
             .disable(UrlEncodedFormParser.Feature.BASE64_DECODE_VALUES));
-    private final List<DreamDecor> decorList = List.of(
-            new DreamDecor(1, "+----------+"),
-            new DreamDecor(2, "Thank you"), 
-            new DreamDecor(3, "for using"),
-            new DreamDecor(4, "Entralinked!"),
-            new DreamDecor(5, "+----------+"));
     private final Set<Integer> sleepyList = new HashSet<>();
     private final Configuration configuration;
     private final DlcList dlcList;
@@ -216,11 +210,13 @@ public class PglHandler implements HttpHandler {
         GameVersion version = player.getGameVersion();
         List<DreamEncounter> encounters = player.getEncounters();
         List<DreamItem> items = player.getItems();
+        List<DreamDecor> decorList = player.getDecor();
         
         // When waking up a Pokémon, these 4 bytes are written to 0x1D304 in the save file.
         // If the bytes in the game's save file match the new bytes, they will be set to 0x00000000
         // and no content will be downloaded.
         // Looking at some old save files, this was very likely just a total tuck-in/wake-up counter.
+        // Additionally, waking up sets a flag at 0x1D4A3 (seems to be a "Pokémon is tucked in" flag or something) to 0x0.
         outputStream.writeInt((int)(Math.random() * Integer.MAX_VALUE));
         
         // Write encounter data (max 10)
@@ -242,7 +238,7 @@ public class PglHandler implements HttpHandler {
         outputStream.write(getDlcIndex(user, player.getMusical(), "MUSICAL", player.getMusicalFile()));
         outputStream.write(getDlcIndex(user, player.getCGearSkin(), version.isVersion2() ? "CGEAR2" : "CGEAR", player.getCGearSkinFile()));
         outputStream.write(getDlcIndex(user, player.getDexSkin(), "ZUKAN", player.getDexSkinFile()));
-        outputStream.write(decorList.isEmpty() ? 0 : 1); // Seems to be a flag for indicating whether or not decor data is present
+        outputStream.write(decorList.isEmpty() ? 0 : 1); // Decor flag (?) stored at 0x1D4A4
         outputStream.write(0); // Must be zero?
         
         // Write item IDs
@@ -276,7 +272,11 @@ public class PglHandler implements HttpHandler {
         }
         
         // Write decor padding
-        outputStream.writeBytes(0, (5 - decorList.size()) * 26);
+        for(int i = 0; i < (5 - decorList.size()); i++) {
+            outputStream.writeShort(0x7E); // Just reset to default state
+            outputStream.writeBytes(0, 24);
+        }
+        
         outputStream.writeShort(0); // ?
         
         // Join Avenue visitor data -- copied in parts to 0x2422C in the save file.
