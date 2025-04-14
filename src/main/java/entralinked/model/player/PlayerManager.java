@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import entralinked.GameVersion;
+import entralinked.utility.GsidUtility;
 
 /**
  * Manager class for managing {@link Player} information (Global Link users)
@@ -117,9 +118,14 @@ public class PlayerManager {
             Player player = mapper.readValue(inputFile, PlayerDto.class).toPlayer();
             String gameSyncId = player.getGameSyncId();
             
+            // Check if Game Sync ID is valid
+            if(!GsidUtility.isValidGameSyncId(gameSyncId)) {
+                throw new IOException("Invalid Game Sync ID: %s".formatted(gameSyncId));
+            }
+            
             // Check for duplicate Game Sync ID
             if(doesPlayerExist(gameSyncId)) {
-                throw new IOException("Duplicate Game Sync ID %s".formatted(gameSyncId));
+                throw new IOException("Duplicate Game Sync ID: %s".formatted(gameSyncId));
             }
             
             player.setDataDirectory(inputFile.getParentFile());

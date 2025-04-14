@@ -321,6 +321,13 @@ public class PglHandler implements HttpHandler {
      */
     private void handleMemoryLink(PglRequest request, Context ctx) throws IOException {
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
+        
+        // Check if Game Sync ID is valid
+        if(!GsidUtility.isValidGameSyncId(request.gameSyncId())) {
+            writeStatusCode(outputStream, 8); // Invalid Game Sync ID
+            return;
+        }
+        
         Player player = playerManager.getPlayer(request.gameSyncId());
         User user = ctx.attribute("user");
         
@@ -472,9 +479,9 @@ public class PglHandler implements HttpHandler {
         // Prepare response
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
         
-        // Make sure Game Sync ID is present
-        if(request.gameSyncId() == null) {
-            writeStatusCode(outputStream, 1); // Unauthorized
+        // Check if Game Sync ID is valid
+        if(!GsidUtility.isValidGameSyncId(request.gameSyncId())) {
+            writeStatusCode(outputStream, 8); // Invalid Game Sync ID
             return;
         }
         
@@ -510,6 +517,12 @@ public class PglHandler implements HttpHandler {
     private void handleCreateData(PglRequest request, Context ctx) throws IOException {
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
         String gameSyncId = GsidUtility.stringifyGameSyncId(Integer.parseInt(ctx.body().replace("\u0000", ""))); // So quirky
+        
+        // Check if Game Sync ID is valid
+        if(!GsidUtility.isValidGameSyncId(request.gameSyncId())) {
+            writeStatusCode(outputStream, 8); // Invalid Game Sync ID
+            return;
+        }
         
         // Check if player doesn't exist already
         if(playerManager.doesPlayerExist(gameSyncId)) {

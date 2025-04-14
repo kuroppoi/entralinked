@@ -25,12 +25,6 @@ public class GsidDeserializer extends StdDeserializer<String> {
     
     @Override
     public String deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-        int gsid = parser.getIntValue();
-        
-        if(gsid < 0) {
-            throw new IOException("Game Sync ID cannot be a negative number.");
-        }
-        
-        return GsidUtility.stringifyGameSyncId(gsid);
+        return GsidUtility.stringifyGameSyncId(parser.getValueAsInt(-1));
     }
 }

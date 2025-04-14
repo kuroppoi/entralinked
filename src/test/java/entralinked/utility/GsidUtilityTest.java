@@ -31,6 +31,13 @@ public class GsidUtilityTest {
         // Illegal length (should be 10)
         assertFalse(GsidUtility.isValidGameSyncId("Y67UEN38K"));
         assertFalse(GsidUtility.isValidGameSyncId("3ER5K8MBN4C"));
+        
+        // Invalid checksum
+        assertFalse(GsidUtility.isValidGameSyncId("VFWM2Q2ADH"));
+        assertFalse(GsidUtility.isValidGameSyncId("44DAWDA4SH"));
+        assertFalse(GsidUtility.isValidGameSyncId("J6F55U7FUE"));
+        assertFalse(GsidUtility.isValidGameSyncId("8FAB4ZF6JF"));
+        assertFalse(GsidUtility.isValidGameSyncId("HWLNS77HWD"));
     }
     
     @Test
@@ -38,8 +45,8 @@ public class GsidUtilityTest {
     void testValidGameSyncIds() {
         assertTrue(GsidUtility.isValidGameSyncId("VFWM2QAXNF"));
         assertTrue(GsidUtility.isValidGameSyncId("44DAWDJKJ8"));
-        assertTrue(GsidUtility.isValidGameSyncId("J6F55UB2X9"));
-        assertTrue(GsidUtility.isValidGameSyncId("8FAB4Z3EN9"));
+        assertTrue(GsidUtility.isValidGameSyncId("J6F55UB2XD"));
+        assertTrue(GsidUtility.isValidGameSyncId("8FAB4Z3END"));
         assertTrue(GsidUtility.isValidGameSyncId("HWLNS7BTNB"));
     }
 }
