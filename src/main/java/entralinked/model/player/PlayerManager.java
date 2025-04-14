@@ -186,7 +186,13 @@ public class PlayerManager {
     public Player registerPlayer(String gameSyncId, GameVersion version) {
         // Check for duplicate Game Sync ID
         if(playerMap.containsKey(gameSyncId)) {
-            logger.warn("Attempted to register duplicate player {}", gameSyncId);
+            logger.warn("Attempted to register duplicate Game Sync ID: {}", gameSyncId);
+            return null;
+        }
+        
+        // Check if Game Sync ID is valid
+        if(!GsidUtility.isValidGameSyncId(gameSyncId)) {
+            logger.warn("Attempted to register invalid Game Sync ID: {}", gameSyncId);
             return null;
         }
         

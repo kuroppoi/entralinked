@@ -48,4 +48,23 @@ public class LEInputStream extends FilterInputStream {
     public double readDouble() throws IOException {
         return Double.longBitsToDouble(readLong());
     }
+    
+    public String readUTF16(int length) throws IOException {
+        char[] charBuffer = new char[length];
+        int read = 0;
+        
+        for(int i = 0; i < charBuffer.length; i++) {
+            int c = readShort() & 0xFFFF;
+            
+            if(c == 0xFFFF) {
+                break;
+            }
+            
+            charBuffer[i] = (char)c;
+            read++;
+        }
+        
+        skipNBytes((length - (read + 1)) * 2);
+        return new String(charBuffer, 0, read);
+    }
 }
