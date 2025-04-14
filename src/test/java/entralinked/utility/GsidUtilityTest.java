@@ -38,6 +38,13 @@ public class GsidUtilityTest {
         assertFalse(GsidUtility.isValidGameSyncId("J6F55U7FUE"));
         assertFalse(GsidUtility.isValidGameSyncId("8FAB4ZF6JF"));
         assertFalse(GsidUtility.isValidGameSyncId("HWLNS77HWD"));
+        
+        // Negative PID
+        assertFalse(GsidUtility.isValidGameSyncId("VYSBC78999"));
+        assertFalse(GsidUtility.isValidGameSyncId("2UD7GJ8999"));
+        assertFalse(GsidUtility.isValidGameSyncId("BTULWN8999"));
+        assertFalse(GsidUtility.isValidGameSyncId("ZW3JBQ9999"));
+        assertFalse(GsidUtility.isValidGameSyncId("MNTNWB9999"));
     }
     
     @Test
