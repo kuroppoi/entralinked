@@ -10,3 +10,6 @@ testRun
 .project
 .classpath
 bin
+
+# IntelliJ
+.idea

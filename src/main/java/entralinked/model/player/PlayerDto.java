@@ -17,6 +17,7 @@ public record PlayerDto(
         @JsonProperty(required = true) String gameSyncId,
         @JsonProperty(required = true) GameVersion gameVersion,
         PlayerStatus status,
+        TrainerInfo trainerInfo,
         PkmnInfo dreamerInfo,
         String cgearSkin,
         String dexSkin,
@@ -31,10 +32,11 @@ public record PlayerDto(
         @JsonDeserialize(contentAs = DreamDecor.class)     Collection<DreamDecor> decor) {
     
     public PlayerDto(Player player) {
-        this(player.getGameSyncId(), player.getGameVersion(), player.getStatus(), player.getDreamerInfo(),
-                player.getCGearSkin(), player.getDexSkin(), player.getMusical(), player.getCustomCGearSkin(),
-                player.getCustomDexSkin(), player.getCustomMusical(), player.getLevelsGained(), player.getEncounters(),
-                player.getItems(), player.getAvenueVisitors(), player.getDecor());
+        this(player.getGameSyncId(), player.getGameVersion(), player.getStatus(), player.getTrainerInfo(),
+                player.getDreamerInfo(), player.getCGearSkin(), player.getDexSkin(), player.getMusical(),
+                player.getCustomCGearSkin(), player.getCustomDexSkin(), player.getCustomMusical(),
+                player.getLevelsGained(), player.getEncounters(), player.getItems(), player.getAvenueVisitors(),
+                player.getDecor());
     }
     
     /**
@@ -44,6 +46,7 @@ public record PlayerDto(
         Player player = new Player(gameSyncId);
         player.setStatus(status);
         player.setGameVersion(gameVersion);
+        player.setTrainerInfo(trainerInfo);
         player.setDreamerInfo(dreamerInfo);
         player.setCGearSkin(cgearSkin);
         player.setDexSkin(dexSkin);

@@ -66,8 +66,9 @@ public class PkmnInfoReader {
         int form = (buffer.getByte(64) >> 3) & 0x1F;
         boolean genderless = ((buffer.getByte(64) >> 2) & 1) == 1;
         boolean female = ((buffer.getByte(64) >> 1) & 1) == 1;
+        int natureByte = buffer.getByte(65);
         PkmnGender gender = genderless ? PkmnGender.GENDERLESS : female ? PkmnGender.FEMALE : PkmnGender.MALE;
-        PkmnNature nature = PkmnNature.valueOf(buffer.getByte(65));
+        PkmnNature nature = PkmnNature.valueOf(natureByte);
         String nickname = getString(buffer, 72, 20);
         String trainerName = getString(buffer, 104, 14);
         
@@ -75,13 +76,13 @@ public class PkmnInfoReader {
         if(!buffer.release()) {
             logger.warn("Buffer was not deallocated!");
         }
-        
+
         // Loosely verify data
-        if(species < 1 || species > 649) throw new IOException("Invalid species");
-        if(heldItem < 0 || heldItem > 638) throw new IOException("Invalid held item");
-        if(ability < 1 || ability > 164) throw new IOException("Invalid ability");
-        if(level < 1 || level > 100) throw new IOException("Level is out of range");
-        if(nature == null) throw new IOException("Invalid nature");
+        if(species < 1 || species > 649) throw new IOException(String.format("Invalid species: %d", species));
+        if(heldItem < 0 || heldItem > 638) throw new IOException(String.format("Invalid held item: %d", heldItem));
+        if(ability < 1 || ability > 164) throw new IOException(String.format("Invalid ability: %d", ability));
+        if(level < 1 || level > 100) throw new IOException(String.format("Level is out of range: %d", level));
+        if(nature == null) throw new IOException(String.format("Invalid nature: %d", natureByte));
         
         // Create record
         return new PkmnInfo(nickname, trainerName, nature, gender, species, personality,

@@ -28,6 +28,9 @@ import entralinked.model.player.DreamItem;
 import entralinked.model.player.Player;
 import entralinked.model.player.PlayerManager;
 import entralinked.model.player.PlayerStatus;
+import entralinked.model.player.TrainerInfo;
+import entralinked.model.player.Offsets;
+import entralinked.model.player.TrainerInfoReader;
 import entralinked.model.user.ServiceSession;
 import entralinked.model.user.User;
 import entralinked.model.user.UserManager;
@@ -36,6 +39,7 @@ import entralinked.network.http.HttpRequestHandler;
 import entralinked.serialization.UrlEncodedFormFactory;
 import entralinked.serialization.UrlEncodedFormParser;
 import entralinked.utility.GsidUtility;
+import entralinked.utility.PointedInputStream;
 import entralinked.utility.LEOutputStream;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -276,7 +280,7 @@ public class PglHandler implements HttpHandler {
             outputStream.writeShort(0x7E); // Just reset to default state
             outputStream.writeBytes(0, 24);
         }
-        
+
         outputStream.writeShort(0); // ?
         
         // Join Avenue visitor data -- copied in parts to 0x2422C in the save file.
@@ -321,13 +325,13 @@ public class PglHandler implements HttpHandler {
      */
     private void handleMemoryLink(PglRequest request, Context ctx) throws IOException {
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
-        
+
         // Check if Game Sync ID is valid
         if(!GsidUtility.isValidGameSyncId(request.gameSyncId())) {
             writeStatusCode(outputStream, 8); // Invalid Game Sync ID
             return;
         }
-        
+
         Player player = playerManager.getPlayer(request.gameSyncId());
         User user = ctx.attribute("user");
         
@@ -419,7 +423,7 @@ public class PglHandler implements HttpHandler {
     private void handleUploadSaveData(PglRequest request, Context ctx) throws IOException {
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
         Player player = playerManager.getPlayer(request.gameSyncId());
-        
+
         // Check if the player exists, has no Pokémon tucked in already and uses the same game version
         if(player == null
                 || (!configuration.allowOverwritingPlayerDreamInfo() && player.getStatus() != PlayerStatus.AWAKE)
@@ -446,17 +450,31 @@ public class PglHandler implements HttpHandler {
         }
         
         // Read save data
-        PkmnInfo dreamerInfo = null;
+        TrainerInfo trainerInfo;
+        PkmnInfo dreamerInfo;
         
-        try(FileInputStream inputStream = new FileInputStream(player.getSaveFile())) {
-            inputStream.skip(0x1D300); // Skip to dream world data
-            inputStream.skip(8); // Skip to Pokémon data
+        try(PointedInputStream inputStream = new PointedInputStream(new FileInputStream(player.getSaveFile()))) {
+
+            inputStream.skipTo(Offsets.TRAINER_INFO);
+            trainerInfo = TrainerInfoReader.readTrainerInfo(inputStream);
+
+            inputStream.skipTo(Offsets.DREAM_WORLD_INFO);
+            inputStream.skip(Offsets.POKEMON_INFO_SUB_OFFSET);
             dreamerInfo = PkmnInfoReader.readPokeInfo(inputStream);
+
+            inputStream.skipTo(Offsets.ADVENTURE_START_TIME_OFFSET);
+            inputStream.skip(Offsets.ADVENTURE_START_TIME_SUB_OFFSET);
+            trainerInfo.setAdventureStartTime(TrainerInfoReader.readAdventureStartTime(inputStream));
+
+            inputStream.skipTo(Offsets.getMoneyAndBadges(request.gameVersion()));
+            trainerInfo.setMoney(TrainerInfoReader.readLong(inputStream));
+            trainerInfo.setGymBadges(TrainerInfoReader.readGymBadges(inputStream));
         }
-        
+
         // Update and save player information
         player.setStatus(PlayerStatus.SLEEPING);
         player.setGameVersion(request.gameVersion());
+        player.setTrainerInfo(trainerInfo);
         player.setDreamerInfo(dreamerInfo);
         
         if(!playerManager.savePlayer(player)) {
@@ -523,7 +541,7 @@ public class PglHandler implements HttpHandler {
             writeStatusCode(outputStream, 8); // Invalid Game Sync ID
             return;
         }
-        
+
         // Check if player doesn't exist already
         if(playerManager.doesPlayerExist(gameSyncId)) {
             writeStatusCode(outputStream, 2); // Duplicate Game Sync ID
@@ -548,7 +566,7 @@ public class PglHandler implements HttpHandler {
         outputStream.writeInt(status);
         outputStream.writeBytes(0, 124);
     }
-    
+
     /**
      * Gets the index of the player's chosen DLC for the specified type and prepares DLC overriding if necessary.
      */
