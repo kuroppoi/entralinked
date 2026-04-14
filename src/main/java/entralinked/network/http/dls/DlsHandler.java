@@ -124,7 +124,7 @@ public class DlsHandler implements HttpHandler {
      */
     private String getDlcGameCode(String gameCode) {
         return switch(gameCode) {
-            case "IRAJ" -> "IRAO";
+            case "IRAJ", "IRAK" -> "IRAO";
             default -> gameCode;
         };
     }
