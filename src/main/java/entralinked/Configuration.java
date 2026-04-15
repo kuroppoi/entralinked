@@ -6,9 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public record Configuration(
         String hostName,
         boolean clearPlayerDreamInfoOnWake,
-        boolean allowOverwritingPlayerDreamInfo,
-        boolean allowPlayerGameVersionMismatch,
         boolean allowWfcRegistrationThroughLogin) {
     
-    public static final Configuration DEFAULT = new Configuration("local", true, false, false, true);
+    public static final Configuration DEFAULT = new Configuration("local", true, true);
 }

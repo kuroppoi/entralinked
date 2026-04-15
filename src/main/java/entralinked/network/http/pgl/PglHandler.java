@@ -420,11 +420,8 @@ public class PglHandler implements HttpHandler {
         LEOutputStream outputStream = new LEOutputStream(ctx.outputStream());
         Player player = playerManager.getPlayer(request.gameSyncId());
         
-        // Check if the player exists, has no Pokémon tucked in already and uses the same game version
-        if(player == null
-                || (!configuration.allowOverwritingPlayerDreamInfo() && player.getStatus() != PlayerStatus.AWAKE)
-                || (!configuration.allowPlayerGameVersionMismatch() && player.getGameVersion() != null 
-                        && request.gameVersion() != player.getGameVersion())) {
+        // Check if the player exists
+        if(player == null) {
             // Skip everything
             ServletInputStream inputStream = ctx.req().getInputStream();
             
@@ -439,6 +436,18 @@ public class PglHandler implements HttpHandler {
         
         logger.info("Player {} is uploading save data", player.getGameSyncId());
         
+        // Warn if player's current status is unexpected
+        if(player.getStatus() != PlayerStatus.AWAKE)
+        {
+            logger.warn("Player {} is not AWAKE -- existing dream information will be overwritten!", player.getGameSyncId());
+        }
+        
+        // Warn if player's game version changed
+        if(player.getGameVersion() != null && request.gameVersion() != player.getGameVersion())
+        {
+            logger.warn("Player {}'s game version changed from {} to {}", player.getGameSyncId(), player.getGameVersion(), request.gameVersion());
+        }
+                
         // Try to store save data
         if(!playerManager.storePlayerGameSaveFile(player, ctx.bodyInputStream())) {
             writeStatusCode(outputStream, 4); // Game save data IO error
