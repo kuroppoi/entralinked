@@ -528,7 +528,8 @@ public class PglHandler implements HttpHandler {
         String gameSyncId = GsidUtility.stringifyGameSyncId(Integer.parseInt(ctx.body().replace("\u0000", ""))); // So quirky
         
         // Check if Game Sync ID is valid
-        if(!GsidUtility.isValidGameSyncId(request.gameSyncId())) {
+        if(!GsidUtility.isValidGameSyncId(gameSyncId)) {
+            logger.debug("[account.createdata] Rejecting invalid Game Sync ID: {} ({})", gameSyncId, ctx.body());
             writeStatusCode(outputStream, 8); // Invalid Game Sync ID
             return;
         }
